@@ -1,0 +1,317 @@
+{
+  "name": "markdownnote",
+  "displayName": "MarkdownNote",
+  "description": "MarkdownNote(Markdown Preview is WYSIWYG Editor)",
+  "version": "0.70.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stken2050/vscode-markdown-note.git"
+  },
+  "engines": {
+    "vscode": "^1.71.0"
+  },
+  "categories": [
+    "Notebooks"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "MarkdownNote",
+      "properties": {
+        "workbench.editor.autoLockGroups": {
+          "mainThreadWebview-MarkdownNote": true
+        },
+        "markdownnote.start_overlay": {
+          "type": "object",
+          "description": "Set the initial editing mode to Overlay instead of Side-by-Side",
+          "default": {
+            "true/false": true
+          }
+        },
+        "markdownnote.image_repository": {
+          "type": "object",
+          "description": "GitHub image repositoy and token",
+          "default": {
+            "repository": "username/your-webimages-repo",
+            "token": "ghp_xxxxxxxxxxxxxxxxxxxx"
+          }
+        },
+        "markdownnote.webkeybindings": {
+          "type": "object",
+          "description": "get keycode for webView via https://stackblitz.com/edit/js-hvpmar?file=index.js",
+          "default": {
+            "blur": {
+              "shiftKey": false,
+              "ctrlKey": false,
+              "altKey": false,
+              "code": [
+                "Escape"
+              ]
+            },
+            "paste": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "KeyV"
+              ]
+            },
+            "undo": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "KeyZ"
+              ]
+            },
+            "redo": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "KeyY"
+              ]
+            },
+            "cell-add": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "Enter"
+              ]
+            },
+            "cell-delete": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "Backspace",
+                "Escape"
+              ]
+            },
+            "cell-up": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "ArrowUp"
+              ]
+            },
+            "cell-down": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "ArrowDown"
+              ]
+            },
+            "bold": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "KeyB"
+              ]
+            },
+            "italic": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "KeyI"
+              ]
+            },
+            "inlinecode": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "Backquote"
+              ]
+            },
+            "code": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "KeyK"
+              ]
+            },
+            "inlinemath": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "KeyN"
+              ]
+            },
+            "math": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "KeyM"
+              ]
+            },
+            "url-paste": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "KeyL"
+              ]
+            },
+            "img-paste": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "KeyP"
+              ]
+            },
+            "admonition": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "KeyO"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "key": "escape",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+enter",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+\\",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+backspace",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+up",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+down",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+b",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+i",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+`",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+k",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+n",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+m",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+l",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+p",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+o",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      }
+    ],
+    "commands": [
+      {
+        "command": "markdownnote.overlay",
+        "title": "MarkdownNote: Overlay"
+      },
+      {
+        "command": "markdownnote.toSide",
+        "title": "MarkdownNote: To the Side"
+      },
+      {
+        "command": "markdownnote.doNothing",
+        "title": "MarkdownNote: Do Nothing for keybindings in WebView"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdownnote.overlay",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdownnote.toSide",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "install:all": "npm install && npm --prefix ./webview-ui install ./webview-ui",
+    "start:webview": "npm --prefix ./webview-ui run start",
+    "build:webview": "npm --prefix ./webview-ui run build",
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.71.0",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "@vscode/test-electron": "^2.1.5",
+    "eslint": "^8.20.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^5.0",
+    "@vscode/vsce": "2.18.0"
+  }
+}

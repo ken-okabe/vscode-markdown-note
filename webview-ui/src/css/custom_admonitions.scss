@@ -1,0 +1,46 @@
+.admonition {
+    border-radius: .375rem;
+    height: auto;
+    margin-bottom: 1.5rem;
+    padding: 1rem 1rem 1px;
+    width: 100%
+}
+
+.admonition .admonition-title {
+    font-weight: 700;
+    margin-bottom: 1rem
+}
+
+
+.admonition-note {
+    background-color: #E6F6E6
+}
+
+.admonition-note .admonition-title {
+    color: #003100
+}
+
+
+.admonition-javascript {
+    background-color: #FFF8E6
+}
+
+.admonition-javascript .admonition-title {
+    color: #8C4400
+}
+
+.admonition-typescript {
+    background-color: #d7f4ff
+}
+
+.admonition-typescript .admonition-title {
+    color: #36768a
+}
+
+.admonition-fsharp {
+    background-color: hsl(209, 93%, 73%)
+}
+
+.admonition-fsharp .admonition-title {
+    color: #14332a
+}
