@@ -95,9 +95,18 @@ export function activate(context: vscode.ExtensionContext) {
         NotePanel.render(context.extensionUri, 2);
       }
     );
+
+  const blurOrFocusCommand =
+    vscode.commands.registerCommand("markdownnote.blurOrFocus",
+      () => {
+        console.log("blurOrFocus called-----");
+        NotePanel.blurOrFocus();
+      }
+    );
   // Add command to the extension context
   context.subscriptions.push(doNothingCommand);
   context.subscriptions.push(overlayCommand);
   context.subscriptions.push(toSideCommand);
+  context.subscriptions.push(blurOrFocusCommand);
 
 }

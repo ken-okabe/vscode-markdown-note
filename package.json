@@ -2,7 +2,7 @@
   "name": "markdownnote",
   "displayName": "MarkdownNote",
   "description": "MarkdownNote(Markdown Preview is WYSIWYG Editor)",
-  "version": "0.70.0",
+  "version": "0.81.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/stken2050/vscode-markdown-note.git"
@@ -187,7 +187,7 @@
     "keybindings": [
       {
         "key": "escape",
-        "command": "markdownnote.doNothing",
+        "command": "markdownnote.blurOrFocus",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
@@ -273,6 +273,10 @@
       {
         "command": "markdownnote.doNothing",
         "title": "MarkdownNote: Do Nothing for keybindings in WebView"
+      },
+      {
+        "command": "markdownnote.blurOrFocus",
+        "title": "MarkdownNote: blurOrFocus"
       }
     ],
     "menus": {
@@ -312,6 +316,6 @@
     "glob": "^8.0.3",
     "mocha": "^10.0.0",
     "typescript": "^5.0",
-    "@vscode/vsce": "2.18.0"
+    "@vscode/vsce": "2.19.0"
   }
 }

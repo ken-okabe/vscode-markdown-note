@@ -64,6 +64,9 @@ const deletingID = R(0);
 const historyEdit = [];
 const undoHistoryEdit = [];
 
+const isBlur = R(true);
+const lastCellID = R("");
+
 let imageRepository;
 let keybinds;
 
@@ -466,7 +469,20 @@ const redo = ev => id => {
 //---event----------------------------------------------
 const onClick = id => showEditFocus(id);
 
+const blurOrFocus = (ev) => id => {
+
+  console.log('blurOrFocus');
+  console.log(isBlur.lastVal);
+
+  isBlur.lastVal
+    ? showEditFocus(id)
+    : undefined;
+
+};
+
 const onBlur = (ev) => id => {
+  isBlur.nextR(true);
+  lastCellID.nextR(id);
   html(id);
   console.log('onBlur');
   cellToMarkSave();
@@ -477,6 +493,14 @@ const onInput = idEdit => {
   console.log(idEdit);
   hStyle(idEdit);
 };
+
+
+const keyMatch = evt => cmd =>
+  (keybinds[cmd].shiftKey === evt.shiftKey) &&
+  (keybinds[cmd].ctrlKey === evt.ctrlKey) &&
+  (keybinds[cmd].altKey === evt.altKey) &&
+  (keybinds[cmd].code.includes(evt.code));
+
 
 const onKeyDown = ev => id => {
 
@@ -496,11 +520,6 @@ const onKeyDown = ev => id => {
     console.log(history);
   };
 
-  const keyMatch = evt => cmd =>
-    (keybinds[cmd].shiftKey === evt.shiftKey) &&
-    (keybinds[cmd].ctrlKey === evt.ctrlKey) &&
-    (keybinds[cmd].altKey === evt.altKey) &&
-    (keybinds[cmd].code.includes(evt.code));
 
   keyMatch(ev)("paste")
     ? paste(ev)(id)
@@ -684,6 +703,8 @@ const showEditFocus =
   (id: string) => {
     console.log('showEditFocus');
 
+    isBlur.nextR(false);
+
     const elHtml = document.getElementById("html" + id);
     !!elHtml
       ? elHtml.style.display = 'none'
@@ -860,6 +881,18 @@ mdtextR
 
     cellsStreamNext(cells); //update cells
 
+    setTimeout(() => {
+      let cells =
+        Array
+          .from(document.getElementsByClassName('cell'));
+
+      console.log(ID.get(cells[0]));
+
+      lastCellID.nextR(ID.get(cells[0])); //set focus
+
+    }, 100);
+
+
   });
 //==========================================
 
@@ -882,7 +915,9 @@ window.addEventListener('message', event => {
       })()
       : message.cmd === 'load'
         ? mdtextR.nextR(message.obj)
-        : undefined;
+        : message.cmd === 'blurOrFocus'
+          ? blurOrFocus({})(lastCellID.lastVal)
+          : undefined;
 
 });
 //==========================================

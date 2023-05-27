@@ -13,7 +13,7 @@ const reloadWebview = () => {
   console.log("@@reloadWebview is called@@");
   vscode.commands
     .executeCommand("workbench.action.webview.reloadWebviewAction");
-}
+};
 
 const mdTextR = R('');
 const saveR = R(undefined);
@@ -64,6 +64,12 @@ export class NotePanel {
     // Set an event listener to listen for messages passed from the webview context
     this._setWebviewMessageListener(this._panel.webview);
 
+  }
+
+  public static blurOrFocus() {
+    NotePanel.currentPanel?._panel.webview.postMessage({
+      cmd: 'blurOrFocus'
+    });
   }
 
   /**
