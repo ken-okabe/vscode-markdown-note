@@ -41,6 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   const exportHTMLR = NotePanel.rExportHTML();
 
+  //-------------------------------------------
   const exportHTML = (content: string) => {
 
     const html =
@@ -61,14 +62,16 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.workspace.workspaceFolders
         ? vscode.workspace.workspaceFolders[0].uri
         : undefined;
+
     const options: vscode.SaveDialogOptions = { defaultUri };
+
     vscode.window.showSaveDialog(options)
       .then(uri =>
         uri && vscode.workspace.fs
           .writeFile(uri, Buffer.from(html))
       );
   };
-
+  //-----------------------------------------------
   exportHTMLR.mapR(
     text =>
       text !== undefined

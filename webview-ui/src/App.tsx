@@ -883,8 +883,6 @@ const cellToHTML = () => {
     els.map((el: HTMLElement) =>
       el.getElementsByClassName("cellhtml")[0].innerHTML);
 
-
-
   const html = htmls.reduce((sum, a) => sum + '\n\n' + a);
 
   return html;
