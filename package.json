@@ -2,7 +2,7 @@
   "name": "markdownnote",
   "displayName": "MarkdownNote",
   "description": "MarkdownNote(Markdown Preview is WYSIWYG Editor)",
-  "version": "0.81.0",
+  "version": "0.90.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/stken2050/vscode-markdown-note.git"
@@ -37,6 +37,18 @@
           "default": {
             "repository": "username/your-webimages-repo",
             "token": "ghp_xxxxxxxxxxxxxxxxxxxx"
+          }
+        },
+        "markdownnote.CSS": {
+          "type": "object",
+          "description": "CSS URLs",
+          "default": {
+            "URLs": [
+              "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css",
+              "https://raw.githubusercontent.com/sindresorhus/github-markdown-css/main/github-markdown-light.css",
+              "https://unpkg.com/prism-themes@1.9.0/themes/prism-coldark-dark.min.css",
+              "https://raw.githubusercontent.com/stken2050/admonition-css/main/custom-admonition.css"
+            ]
           }
         },
         "markdownnote.webkeybindings": {
@@ -179,6 +191,14 @@
               "code": [
                 "KeyO"
               ]
+            },
+            "tex2svg": {
+              "shiftKey": false,
+              "ctrlKey": true,
+              "altKey": false,
+              "code": [
+                "Comma"
+              ]
             }
           }
         }
@@ -259,16 +279,21 @@
         "key": "ctrl+o",
         "command": "markdownnote.doNothing",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+,",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
       }
     ],
     "commands": [
       {
         "command": "markdownnote.overlay",
-        "title": "MarkdownNote: Overlay"
+        "title": "MarkdownNote: _📝 Overlay & Reload"
       },
       {
         "command": "markdownnote.toSide",
-        "title": "MarkdownNote: To the Side"
+        "title": "MarkdownNote: _📖 To the Side & Reload"
       },
       {
         "command": "markdownnote.doNothing",
@@ -276,7 +301,11 @@
       },
       {
         "command": "markdownnote.blurOrFocus",
-        "title": "MarkdownNote: blurOrFocus"
+        "title": "MarkdownNote: Blur or Focus"
+      },
+      {
+        "command": "markdownnote.exportHTML",
+        "title": "MarkdownNote: 📁 Export as HTML file"
       }
     ],
     "menus": {
@@ -289,6 +318,11 @@
         {
           "when": "resourceLangId == markdown",
           "command": "markdownnote.toSide",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdownnote.exportHTML",
           "group": "navigation"
         }
       ]
@@ -312,10 +346,10 @@
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.31.0",
     "@vscode/test-electron": "^2.1.5",
+    "@vscode/vsce": "2.19.0",
     "eslint": "^8.20.0",
     "glob": "^8.0.3",
     "mocha": "^10.0.0",
-    "typescript": "^5.0",
-    "@vscode/vsce": "2.19.0"
+    "typescript": "^5.0"
   }
 }

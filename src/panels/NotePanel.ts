@@ -15,8 +15,12 @@ const reloadWebview = () => {
     .executeCommand("workbench.action.webview.reloadWebviewAction");
 };
 
+const cssR = R('');
+const katexR = R('');
 const mdTextR = R('');
 const saveR = R(undefined);
+
+const exportHTMLR = R(undefined);
 
 console.log("NodePanel imported");
 
@@ -37,11 +41,31 @@ export class NotePanel {
   private readonly _panel: WebviewPanel;
   private _disposables: Disposable[] = [];
 
+  public static rCSS() {
+    return cssR;
+  }
+  public static rKatex() {  // for katex
+    return katexR;
+  }
+
   public static rMdText() {
     return mdTextR;
   }
   public static rSave() {
     return saveR;
+  }
+  public static rExportHTML() {
+    return exportHTMLR;
+  }
+  public static blurOrFocus() {
+    NotePanel.currentPanel?._panel.webview.postMessage({
+      cmd: 'blurOrFocus'
+    });
+  }
+  public static exportHTML() {
+    NotePanel.currentPanel?._panel.webview.postMessage({
+      cmd: 'exportHTML'
+    });
   }
   /**
    * The NotePanel class private constructor (called only from the render method).
@@ -59,17 +83,12 @@ export class NotePanel {
     this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
 
     // Set the HTML content for the webview panel
-    this._panel.webview.html = this._getWebviewContent(this._panel.webview, extensionUri);
+    this._panel.webview.html =
+      this._getWebviewContent(this._panel.webview, extensionUri);
 
     // Set an event listener to listen for messages passed from the webview context
     this._setWebviewMessageListener(this._panel.webview);
 
-  }
-
-  public static blurOrFocus() {
-    NotePanel.currentPanel?._panel.webview.postMessage({
-      cmd: 'blurOrFocus'
-    });
   }
 
   /**
@@ -161,12 +180,13 @@ export class NotePanel {
           <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="stylesheet" type="text/css" href="${stylesUri}">
-          <title>Markdown Note</title>
+          <title>Markdown Note View</title>
 
+          <style>${cssR.lastVal}</style>
 
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+          ${katexR.lastVal}
 
-
+          <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
         </head>
         <body>
           <div id="root"></div>
@@ -231,6 +251,9 @@ export class NotePanel {
             saveR.nextR(text);
             return;
 
+          case "exportHTML": // save to the source
+            exportHTMLR.nextR(text);
+            return;
         }
       },
       undefined,

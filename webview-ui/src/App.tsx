@@ -22,13 +22,22 @@ import remarkBreaks from 'remark-breaks'
 import remarkDirective from 'remark-directive';
 
 import remarkMdx from 'remark-mdx'
-import remarkGfm from 'remark-gfm'
-import remarkRehype from 'remark-rehype'
 import rehypePrism from 'rehype-prism-plus'
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
 import rehypeFormat from 'rehype-format'
+
+
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkGfm from 'remark-gfm'
+import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
+
+import rehypeRaw from 'rehype-raw'
+
+
+
 
 // In order to use the Webview UI Toolkit web components they
 // must be registered with the browser (i.e. webview) using the
@@ -69,6 +78,8 @@ const lastCellID = R("");
 
 let imageRepository;
 let keybinds;
+
+//==========================================
 
 //==========================================
 
@@ -465,6 +476,22 @@ const redo = ev => id => {
 
 };
 
+const tex2svg = ev => id => {
+  console.log('tex2svg');
+
+  const text = document.getElementById("edit" + id).innerText;
+
+  const texs =
+    (text.match(/\${3}([\s\S]*?)\${3}/g) || [])
+      .map(match =>
+        match
+          .slice(3, -3)
+          .replace(/\n/g, ''));
+
+  console.log(texs);
+
+};
+
 
 //---event----------------------------------------------
 const onClick = id => showEditFocus(id);
@@ -555,7 +582,9 @@ const onKeyDown = ev => id => {
                                   ? imgPaste(ev)(id)
                                   : keyMatch(ev)("admonition")
                                     ? admonition(ev)(id)
-                                    : setTimeout(history, 0);
+                                    : keyMatch(ev)("tex2svg")
+                                      ? tex2svg(ev)(id)
+                                      : setTimeout(history, 0);
 
 
 };
@@ -620,6 +649,27 @@ const Cell: Component = (text: string) => {
 const markHtml =
   (id: string) => {
 
+    const rmPromise =
+      unified()
+        .use(remarkParse)
+        .use(remarkDirective)
+        .use(admonitionsPlugin)
+        .use(remarkGfm as any)
+        .use(remarkBreaks)
+        .use(remarkMath)
+        .use(remarkRehype, { allowDangerousHtml: true })
+        .use(rehypeRaw) // *Parse* the raw HTML strings embedded in the tree
+        .use(rehypePrism)
+        .use(rehypeKatex)
+        .use(rehypeStringify)
+        .process(textList[id])
+        .catch(error => {
+          console.log("%%%%% reMark parser ERROR");
+          console.log(error.message)
+        });
+
+
+    /*
     const rmPromise = remark()
 
       .use(remarkMdx)
@@ -639,7 +689,7 @@ const markHtml =
         console.log("%%%%% reMark parser ERROR");
         console.log(error.message)
       });;
-
+*/
     rmPromise
       .then((html) =>
         !!html
@@ -820,6 +870,27 @@ const cellToMark = () => {
 
 };
 
+// ------------
+const cellToExportHTML = () => exportHTML(cellToHTML());
+
+
+const cellToHTML = () => {
+
+  console.log("cellToHTML called!");
+
+  const els = Array.from(document.getElementsByClassName('cell'));
+  const htmls =
+    els.map((el: HTMLElement) =>
+      el.getElementsByClassName("cellhtml")[0].innerHTML);
+
+
+
+  const html = htmls.reduce((sum, a) => sum + '\n\n' + a);
+
+  return html;
+
+};
+
 const requestLoad = () =>
   vscode.postMessage({
     command: "requestLoad",
@@ -832,6 +903,11 @@ const save = (text: string) =>
     text: text,
   });
 
+const exportHTML = (html: string) =>
+  vscode.postMessage({
+    command: "exportHTML",
+    text: html,
+  });
 
 const separator = "@@!!################!!@@";
 const first3 = mdText => mdText.slice(0, 3);
@@ -917,7 +993,12 @@ window.addEventListener('message', event => {
         ? mdtextR.nextR(message.obj)
         : message.cmd === 'blurOrFocus'
           ? blurOrFocus({})(lastCellID.lastVal)
-          : undefined;
+          : message.cmd === 'exportHTML'
+            ? (() => {
+              console.log("exportHTML!!!!!!!!!!!!!");
+              cellToExportHTML();
+            })()
+            : undefined;
 
 });
 //==========================================
