@@ -23,7 +23,6 @@ export function activate(context: vscode.ExtensionContext) {
 
   console.log("!!!!!markdownnote Activated!!!!!");
 
-
   const fileNameR = R('');
 
   const cssR = NotePanel.rCSS();
@@ -164,7 +163,6 @@ export function activate(context: vscode.ExtensionContext) {
   readFiles(cssURLs); // this triggers whole process
 
 
-
   // ------------
   const doNothing = () => { console.log("..."); };
   const doNothingCommand =
@@ -209,7 +207,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("markdownnote.exportHTML",
       () => {
         console.log("exportHTML called-----");
-        NotePanel.exportHTML();
+        // NotePanel.exportHTML();
       }
     );
 

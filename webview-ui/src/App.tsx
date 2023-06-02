@@ -19,21 +19,17 @@ import Sortable from 'sortablejs';
 
 import { remark } from 'remark';
 import remarkBreaks from 'remark-breaks'
-import remarkDirective from 'remark-directive';
-
-import remarkMdx from 'remark-mdx'
+import remarkDirective from 'remark-directive'
 import rehypePrism from 'rehype-prism-plus'
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
 import rehypeFormat from 'rehype-format'
-
 
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkGfm from 'remark-gfm'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
-
 import rehypeRaw from 'rehype-raw'
 
 
@@ -823,6 +819,8 @@ const App: Component = () => {
       hFont['bold'] = getComputedStyle(document.getElementById('bold')).font;
       hFont['italic'] = getComputedStyle(document.getElementById('italic')).font;
 
+
+      console.log('requestLoad');
       requestLoad();
     });
 

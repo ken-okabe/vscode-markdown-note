@@ -98,6 +98,7 @@ export class NotePanel {
    * @param extensionUri The URI of the directory containing the extension.
    */
 
+
   public static render(extensionUri: Uri, mode: number) {
 
     console.log("@@@@@@@@@@@@ webview @@@@@@@@@@@@@");
@@ -185,8 +186,6 @@ export class NotePanel {
           <style>${cssR.lastVal}</style>
 
           ${katexR.lastVal}
-
-          <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
         </head>
         <body>
           <div id="root"></div>
@@ -195,7 +194,6 @@ export class NotePanel {
       </html>
     `;
   }
-
   /**
    * Sets up an event listener to listen for messages passed from the webview context and
    * executes code based on the message that is recieved.
