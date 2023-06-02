@@ -23,6 +23,8 @@ export function activate(context: vscode.ExtensionContext) {
 
   console.log("!!!!!markdownnote Activated!!!!!");
 
+  const mathjax = require("mathjax");
+
   const fileNameR = R('');
 
   const cssR = NotePanel.rCSS();
@@ -120,6 +122,16 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.onDidChangeActiveTextEditor((evt) =>
       f(evt?.document)
     );
+
+
+    mathjax.init({
+      loader: { load: ['input/tex', 'output/svg'] }
+    })
+      .then((mj: any) => {
+        const svg = mj.tex2svg('\\frac{1}{x^2-1}', { display: true });
+        console.log(mj.startup.adaptor.outerHTML(svg));
+      })
+      .catch((err: any) => console.log(err.message));
   };
   //================================================================
 
