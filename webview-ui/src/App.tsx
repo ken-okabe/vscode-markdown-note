@@ -1039,15 +1039,19 @@ const svgsF = svgs => {
   getSVGs(svgs).then(urls => {
     const tags = urls.map((url, i) =>
       `<p align="center"><img src= "${url}"></p>`);
-    const tag = tags.reduce((sum, a) => sum + '\n\n' + a);
+    const tag = tags.reduce((sum, a) => sum + '\n' + a);
 
     const elEdit = document.getElementById("edit" + svgCellID.lastVal);
 
     const text = elEdit.innerText;
 
-    const comment = text => `<!--\n${text}\n-->`;
+    const comment
+      = text =>
+        `<!--${text}-->`
+          .replace("$$$", " ")
+          .replace("$$$", " ");
 
-    const newText = comment(text) + `\n` + tag;
+    const newText = comment(text) + "\n" + tag;
 
     elEdit.innerText = newText;
   });
