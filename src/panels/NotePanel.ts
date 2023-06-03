@@ -15,6 +15,8 @@ const reloadWebview = () => {
     .executeCommand("workbench.action.webview.reloadWebviewAction");
 };
 
+const mathjax = require("mathjax");
+
 const cssR = R('');
 const katexR = R('');
 const mdTextR = R('');
@@ -47,7 +49,6 @@ export class NotePanel {
   public static rKatex() {  // for katex
     return katexR;
   }
-
   public static rMdText() {
     return mdTextR;
   }
@@ -203,16 +204,45 @@ export class NotePanel {
    */
   private _setWebviewMessageListener(webview: Webview) {
 
+    const tex2svg =
+      (tex: string) => new Promise<string>((resolve, reject) => {
+
+        mathjax.init({
+          loader: { load: ['input/tex', 'output/svg'] }
+        })
+          .then((mj: any) => {
+            const svg = mj.tex2svg(tex, { display: true });
+            const svg1 = mj.startup.adaptor.innerHTML(svg);
+
+            console.log('$$$$$tex2svg$$$$');
+            console.log(svg1);
+            resolve(svg1);
+          })
+          .catch((err: any) => console.log(err.message));
+
+      });
+
+    const tex2svgs =
+      (texs: string[]) =>
+        Promise
+          .all(texs.map(tex => tex2svg(tex)))
+          .then(svgs =>
+            webview.postMessage({
+              cmd: 'returnSVGs',
+              obj: JSON.stringify(svgs)
+            })
+          );
+
+
     webview.onDidReceiveMessage(
       (message: any) => {
         const command = message.command;
-        const text = message.text;
 
         switch (command) {
 
           case "hello":
             // Code that should run in response to the hello message command
-            window.showInformationMessage(text);
+            window.showInformationMessage(message.text);
             return;
 
           case "requestLoad": // (re)loaded webView request to load
@@ -246,11 +276,15 @@ export class NotePanel {
             return;
 
           case "save": // save to the source
-            saveR.nextR(text);
+            saveR.nextR(message.text);
             return;
 
-          case "exportHTML": // save to the source
-            exportHTMLR.nextR(text);
+          case "exportHTML": // export to HTML
+            exportHTMLR.nextR(message.text);
+            return;
+
+          case "requestSVGs":
+            tex2svgs(JSON.parse(message.text));
             return;
         }
       },

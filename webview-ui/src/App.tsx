@@ -33,8 +33,6 @@ import rehypeStringify from 'rehype-stringify'
 import rehypeRaw from 'rehype-raw'
 
 
-
-
 // In order to use the Webview UI Toolkit web components they
 // must be registered with the browser (i.e. webview) using the
 // syntax below.
@@ -472,9 +470,11 @@ const redo = ev => id => {
 
 };
 
+const svgCellID = R(0);
 const tex2svg = ev => id => {
   console.log('tex2svg');
 
+  svgCellID.nextR(id);
   const text = document.getElementById("edit" + id).innerText;
 
   const texs =
@@ -482,9 +482,12 @@ const tex2svg = ev => id => {
       .map(match =>
         match
           .slice(3, -3)
-          .replace(/\n/g, ''));
+          .replace(/\n/g, ''))
+      .flatMap(tex => tex.split('\\\\'));
 
   console.log(texs);
+
+  requestSVGs(texs);
 
 };
 
@@ -774,7 +777,6 @@ const onSort = evt => {
 
   console.log(evt.to);
 
-
   cellToMarkSave();
 }
 
@@ -905,6 +907,17 @@ const exportHTML = (html: string) =>
     text: html,
   });
 
+
+const requestSVGs = (texs: string[]) => {
+
+  const text = JSON.stringify(texs);
+  vscode.postMessage({
+    command: "requestSVGs",
+    text: text,
+  });
+
+};
+
 const separator = "@@!!################!!@@";
 const first3 = mdText => mdText.slice(0, 3);
 
@@ -968,6 +981,78 @@ mdtextR
   });
 //==========================================
 
+const getSVGurl = (svg: string) =>
+
+  new Promise<string>(
+    (resolve, reject) =>
+
+      imageRepository.repository === "username/webimages_repo" // left as default, no user config
+        ? reject("no imageRepository")
+        : (() => {
+          const content = btoa(svg);
+          const ext = "svg";
+          const filename = "img_" + Date.now() + "." + ext;
+          const data = {
+            name: filename,
+            content: content
+          };
+          return fetch(
+            `https://api.github.com/repos/${imageRepository.repository}/contents/${data.name}`,
+            {
+              method: "PUT",
+              headers: {
+                Accept: "application/vnd.github+json",
+                Authorization: `Bearer ${imageRepository.token}`
+              },
+              body: JSON.stringify({
+                message: "upload image from api",
+                content: data.content
+              })
+            }
+          )
+            .then((res) => res.json())
+            .then(
+              (json) => resolve(json.content.download_url)
+            )
+
+        })()
+  );
+
+const svgsF = svgs => {
+  console.log("svgs");
+  console.log(svgs);
+
+  const delay = (t: number) => new Promise<void>(resolve => setTimeout(resolve, t));
+
+  const getSVGs = (svgs: string[]) => {
+    const results: string[] = [];
+    let chain = Promise.resolve();
+    svgs.forEach(svg => {
+      chain = chain
+        .then(() => getSVGurl(svg))
+        .then(result => results.push(result))
+        .then(() => delay(100)); // delay
+    });
+    return chain.then(() => results);
+  }
+
+  getSVGs(svgs).then(urls => {
+    const tags = urls.map((url, i) =>
+      `<p align="center"><img src= "${url}"></p>`);
+    const tag = tags.reduce((sum, a) => sum + '\n\n' + a);
+
+    const elEdit = document.getElementById("edit" + svgCellID.lastVal);
+
+    const text = elEdit.innerText;
+
+    const comment = text => `<!--\n${text}\n-->`;
+
+    const newText = comment(text) + `\n` + tag;
+
+    elEdit.innerText = newText;
+  });
+};
+
 //==========================================
 window.addEventListener('message', event => {
 
@@ -994,7 +1079,12 @@ window.addEventListener('message', event => {
               console.log("exportHTML!!!!!!!!!!!!!");
               cellToExportHTML();
             })()
-            : undefined;
+            : message.cmd === 'returnSVGs'
+              ? (() => {
+                console.log("returnSVGs!!!!!!!!!!!!!");
+                svgsF(JSON.parse(message.obj));
+              })()
+              : undefined;
 
 });
 //==========================================

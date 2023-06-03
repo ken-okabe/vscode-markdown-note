@@ -10,6 +10,8 @@ import * as fs from "node:fs/promises";
 
 import * as https from 'https';
 
+
+
 const katexText = `
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
       <!-- The loading of KaTeX is deferred to speed up page rendering -->
@@ -23,7 +25,6 @@ export function activate(context: vscode.ExtensionContext) {
 
   console.log("!!!!!markdownnote Activated!!!!!");
 
-  const mathjax = require("mathjax");
 
   const fileNameR = R('');
 
@@ -122,16 +123,6 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.onDidChangeActiveTextEditor((evt) =>
       f(evt?.document)
     );
-
-
-    mathjax.init({
-      loader: { load: ['input/tex', 'output/svg'] }
-    })
-      .then((mj: any) => {
-        const svg = mj.tex2svg('\\frac{1}{x^2-1}', { display: true });
-        console.log(mj.startup.adaptor.outerHTML(svg));
-      })
-      .catch((err: any) => console.log(err.message));
   };
   //================================================================
 
