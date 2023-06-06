@@ -279,11 +279,11 @@ const italic = (ev) => (id) => {
 
 const inlinecode = ev => id => {
   ev.preventDefault();
-  replaceSelected('`')('`');
+  replaceSelected(' `')('` ');
 };
 const inlinemath = ev => id => {
   ev.preventDefault();
-  replaceSelected('$')('$');
+  replaceSelected(' $')('$ ');
 };
 
 const code = ev => id => {
