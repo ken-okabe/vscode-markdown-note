@@ -1,2 +1,2 @@
-# vscdode-markdown-note
+# vscode-markdown-note
 
