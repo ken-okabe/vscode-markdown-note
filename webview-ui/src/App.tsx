@@ -922,32 +922,27 @@ const separator = "@@!!################!!@@";
 const first3 = mdText => mdText.slice(0, 3);
 
 //=============================================================
-const parseMd = (mdText: string) =>
-  mdText
-    .replace(/:{3}(.+)\n([\S\s]+?)\n:{3}/g,
-      match => separator + match + separator)
-    .split(separator)
-    .flatMap(mdtext1 =>
-      (first3(mdtext1) === ':::')
-        ? [mdtext1]
-        : mdtext1
-          .replace(/`{3}([\w]*)\n([\S\s]+?)\n`{3}/g,
-            match => separator + match + separator)
-          .replace(/\${3}([\w]*)\n([\S\s]+?)\n\${3}/g,
-            match => separator + match + separator)
-          .split(separator)
-          .flatMap(mdtext2 =>
-            (first3(mdtext2) === '```'
-              || first3(mdtext2) === '$$$')
-              ? [mdtext2]
-              : mdtext2
-                .split(/\n{2,}/g)
-                .flatMap(mdtext3 =>
-                  mdtext3 === ''
-                    ? []
-                    : [mdtext3]))
-
-    );
+const parseMd = (mdText: string) => {
+  const codeBlockRegex = /`{3}[\S\s]+?`{3}/g;
+  const splitText =
+    mdText
+      .split(codeBlockRegex);
+  const codeBlocks =
+    mdText
+      .match(codeBlockRegex) || [];
+  const result =
+    splitText
+      .flatMap((text, index) => {
+        const blocks =
+          text
+            .split('\n\n')
+            .filter(block => block.trim() !== '');
+        return index < codeBlocks.length
+          ? [...blocks, codeBlocks[index]]
+          : blocks;
+      });
+  return result;
+};
 
 
 
