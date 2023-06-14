@@ -216,6 +216,8 @@ const html = id => {
     ? undefined
     : markHtml(id);
 
+
+
 };
 
 //------------------------------------------------------
@@ -233,33 +235,31 @@ const replaceSelected =
 
   };
 
-const newlinesSelected =
-  before => after => {
-    const br1 = document.createElement('br');
-    const br2 = document.createElement('br');
+const newlinesPaste =
+  key => {
+    const sel = window.getSelection();
+    const range = sel.getRangeAt(0);
 
-    const range = window.getSelection().getRangeAt(0);
-    const clonedNode = range.cloneContents();
-    range.deleteContents();
-    range.insertNode(document.createTextNode(after));
-    range.insertNode(br1);
-    range.insertNode(clonedNode)
-    range.insertNode(br2);
-    range.insertNode(document.createTextNode(before));
-
+    navigator.clipboard.readText()
+      .then(
+        clipText => {
+          const text = key + '\n' + clipText + '\n' + key;
+          range.deleteContents();
+          range.insertNode(document.createTextNode(text));
+        }
+      );
   };
 
 const replaceURLpaste =
   key => {
     const sel = window.getSelection();
+    const range = sel.getRangeAt(0);
     const selStr = sel.toString();
 
     navigator.clipboard.readText()
       .then(
         clipText => {
           const text = key + '[' + selStr + '](' + clipText + ')';
-          const range = sel.getRangeAt(0);
-
           range.deleteContents();
           range.insertNode(document.createTextNode(text));
         }
@@ -288,16 +288,12 @@ const inlinemath = ev => id => {
 
 const code = ev => id => {
   ev.preventDefault();
-  newlinesSelected('```')('```');
+  newlinesPaste('```');
 };
 
 const math = ev => id => {
   ev.preventDefault();
-  newlinesSelected('$$$')('$$$');
-};
-const admonition = ev => id => {
-  ev.preventDefault();
-  newlinesSelected(':::')(':::');
+  newlinesPaste('$$$');
 };
 
 
@@ -579,11 +575,9 @@ const onKeyDown = ev => id => {
                                 ? urlPaste(ev)(id)
                                 : keyMatch(ev)("img-paste")
                                   ? imgPaste(ev)(id)
-                                  : keyMatch(ev)("admonition")
-                                    ? admonition(ev)(id)
-                                    : keyMatch(ev)("tex2svg")
-                                      ? tex2svg(ev)(id)
-                                      : setTimeout(history, 0);
+                                  : keyMatch(ev)("tex2svg")
+                                    ? tex2svg(ev)(id)
+                                    : setTimeout(history, 0);
 
 
 };
@@ -661,6 +655,10 @@ const markHtml =
         .use(rehypePrism)
         .use(rehypeKatex)
         .use(rehypeStringify)
+        .use(rehypeFormat, {
+          indent: 2,
+          indentInitial: true
+        })
         .process(textList[id])
         .catch(error => {
           console.log("%%%%% reMark parser ERROR");
@@ -701,7 +699,8 @@ const checkHtml = (id: string) => (html) => {
 
   const div = document.createElement('div');
 
-  const f = () => {
+  setTimeout(() => {
+    // your code here
     div.innerHTML = html.toString();
 
     const image = div.querySelector('img') != null;
@@ -711,9 +710,8 @@ const checkHtml = (id: string) => (html) => {
     !image && div.innerText.length === 0
       ? showEdit(id)
       : showHtml(id);
-  };
+  }, 300); // if this is like 100, render does not work well
 
-  setTimeout(f, 100);
 
 };
 
@@ -918,8 +916,6 @@ const requestSVGs = (texs: string[]) => {
 
 };
 
-const separator = "@@!!################!!@@";
-const first3 = mdText => mdText.slice(0, 3);
 
 //=============================================================
 const parseMd = (mdText: string) => {
@@ -1017,7 +1013,9 @@ const svgsF = svgs => {
   console.log("svgs");
   console.log(svgs);
 
-  const delay = (t: number) => new Promise<void>(resolve => setTimeout(resolve, t));
+  const delay =
+    (t: number) =>
+      new Promise<void>(resolve => setTimeout(resolve, t));
 
   const getSVGs = (svgs: string[]) => {
     const results: string[] = [];
