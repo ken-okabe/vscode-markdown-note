@@ -32,6 +32,8 @@ import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
 import rehypeRaw from 'rehype-raw'
 
+import rehypeMermaid from 'rehype-mermaidjs'
+
 
 // In order to use the Webview UI Toolkit web components they
 // must be registered with the browser (i.e. webview) using the
@@ -293,7 +295,7 @@ const code = ev => id => {
 
 const math = ev => id => {
   ev.preventDefault();
-  newlinesPaste('$$$');
+  newlinesPaste('$$');
 };
 
 
@@ -474,10 +476,10 @@ const tex2svg = ev => id => {
   const text = document.getElementById("edit" + id).innerText;
 
   const texs =
-    (text.match(/\${3}([\s\S]*?)\${3}/g) || [])
+    (text.match(/\${2}([\s\S]*?)\${2}/g) || [])
       .map(match =>
         match
-          .slice(3, -3)
+          .slice(2, -2)
           .replace(/\n/g, ''))
       .flatMap(tex => tex.split('\\\\'));
 
@@ -654,6 +656,13 @@ const markHtml =
         .use(rehypeRaw) // *Parse* the raw HTML strings embedded in the tree
         .use(rehypePrism)
         .use(rehypeKatex)
+        .use(rehypeMermaid, {
+          // The default strategy is 'inline-svg'
+          // strategy: 'img-png'
+          // strategy: 'img-svg'
+          // strategy: 'inline-svg'
+          // strategy: 'pre-mermaid'
+        })
         .use(rehypeStringify)
         .use(rehypeFormat, {
           indent: 2,
@@ -666,27 +675,6 @@ const markHtml =
         });
 
 
-    /*
-    const rmPromise = remark()
-
-      .use(remarkMdx)
-      .use(remarkGfm)
-      .use(remarkBreaks)
-      .use(remarkMath)
-      .use(remarkDirective)
-      .use(admonitionsPlugin)
-      .use(remarkRehype as any)
-      .use(rehypePrism)
-      .use(rehypeKatex)
-      .use(rehypeFormat)
-      .use(rehypeStringify)
-
-      .process(textList[id])
-      .catch(error => {
-        console.log("%%%%% reMark parser ERROR");
-        console.log(error.message)
-      });;
-*/
     rmPromise
       .then((html) =>
         !!html
@@ -1041,8 +1029,8 @@ const svgsF = svgs => {
     const comment
       = text =>
         `<!--${text}-->`
-          .replace("$$$", " ")
-          .replace("$$$", " ");
+          .replace("$$", " ")
+          .replace("$$", " ");
 
     const newText = comment(text) + "\n" + tag;
 
