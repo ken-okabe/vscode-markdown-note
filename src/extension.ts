@@ -198,11 +198,11 @@ export function activate(context: vscode.ExtensionContext) {
       }
     );
 
-  const blurOrFocusCommand =
-    vscode.commands.registerCommand("markdownnote.blurOrFocus",
+  const editOrHTMLCommand =
+    vscode.commands.registerCommand("markdownnote.editOrHTML",
       () => {
-        console.log("blurOrFocus called-----");
-        NotePanel.blurOrFocus();
+        console.log("editOrHTML called-----");
+        NotePanel.editOrHTML();
       }
     );
 
@@ -219,7 +219,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(doNothingCommand);
   context.subscriptions.push(overlayCommand);
   context.subscriptions.push(toSideCommand);
-  context.subscriptions.push(blurOrFocusCommand);
+  context.subscriptions.push(editOrHTMLCommand);
   context.subscriptions.push(exportHTMLCommand);
 
 }

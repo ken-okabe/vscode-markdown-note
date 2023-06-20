@@ -58,9 +58,9 @@ export class NotePanel {
   public static rExportHTML() {
     return exportHTMLR;
   }
-  public static blurOrFocus() {
+  public static editOrHTML() {
     NotePanel.currentPanel?._panel.webview.postMessage({
-      cmd: 'blurOrFocus'
+      cmd: 'editOrHTML'
     });
   }
   public static exportHTML() {

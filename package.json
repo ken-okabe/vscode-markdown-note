@@ -2,7 +2,7 @@
   "name": "markdownnote",
   "displayName": "MarkdownNote",
   "description": "MarkdownNote(Markdown Preview is WYSIWYG Editor)",
-  "version": "0.121.0",
+  "version": "0.130.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/stken2050/vscode-markdown-note.git"
@@ -55,14 +55,6 @@
           "type": "object",
           "description": "get keycode for webView via https://stackblitz.com/edit/js-hvpmar?file=index.js",
           "default": {
-            "blur": {
-              "shiftKey": false,
-              "ctrlKey": false,
-              "altKey": false,
-              "code": [
-                "Escape"
-              ]
-            },
             "paste": {
               "shiftKey": false,
               "ctrlKey": true,
@@ -199,7 +191,7 @@
     "keybindings": [
       {
         "key": "escape",
-        "command": "markdownnote.blurOrFocus",
+        "command": "markdownnote.editOrHTML",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
@@ -287,8 +279,8 @@
         "title": "MarkdownNote: Do Nothing for keybindings in WebView"
       },
       {
-        "command": "markdownnote.blurOrFocus",
-        "title": "MarkdownNote: Blur or Focus"
+        "command": "markdownnote.editOrHTML",
+        "title": "MarkdownNote: Edit or HTML"
       },
       {
         "command": "markdownnote.exportHTML",
