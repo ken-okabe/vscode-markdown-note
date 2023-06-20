@@ -2,7 +2,7 @@
   "name": "markdownnote",
   "displayName": "MarkdownNote",
   "description": "MarkdownNote(Markdown Preview is WYSIWYG Editor)",
-  "version": "0.130.0",
+  "version": "0.131.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/stken2050/vscode-markdown-note.git"
@@ -44,10 +44,8 @@
           "description": "CSS URLs",
           "default": {
             "URLs": [
-              "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css",
               "https://raw.githubusercontent.com/sindresorhus/github-markdown-css/main/github-markdown-light.css",
-              "https://unpkg.com/prism-themes@1.9.0/themes/prism-coldark-dark.min.css",
-              "https://raw.githubusercontent.com/stken2050/admonition-css/main/custom-admonition.css"
+              "https://unpkg.com/prism-themes@1.9.0/themes/prism-coldark-dark.min.css"
             ]
           }
         },
