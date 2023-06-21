@@ -2,7 +2,7 @@
   "name": "markdownnote",
   "displayName": "MarkdownNote",
   "description": "MarkdownNote(Markdown Preview is WYSIWYG Editor)",
-  "version": "0.170.0",
+  "version": "0.180.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/stken2050/vscode-markdown-note.git"
@@ -115,7 +115,8 @@
               "ctrlKey": true,
               "altKey": false,
               "code": [
-                "KeyB"
+                "KeyB",
+                "KeyW"
               ]
             },
             "italic": {
@@ -131,7 +132,8 @@
               "ctrlKey": true,
               "altKey": false,
               "code": [
-                "KeyJ"
+                "KeyJ",
+                "KeyE"
               ]
             },
             "code": {
@@ -224,12 +226,22 @@
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
+        "key": "ctrl+w",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
         "key": "ctrl+i",
         "command": "markdownnote.doNothing",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+j",
+        "command": "markdownnote.doNothing",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+e",
         "command": "markdownnote.doNothing",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
