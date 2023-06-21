@@ -17,6 +17,7 @@ const reloadWebview = () => {
 
 const mathjax = require("mathjax");
 
+const lastCSSR = R('');
 const cssR = R('');
 const katexR = R('');
 const mdTextR = R('');
@@ -173,6 +174,21 @@ export class NotePanel {
     const scriptUri = getUri(webview, extensionUri, ["webview-ui", "build", "assets", "index.js"]);
 
     const nonce = getNonce();
+
+    //--------------------------------------
+
+    const katexText = `
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+      <!-- The loading of KaTeX is deferred to speed up page rendering -->
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+      <!-- To automatically render math in text elements, include the auto-render extension: -->
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+          onload="renderMathInElement(document.body);"></script>
+`;
+
+    katexR.nextR(katexText);
+
+    //------------------------------------------------------
 
     // Tip: Install the es6-string-html VS Code extension to enable code highlighting below
     return /*html*/ `

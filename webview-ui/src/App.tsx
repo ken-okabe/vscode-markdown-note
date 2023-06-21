@@ -129,7 +129,6 @@ const upCell = (ev) => id => {
 
     cell.id === id
       ? (() => {
-
         i === 0 //cell is top
           ? undefined
           : (() => {
@@ -157,7 +156,6 @@ const downCell = (ev) => id => {
 
     cell.id === id
       ? (() => {
-
         i === Array.from(cells).length - 1 //cell is buttom
           ? undefined
           : (() => {
@@ -525,7 +523,6 @@ const showEditFocus =
     console.log('showEditFocus');
 
     const elHtml = document.getElementById("html" + id);
-
     !!elHtml
       ? elHtml.style.display = 'none'
       : undefined;
@@ -584,7 +581,21 @@ const toHTMLmode = (ev) => id => {
 
   isEdit.nextR(false);
   //lastEditID.nextR(id);
-  toHTML(ev)(id);
+
+  const f = (cell: Element) => {
+
+    const elHtml = document.getElementById("html" + cell.id);
+    elHtml?.style.display === 'none'
+      ? toHTML(ev)(cell.id)
+      : undefined;
+
+    return cell;
+  };
+
+  Array
+    .from(document.getElementsByClassName('cell'))
+    .map(f);
+
 };
 
 const onInput = idEdit => {
