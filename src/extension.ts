@@ -93,6 +93,8 @@ export function activate(context: vscode.ExtensionContext) {
 
   const loadCSS = () => {
 
+    console.log("load CSS");
+
     const cssURLs: string[] =
       vscode.workspace.getConfiguration("markdownnote.CSS").URLs;
     console.log(cssURLs);
