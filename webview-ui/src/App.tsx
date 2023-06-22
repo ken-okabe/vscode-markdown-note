@@ -17,13 +17,11 @@ import { setEndOfContenteditable } from "./utilities/setEndOfContenteditable";
 // Default SortableJS
 import Sortable from 'sortablejs';
 
-import { remark } from 'remark';
 import remarkBreaks from 'remark-breaks'
 import remarkDirective from 'remark-directive'
 import rehypePrism from 'rehype-prism-plus'
 import rehypeMathjax from 'rehype-mathjax'
 import remarkMath from 'remark-math'
-import rehypeFormat from 'rehype-format'
 
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
@@ -72,7 +70,7 @@ const undoHistoryEdit = [];
 const isEdit = R(true);
 const lastEditID = R("");
 
-
+const currentID = R("");
 
 let imageRepository;
 let keybinds;
@@ -206,7 +204,7 @@ const hStyle = idEdit => {
 
 };
 
-const renderHTML = id => {
+const renderHTML = id  => {
 
   textList[id] =
     !!document.getElementById("edit" + id)
@@ -581,6 +579,8 @@ const toHTMLmode = (ev) => id => {
   isEdit.nextR(false);
   //lastEditID.nextR(id);
 
+  currentID.nextR(id);
+
   const f = (cell: Element) => {
 
     const elHtml = document.getElementById("html" + cell.id);
@@ -714,6 +714,7 @@ const Cell: Component = (text: string) => {
 
   const initCell = () => {
     hStyle(idEdit);
+    currentID.nextR(id);
     renderHTML(id);
   };
 
@@ -769,36 +770,44 @@ const isHTML = str => {
   return Array.from(doc.body.childNodes).some(node => node.nodeType === 1);
 }
 
-const finalHtml = (id: string) => (html) => (div) => {
+const finalHtml =
+  (id: string) => (html) => (div) => {
 
-  const f = () => {
+    const f = () => {
 
-    const editIDtext = document.getElementById("edit" + id).innerText;
-    const isMarkdownTxt =
-      !isHTML(editIDtext);
+      const editIDtext = document.getElementById("edit" + id).innerText;
+      const isMarkdownTxt =
+        !isHTML(editIDtext);
 
-    div.innerHTML = html.toString();
+      div.innerHTML = html.toString();
 
-    const isImage = div.querySelector('img') != null;
+      const isImage = div.querySelector('img') != null;
 
-    const hasText = div.innerText.length > 0;
+      const hasText = div.innerText.length > 0;
 
-    contentStreams[id].next(div);
+      contentStreams[id].next(div);
 
-    const isVisible =
-      isMarkdownTxt && editIDtext !== "" //non empty markdown text
-        ? true
-        : isImage
+      const isVisible =
+        isMarkdownTxt && editIDtext !== "" //non empty markdown text
           ? true
-          : hasText;
+          : isImage
+            ? true
+            : hasText;
 
-    isVisible
-      ? showHtml(id)
-      : showEdit(id);
+      isVisible
+        ? showHtml(id)
+        : (() => {
+
+          id === currentID.lastVal
+            ? isEdit.nextR(true)
+            : undefined;
+
+          showEdit(id);
+        })();
+    };
+
+    window.setTimeout(f, 10);
   };
-
-  window.setTimeout(f, 10);
-};
 
 //=================================================================
 
