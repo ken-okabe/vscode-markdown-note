@@ -245,25 +245,16 @@ export class NotePanel {
               'webView: loaded and requestLoad!!!!!!!!!!!'
             );
 
-            const keybinds =
-              vscode.workspace.getConfiguration(
-                'markdownnote.webkeybindings');
-
             const imageRepository =
               vscode.workspace.getConfiguration(
                 'markdownnote.image_repository');
 
             webview.postMessage({ // 1
-              cmd: 'keybinds',
-              obj: keybinds
-            });
-
-            webview.postMessage({ // 2
               cmd: 'imageRepository',
               obj: imageRepository
             });
 
-            webview.postMessage({ // 3
+            webview.postMessage({ // 2
               cmd: 'load',
               obj: mdTextR.lastVal
             }); // load from the source

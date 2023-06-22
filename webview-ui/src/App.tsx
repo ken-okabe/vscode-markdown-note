@@ -71,7 +71,6 @@ const isEdit = R(true);
 const currentID = R("");
 
 let imageRepository;
-let keybinds;
 
 //==========================================
 
@@ -1036,60 +1035,54 @@ window.addEventListener('message', event => {
       imageRepository = message.obj;
       console.log(imageRepository);
     })()
-    : message.cmd === 'keybinds'
-      ? (() => {
-        console.log("keybinds!!!!!!!!!!!!!");
-        keybinds = message.obj;
-        console.log(keybinds);
-      })()
-      : message.cmd === 'load'
-        ? mdtextR.nextR(message.obj)
-        : message.cmd === 'exportHTML'
+    : message.cmd === 'load'
+      ? mdtextR.nextR(message.obj)
+      : message.cmd === 'exportHTML'
+        ? (() => {
+          console.log("exportHTML!!!!!!!!!!!!!");
+          cellToExportHTML();
+        })()
+        : message.cmd === 'returnSVG'
           ? (() => {
-            console.log("exportHTML!!!!!!!!!!!!!");
-            cellToExportHTML();
+            console.log("returnSVG!!!!!!!!!!!!!");
+            svgF(JSON.parse(message.obj));
           })()
-          : message.cmd === 'returnSVG'
-            ? (() => {
-              console.log("returnSVG!!!!!!!!!!!!!");
-              svgF(JSON.parse(message.obj));
-            })()
-            //keys--------------------------------
-            : message.cmd === 'editOrHTML'
-              ? editOrHTML(currentID.lastVal)
-              : message.cmd === 'paste'
-                ? paste(currentID.lastVal)
-                : message.cmd === 'undo'
-                  ? undo(currentID.lastVal)
-                  : message.cmd === 'redo'
-                    ? redo(currentID.lastVal)
-                    : message.cmd === 'cellAdd'
-                      ? cellAdd(currentID.lastVal)
-                      : message.cmd === 'cellDelete'
-                        ? cellDelete(currentID.lastVal)
-                        : message.cmd === 'cellUp'
-                          ? cellUp(currentID.lastVal)
-                          : message.cmd === 'cellDown'
-                            ? cellDown(currentID.lastVal)
-                            : message.cmd === 'bold'
-                              ? bold(currentID.lastVal)
-                              : message.cmd === 'italic'
-                                ? italic(currentID.lastVal)
-                                : message.cmd === 'inlineCode'
-                                  ? inlineCode(currentID.lastVal)
-                                  : message.cmd === 'inlineMath'
-                                    ? inlineMath(currentID.lastVal)
-                                    : message.cmd === 'code'
-                                      ? code(currentID.lastVal)
-                                      : message.cmd === 'math'
-                                        ? math(currentID.lastVal)
-                                        : message.cmd === 'urlPaste'
-                                          ? urlPaste(currentID.lastVal)
-                                          : message.cmd === 'imgPaste'
-                                            ? imgPaste(currentID.lastVal)
-                                            : message.cmd === 'tex2svg'
-                                              ? tex2svg(currentID.lastVal)
-                                              : undefined;
+          //keys--------------------------------
+          : message.cmd === 'editOrHTML'
+            ? editOrHTML(currentID.lastVal)
+            : message.cmd === 'paste'
+              ? paste(currentID.lastVal)
+              : message.cmd === 'undo'
+                ? undo(currentID.lastVal)
+                : message.cmd === 'redo'
+                  ? redo(currentID.lastVal)
+                  : message.cmd === 'cellAdd'
+                    ? cellAdd(currentID.lastVal)
+                    : message.cmd === 'cellDelete'
+                      ? cellDelete(currentID.lastVal)
+                      : message.cmd === 'cellUp'
+                        ? cellUp(currentID.lastVal)
+                        : message.cmd === 'cellDown'
+                          ? cellDown(currentID.lastVal)
+                          : message.cmd === 'bold'
+                            ? bold(currentID.lastVal)
+                            : message.cmd === 'italic'
+                              ? italic(currentID.lastVal)
+                              : message.cmd === 'inlineCode'
+                                ? inlineCode(currentID.lastVal)
+                                : message.cmd === 'inlineMath'
+                                  ? inlineMath(currentID.lastVal)
+                                  : message.cmd === 'code'
+                                    ? code(currentID.lastVal)
+                                    : message.cmd === 'math'
+                                      ? math(currentID.lastVal)
+                                      : message.cmd === 'urlPaste'
+                                        ? urlPaste(currentID.lastVal)
+                                        : message.cmd === 'imgPaste'
+                                          ? imgPaste(currentID.lastVal)
+                                          : message.cmd === 'tex2svg'
+                                            ? tex2svg(currentID.lastVal)
+                                            : undefined;
 
 });
 //==========================================
