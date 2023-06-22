@@ -213,22 +213,19 @@ export class NotePanel {
 
             console.log('$$$$$tex2svg$$$$');
             console.log(svg1);
+
+            webview.postMessage({
+              cmd: 'returnSVG',
+              obj: JSON.stringify(svg1)
+            });
+
             resolve(svg1);
+
           })
           .catch((err: any) => console.log(err.message));
 
       });
 
-    const tex2svgs =
-      (texs: string[]) =>
-        Promise
-          .all(texs.map(tex => tex2svg(tex)))
-          .then(svgs =>
-            webview.postMessage({
-              cmd: 'returnSVGs',
-              obj: JSON.stringify(svgs)
-            })
-          );
 
 
     webview.onDidReceiveMessage(
@@ -280,8 +277,8 @@ export class NotePanel {
             exportHTMLR.nextR(message.text);
             return;
 
-          case "requestSVGs":
-            tex2svgs(JSON.parse(message.text));
+          case "requestSVG":
+            tex2svg(JSON.parse(message.text));
             return;
         }
       },

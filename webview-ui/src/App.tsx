@@ -472,17 +472,16 @@ const tex2svg = ev => id => {
   svgCellID.nextR(id);
   const text = document.getElementById("edit" + id).innerText;
 
-  const texs =
+  const tex =
     (text.match(/\${2}([\s\S]*?)\${2}/g) || [])
       .map(match =>
         match
           .slice(2, -2)
-          .replace(/\n/g, ''))
-      .flatMap(tex => tex.split('\\\\'));
+          .replace(/\n/g, ''))[0];
 
-  console.log(texs);
+  console.log(tex);
 
-  requestSVGs(texs);
+  requestSVG(tex);
 
 };
 
@@ -928,11 +927,11 @@ const exportHTML = (html: string) =>
   });
 
 
-const requestSVGs = (texs: string[]) => {
+const requestSVG = (tex: string) => {
 
-  const text = JSON.stringify(texs);
+  const text = JSON.stringify(tex);
   vscode.postMessage({
-    command: "requestSVGs",
+    command: "requestSVG",
     text: text,
   });
 
@@ -995,7 +994,6 @@ mdtextR
 //==========================================
 
 const getSVGurl = (svg: string) =>
-
   new Promise<string>(
     (resolve, reject) =>
 
@@ -1031,33 +1029,14 @@ const getSVGurl = (svg: string) =>
         })()
   );
 
-const svgsF = svgs => {
-  console.log("svgs");
-  console.log(svgs);
+const svgF = svg => {
+  console.log("svg");
+  console.log(svg);
 
-  const delay =
-    (t: number) =>
-      new Promise<void>(resolve => window.setTimeout(resolve, t));
-
-  const getSVGs = (svgs: string[]) => {
-    const results: string[] = [];
-    let chain = Promise.resolve();
-    svgs.forEach(svg => {
-      chain = chain
-        .then(() => getSVGurl(svg))
-        .then(result => results.push(result))
-        .then(() => delay(100)); // delay
-    });
-    return chain.then(() => results);
-  }
-
-  getSVGs(svgs).then(urls => {
-    const tags = urls.map((url, i) =>
-      `<p align="center"><img src= "${url}"></p>`);
-    const tag = tags.reduce((sum, a) => sum + '\n' + a);
+  getSVGurl(svg).then(url => {
+    const tag = `<p align="center"><img src= "${url}"></p>`;
 
     const elEdit = document.getElementById("edit" + svgCellID.lastVal);
-
     const text = elEdit.innerText;
 
     const comment
@@ -1098,10 +1077,10 @@ window.addEventListener('message', event => {
               console.log("exportHTML!!!!!!!!!!!!!");
               cellToExportHTML();
             })()
-            : message.cmd === 'returnSVGs'
+            : message.cmd === 'returnSVG'
               ? (() => {
-                console.log("returnSVGs!!!!!!!!!!!!!");
-                svgsF(JSON.parse(message.obj));
+                console.log("returnSVG!!!!!!!!!!!!!");
+                svgF(JSON.parse(message.obj));
               })()
               : undefined;
 
