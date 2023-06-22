@@ -101,7 +101,11 @@ export function activate(context: vscode.ExtensionContext) {
         let css =
           textDataArray.reduce(
             (acc, textData) => acc + "\n\n" + textData
-            , ''); cssR.nextR(css); // final purposeconsole.log("css loaded");start();
+            , '');
+        cssR.nextR(css); // final purpose
+        console.log("css loaded");
+
+        start(); // start overlay or side mode
 
       });
 

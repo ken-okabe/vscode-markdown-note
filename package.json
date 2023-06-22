@@ -2,7 +2,7 @@
   "name": "markdownnote",
   "displayName": "MarkdownNote",
   "description": "MarkdownNote(Markdown Preview is WYSIWYG Editor)",
-  "version": "0.300.0",
+  "version": "0.301.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/stken2050/vscode-markdown-note.git"
@@ -34,7 +34,7 @@
         },
         "markdownnote.start_overlay": {
           "type": "object",
-          "description": "Set the initial editing mode to Overlay instead of Side-by-Side",
+          "description": "Initial editing mode to Overlay(Default): true OR Side-by-Side: false",
           "default": {
             "true/false": true
           }
