@@ -1075,14 +1075,14 @@ window.addEventListener('message', event => {
                               ? bold(currentID.lastVal)
                               : message.cmd === 'italic'
                                 ? italic(currentID.lastVal)
-                                : message.cmd === 'code'
-                                  ? code(currentID.lastVal)
-                                  : message.cmd === 'math'
-                                    ? math(currentID.lastVal)
-                                    : message.cmd === 'inlineCode'
-                                      ? inlineCode(currentID.lastVal)
-                                      : message.cmd === 'inlineMath'
-                                        ? inlineMath(currentID.lastVal)
+                                : message.cmd === 'inlineCode'
+                                  ? inlineCode(currentID.lastVal)
+                                  : message.cmd === 'inlineMath'
+                                    ? inlineMath(currentID.lastVal)
+                                    : message.cmd === 'code'
+                                      ? code(currentID.lastVal)
+                                      : message.cmd === 'math'
+                                        ? math(currentID.lastVal)
                                         : message.cmd === 'urlPaste'
                                           ? urlPaste(currentID.lastVal)
                                           : message.cmd === 'imgPaste'
