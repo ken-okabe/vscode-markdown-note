@@ -728,6 +728,8 @@ const Cell: Component = (text: string) => {
 const markHtml =
   (id: string) => {
 
+    const div = document.createElement('div');
+
     const rmPromise =
       unified()
         .use(remarkParse)
@@ -748,48 +750,57 @@ const markHtml =
           // strategy: 'pre-mermaid'
         })
         .use(rehypeStringify)
-        .use(rehypeFormat, {
-          indent: 2,
-          indentInitial: true
-        })
         .process(textList[id])
         .catch(error => {
           console.log("%%%%% reMark parser ERROR");
           console.log(error.message)
         });
 
-
     rmPromise
       .then((html) =>
         !!html
-          ? finalHtml(id)(html)
+          ? finalHtml(id)(html)(div)
           : undefined
       );
   };
 
-const finalHtml = (id: string) => (html) => {
+const isHTML = str => {
+  const doc = new DOMParser().parseFromString(str, "text/html");
+  return Array.from(doc.body.childNodes).some(node => node.nodeType === 1);
+}
 
-  const div = document.createElement('div');
+const finalHtml = (id: string) => (html) => (div) => {
 
-  window.setTimeout(() => {
-    // your code here
+  const f = () => {
+
+    const editIDtext = document.getElementById("edit" + id).innerText;
+    const isMarkdownTxt =
+      !isHTML(editIDtext);
+
     div.innerHTML = html.toString();
 
-    const image = div.querySelector('img') != null;
+    const isImage = div.querySelector('img') != null;
+
+    const hasText = div.innerText.length > 0;
 
     contentStreams[id].next(div);
 
-    !image && div.innerText.length === 0
-      ? showEdit(id)
-      : showHtml(id);
-  }, 100); // 100ms timeout
+    const isVisible =
+      isMarkdownTxt && editIDtext !== "" //non empty markdown text
+        ? true
+        : isImage
+          ? true
+          : hasText;
 
+    isVisible
+      ? showHtml(id)
+      : showEdit(id);
+  };
 
+  window.setTimeout(f, 10);
 };
 
-
 //=================================================================
-
 
 const onSort = evt => {
   console.log('onSort');
