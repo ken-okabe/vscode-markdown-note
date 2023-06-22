@@ -54,14 +54,15 @@ export class NotePanel {
   public static rExportHTML() {
     return exportHTMLR;
   }
-  public static editOrHTML() {
-    NotePanel.currentPanel?._panel.webview.postMessage({
-      cmd: 'editOrHTML'
-    });
-  }
   public static exportHTML() {
     NotePanel.currentPanel?._panel.webview.postMessage({
       cmd: 'exportHTML'
+    });
+  }
+  //key------------------------------------
+  public static sendKey(cmd: string) {
+    NotePanel.currentPanel?._panel.webview.postMessage({
+      cmd: cmd
     });
   }
   /**

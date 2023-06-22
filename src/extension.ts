@@ -98,17 +98,10 @@ export function activate(context: vscode.ExtensionContext) {
 
     Promise.all(cssURLs.map(url => readFile(url)))
       .then(textDataArray => {
-
         let css =
           textDataArray.reduce(
             (acc, textData) => acc + "\n\n" + textData
-            , '');
-
-        cssR.nextR(css); // final purpose
-
-        console.log("css loaded");
-
-        start();
+            , ''); cssR.nextR(css); // final purposeconsole.log("css loaded");start();
 
       });
 
@@ -143,9 +136,7 @@ export function activate(context: vscode.ExtensionContext) {
         ? (() => {
           console.log("===============");
           console.log(document.fileName);
-          fileNameR.lastVal = document.fileName;
-
-          modeR.lastVal === 1
+          fileNameR.lastVal = document.fileName; modeR.lastVal === 1
             ? vscode.commands
               .executeCommand("markdownnote.overlay")
             : vscode.commands
@@ -172,10 +163,10 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   // ------------
-  const doNothing = () => { console.log("..."); };
+  /*const doNothing = () => { console.log("..."); };
   const doNothingCommand =
     vscode.commands.registerCommand("markdownnote.doNothing",
-      doNothing);
+      doNothing);*/
   const overlayCommand =
     vscode.commands.registerCommand("markdownnote.overlay",
       () => {
@@ -202,15 +193,6 @@ export function activate(context: vscode.ExtensionContext) {
         NotePanel.render(context.extensionUri, 2);
       }
     );
-
-  const editOrHTMLCommand =
-    vscode.commands.registerCommand("markdownnote.editOrHTML",
-      () => {
-        console.log("editOrHTML called-----");
-        NotePanel.editOrHTML();
-      }
-    );
-
   const exportHTMLCommand =
     vscode.commands.registerCommand("markdownnote.exportHTML",
       () => {
@@ -218,13 +200,133 @@ export function activate(context: vscode.ExtensionContext) {
         NotePanel.exportHTML();
       }
     );
+  //--------------------------------------------------------
+
+  const editOrHTML =
+    vscode.commands.registerCommand("markdownnote.editOrHTML",
+      () => {
+        NotePanel.sendKey("editOrHTML");
+      }
+    );
+  const paste =
+    vscode.commands.registerCommand("markdownnote.paste",
+      () => {
+        NotePanel.sendKey("paste");
+      }
+    );
+  const undo =
+    vscode.commands.registerCommand("markdownnote.undo",
+      () => {
+        NotePanel.sendKey("undo");
+      }
+    );
+  const redo =
+    vscode.commands.registerCommand("markdownnote.redo",
+      () => {
+        NotePanel.sendKey("redo");
+      }
+    );
+  const cellAdd =
+    vscode.commands.registerCommand("markdownnote.cellAdd",
+      () => {
+        NotePanel.sendKey("cellAdd");
+      }
+    );
+  const cellDelete =
+    vscode.commands.registerCommand("markdownnote.cellDelete",
+      () => {
+        NotePanel.sendKey("cellDelete");
+      }
+    );
+  const cellUp =
+    vscode.commands.registerCommand("markdownnote.cellUp",
+      () => {
+        NotePanel.sendKey("cellUp");
+      }
+    );
+  const cellDown =
+    vscode.commands.registerCommand("markdownnote.cellDown",
+      () => {
+        NotePanel.sendKey("cellDown");
+      }
+    );
+  const bold =
+    vscode.commands.registerCommand("markdownnote.bold",
+      () => {
+        NotePanel.sendKey("bold");
+      }
+    );
+  const italic =
+    vscode.commands.registerCommand("markdownnote.italic",
+      () => {
+        NotePanel.sendKey("italic");
+      }
+    );
+  const inlineCode =
+    vscode.commands.registerCommand("markdownnote.inlineCode",
+      () => {
+        NotePanel.sendKey("inlineCode");
+      }
+    );
+  const inlineMath =
+    vscode.commands.registerCommand("markdownnote.inlineMath",
+      () => {
+        NotePanel.sendKey("inlineMath");
+      }
+    );
+  const code =
+    vscode.commands.registerCommand("markdownnote.code",
+      () => {
+        NotePanel.sendKey("code");
+      }
+    );
+  const math =
+    vscode.commands.registerCommand("markdownnote.math",
+      () => {
+        NotePanel.sendKey("math");
+      }
+    );
+  const urlPaste =
+    vscode.commands.registerCommand("markdownnote.urlPaste",
+      () => {
+        NotePanel.sendKey("urlPaste");
+      }
+    );
+  const imgPaste =
+    vscode.commands.registerCommand("markdownnote.imgPaste",
+      () => {
+        NotePanel.sendKey("imgPaste");
+      }
+    );
+  const tex2svg =
+    vscode.commands.registerCommand("markdownnote.tex2svg",
+      () => {
+        NotePanel.sendKey("tex2svg");
+      }
+    );
 
 
   // Add command to the extension context
-  context.subscriptions.push(doNothingCommand);
   context.subscriptions.push(overlayCommand);
   context.subscriptions.push(toSideCommand);
-  context.subscriptions.push(editOrHTMLCommand);
   context.subscriptions.push(exportHTMLCommand);
+  //keybinding
+  context.subscriptions.push(editOrHTML);
+  context.subscriptions.push(paste);
+  context.subscriptions.push(undo);
+  context.subscriptions.push(redo);
+  context.subscriptions.push(cellAdd);
+  context.subscriptions.push(cellDelete);
+  context.subscriptions.push(cellUp);
+  context.subscriptions.push(cellDown);
+  context.subscriptions.push(bold);
+  context.subscriptions.push(italic);
+  context.subscriptions.push(inlineCode);
+  context.subscriptions.push(inlineMath);
+  context.subscriptions.push(code);
+  context.subscriptions.push(math);
+  context.subscriptions.push(urlPaste);
+  context.subscriptions.push(imgPaste);
+  context.subscriptions.push(tex2svg);
 
 }

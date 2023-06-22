@@ -2,7 +2,7 @@
   "name": "markdownnote",
   "displayName": "MarkdownNote",
   "description": "MarkdownNote(Markdown Preview is WYSIWYG Editor)",
-  "version": "0.223.0",
+  "version": "0.300.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/stken2050/vscode-markdown-note.git"
@@ -49,143 +49,6 @@
         },
         "workbench.editor.autoLockGroups": {
           "mainThreadWebview-MarkdownNote": true
-        },
-        "markdownnote.webkeybindings": {
-          "type": "object",
-          "description": "get keycode for webView via https://stackblitz.com/edit/js-hvpmar?file=index.js",
-          "default": {
-            "paste": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "KeyV"
-              ]
-            },
-            "undo": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "KeyZ"
-              ]
-            },
-            "redo": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "KeyY"
-              ]
-            },
-            "cell-add": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "Enter"
-              ]
-            },
-            "cell-delete": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "Backspace"
-              ]
-            },
-            "cell-up": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "ArrowUp"
-              ]
-            },
-            "cell-down": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "ArrowDown"
-              ]
-            },
-            "bold": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "KeyB",
-                "KeyW"
-              ]
-            },
-            "italic": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "KeyI"
-              ]
-            },
-            "inlinecode": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "KeyJ",
-                "KeyE"
-              ]
-            },
-            "code": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "KeyK"
-              ]
-            },
-            "inlinemath": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "KeyN"
-              ]
-            },
-            "math": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "KeyM"
-              ]
-            },
-            "url-paste": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "KeyL"
-              ]
-            },
-            "img-paste": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "KeyP"
-              ]
-            },
-            "tex2svg": {
-              "shiftKey": false,
-              "ctrlKey": true,
-              "altKey": false,
-              "code": [
-                "Comma",
-                "Slash"
-              ]
-            }
-          }
         }
       }
     },
@@ -196,88 +59,93 @@
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
-        "key": "ctrl+enter",
-        "command": "markdownnote.doNothing",
+        "key": "ctrl+v",
+        "command": "markdownnote.paste",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
-        "key": "ctrl+\\",
-        "command": "markdownnote.doNothing",
+        "key": "ctrl+z",
+        "command": "markdownnote.undo",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+y",
+        "command": "markdownnote.redo",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+enter",
+        "command": "markdownnote.cellAdd",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+backspace",
-        "command": "markdownnote.doNothing",
+        "command": "markdownnote.cellDelete",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+up",
-        "command": "markdownnote.doNothing",
+        "command": "markdownnote.cellUp",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+down",
-        "command": "markdownnote.doNothing",
+        "command": "markdownnote.cellDown",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+b",
-        "command": "markdownnote.doNothing",
+        "command": "markdownnote.bold",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+w",
-        "command": "markdownnote.doNothing",
+        "command": "markdownnote.bold",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+i",
-        "command": "markdownnote.doNothing",
-        "when": "activeWebviewPanelId == 'MarkdownNote'"
-      },
-      {
-        "key": "ctrl+j",
-        "command": "markdownnote.doNothing",
+        "command": "markdownnote.italic",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+e",
-        "command": "markdownnote.doNothing",
+        "command": "markdownnote.inlineCode",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
-        "key": "ctrl+k",
-        "command": "markdownnote.doNothing",
+        "key": "ctrl+j",
+        "command": "markdownnote.inlineCode",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+n",
-        "command": "markdownnote.doNothing",
+        "command": "markdownnote.inlineMath",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+k",
+        "command": "markdownnote.code",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+m",
-        "command": "markdownnote.doNothing",
+        "command": "markdownnote.math",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+l",
-        "command": "markdownnote.doNothing",
+        "command": "markdownnote.urlPaste",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+p",
-        "command": "markdownnote.doNothing",
-        "when": "activeWebviewPanelId == 'MarkdownNote'"
-      },
-      {
-        "key": "ctrl+,",
-        "command": "markdownnote.doNothing",
+        "command": "markdownnote.imgPaste",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+/",
-        "command": "markdownnote.doNothing",
+        "command": "markdownnote.tex2svg",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       }
     ],
@@ -289,14 +157,6 @@
       {
         "command": "markdownnote.toSide",
         "title": "MarkdownNote: _📖 Reload to Side"
-      },
-      {
-        "command": "markdownnote.doNothing",
-        "title": "MarkdownNote: Do Nothing for keybindings in WebView"
-      },
-      {
-        "command": "markdownnote.editOrHTML",
-        "title": "MarkdownNote: Edit or HTML"
       },
       {
         "command": "markdownnote.exportHTML",

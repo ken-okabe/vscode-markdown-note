@@ -68,8 +68,6 @@ const historyEdit = [];
 const undoHistoryEdit = [];
 
 const isEdit = R(true);
-const lastEditID = R("");
-
 const currentID = R("");
 
 let imageRepository;
@@ -81,7 +79,7 @@ let keybinds;
 
 const newCellID = R('');
 
-const addCell = ev => id => {
+const cellAdd = id => {
   console.log('on addCell');
 
   const newCells = cells =>
@@ -92,19 +90,19 @@ const addCell = ev => id => {
           : [cell]
     );
 
-  toHTML(ev)(id);
+  toHTML(id);
 
   cellsStreamNext(cells => newCells(cells));
-  window.setTimeout(() => toEdit(ev)(newCellID.lastVal), 0);
+  window.setTimeout(() => toEdit(newCellID.lastVal), 0);
 
 };
 
-const deleteCell = (ev) => id => {
+const cellDelete = id => {
   console.log('on deleteCell');
 
   deletingID.nextR(id);
 
-  upCell(ev)(id);
+  cellDown(id);
 
   const newCells = cells =>
     cells.flatMap(
@@ -120,7 +118,7 @@ const deleteCell = (ev) => id => {
 
 };
 
-const upCell = (ev) => id => {
+const cellUp = id => {
   console.log('on upCell');
 
   const f = (cell: Element, i: number, cells: Element[]) => {
@@ -132,8 +130,8 @@ const upCell = (ev) => id => {
           : (() => {
             const targetCell = cells[i - 1];
             const targetID = ID.get(targetCell);
-            toHTML(ev)(id);
-            toEdit(ev)(targetID);
+            toHTML(id);
+            toEdit(targetID);
           })()
       })()
       : undefined;
@@ -147,7 +145,7 @@ const upCell = (ev) => id => {
 
 };
 
-const downCell = (ev) => id => {
+const cellDown = id => {
   console.log('on downCell');
 
   const f = (cell: Element, i: number, cells: Element[]) => {
@@ -159,8 +157,8 @@ const downCell = (ev) => id => {
           : (() => {
             const targetCell = cells[i + 1];
             const targetID = ID.get(targetCell);
-            toHTML(ev)(id);
-            toEdit(ev)(targetID)
+            toHTML(id);
+            toEdit(targetID)
           })()
       })()
       : undefined;
@@ -175,9 +173,9 @@ const downCell = (ev) => id => {
 };
 
 
-const hStyle = idEdit => {
+const hStyle = id => {
 
-  const elEdit = document.getElementById(idEdit);
+  const elEdit = document.getElementById("edit" + id);
 
   const f0 = () => {
     const text = elEdit.innerText;
@@ -204,7 +202,7 @@ const hStyle = idEdit => {
 
 };
 
-const renderHTML = id  => {
+const renderHTML = id => {
 
   textList[id] =
     !!document.getElementById("edit" + id)
@@ -263,43 +261,43 @@ const replaceURLpaste =
       );
   };
 
-const bold = (ev) => (id) => {
-  ev.preventDefault();
+const bold = (id) => {
+  //ev.preventDefault();
   replaceSelected(' **')('** ');
 };
-const italic = (ev) => (id) => {
-  ev.preventDefault();
+const italic = (id) => {
+  //ev.preventDefault();
   replaceSelected(' *')('* ');
 };
 
 //======================================================
 
-const inlinecode = ev => id => {
-  ev.preventDefault();
+const inlineCode = id => {
+  //ev.preventDefault();
   replaceSelected(' `')('` ');
 };
-const inlinemath = ev => id => {
-  ev.preventDefault();
+const inlineMath = id => {
+  //ev.preventDefault();
   replaceSelected(' $')('$ ');
 };
 
-const code = ev => id => {
-  ev.preventDefault();
+const code = id => {
+  //ev.preventDefault();
   newlinesPaste('```');
 };
 
-const math = ev => id => {
-  ev.preventDefault();
+const math = id => {
+  //ev.preventDefault();
   newlinesPaste('$$');
 };
 
 
-const urlPaste = ev => id => {
-  ev.preventDefault();
+const urlPaste = id => {
+  //ev.preventDefault();
   replaceURLpaste('');
 };
-const imgPaste = ev => id => {
-  ev.preventDefault();
+const imgPaste = id => {
+  //ev.preventDefault();
   replaceURLpaste('!');
 };
 
@@ -315,11 +313,11 @@ const blobToBase64 = (blob) =>
     fileReader.readAsDataURL(blob);
   });
 
-const paste = ev => id => {
+const paste = id => {
   console.log('on paste');
 
   const f = text => {
-    ev.preventDefault();
+    // ev.preventDefault();
     const sel = window.getSelection();
     // const selStr = sel.toString();
     const range = sel.getRangeAt(0);
@@ -340,8 +338,12 @@ const paste = ev => id => {
         // https://github.com/w3c/clipboard-apis/issues/93
         console.log(item);
         !item.types[0].startsWith("image/")
-          ? undefined
-          : imageRepository.repository === "username/webimages_repo" // left as default, no user config
+          ? item.getType("text/plain")
+            .then((blob) =>
+              blob.text()
+                .then(f)
+            )
+          : imageRepository.repository === "USER/IMAGES-REPOSITORY" // left as default, no user config
             ? undefined
             : item
               .getType(item.types[0])
@@ -377,7 +379,7 @@ const paste = ev => id => {
                   )
                   .then((text: string) => "![image](" + text + ")")
                   .then(f)
-                  .then(() => toHTMLmode(ev)(id));
+                  .then(() => toHTMLmode(id));
 
               });
 
@@ -388,7 +390,7 @@ const paste = ev => id => {
 };
 //=======================================================
 
-const undo = ev => id => {
+const undo = id => {
 
   console.log('undo');
 
@@ -398,7 +400,7 @@ const undo = ev => id => {
     ? console.log('no previous History')
     : (() => {
 
-      ev.preventDefault();
+      //ev.preventDefault();
 
       const elEdit = document.getElementById("edit" + id);
 
@@ -424,16 +426,16 @@ const undo = ev => id => {
 
       setEndOfContenteditable(elEdit);
 
-      hStyle("edit" + id);
+      hStyle(id);
     })();
 };
 
 
-const redo = ev => id => {
+const redo = id => {
 
   console.log('redo');
 
-  ev.preventDefault();
+  //ev.preventDefault();
 
   const elEdit = document.getElementById("edit" + id);
 
@@ -458,13 +460,13 @@ const redo = ev => id => {
 
       setEndOfContenteditable(elEdit);
 
-      hStyle("edit" + id);
+      hStyle(id);
     })();
 
 };
 
 const svgCellID = R(0);
-const tex2svg = ev => id => {
+const tex2svg = id => {
   console.log('tex2svg');
 
   svgCellID.nextR(id);
@@ -529,7 +531,7 @@ const showEditFocus =
       ? elEdit.style.display = ''
       : undefined;
 
-    elEdit.focus();
+    elEdit.focus(); // will trigger onFocusin
 
     //setEndOfContenteditable(elEdit);
   };
@@ -540,44 +542,43 @@ isEdit.mapR(val => {
   return val;
 });
 
-const editOrHTML = (ev) => id => {
+const editOrHTML = id => {
 
   console.log('editOrHTML');
   console.log(isEdit.lastVal);
 
   isEdit.lastVal
-    ? toHTMLmode(ev)(id)
-    : toEdit(ev)(id);
+    ? toHTMLmode(id)
+    : toEdit(id);
 
 };
-const onEdit = (ev) => id => {
-  console.log('onEdit');
+const onFocus = id => {
+  console.log('onFocus');
 
   isEdit.nextR(true);
-  lastEditID.nextR(id);
+  currentID.nextR(id);
 };
 
-const toEdit = (ev) => id => {
+const toEdit = id => {
   console.log('toEdit');
 
-  isEdit.nextR(true);
-  lastEditID.nextR(id);
+  // isEdit.nextR(true);   // redundant for onFocus
+  // currentID.nextR(id);  // redundant for onFocus
 
   showEditFocus(id);
 };
 
-const toHTML = (ev) => id => {
+const toHTML = id => {
   console.log('toHTML');
 
   renderHTML(id);
   cellToMarkSave();
 };
 
-const toHTMLmode = (ev) => id => {
+const toHTMLmode = id => {
   console.log('toHTMLmode');
 
   isEdit.nextR(false);
-  //lastEditID.nextR(id);
 
   currentID.nextR(id);
 
@@ -585,7 +586,7 @@ const toHTMLmode = (ev) => id => {
 
     const elHtml = document.getElementById("html" + cell.id);
     elHtml?.style.display === 'none'
-      ? toHTML(ev)(cell.id)
+      ? toHTML(cell.id)
       : undefined;
 
     return cell;
@@ -597,20 +598,10 @@ const toHTMLmode = (ev) => id => {
 
 };
 
-const onInput = idEdit => {
+const onInput = id => {
   console.log("onInput");
-  console.log(idEdit);
-  hStyle(idEdit);
-};
-
-const keyMatch = evt => cmd =>
-  (keybinds[cmd].shiftKey === evt.shiftKey) &&
-  (keybinds[cmd].ctrlKey === evt.ctrlKey) &&
-  (keybinds[cmd].altKey === evt.altKey) &&
-  (keybinds[cmd].code.includes(evt.code));
-
-
-const onKeyDown = ev => id => {
+  console.log("edit" + id);
+  hStyle(id);
 
   const history = () => {
     console.log("history--------------");
@@ -628,50 +619,15 @@ const onKeyDown = ev => id => {
     console.log(history);
   };
 
-
-  keyMatch(ev)("paste")
-    ? paste(ev)(id)
-    : keyMatch(ev)("undo")
-      ? undo(ev)(id)
-      : keyMatch(ev)("redo")
-        ? redo(ev)(id)
-        : keyMatch(ev)("cell-add")
-          ? addCell(ev)(id)
-          : keyMatch(ev)("cell-delete")
-            ? deleteCell(ev)(id)
-            : keyMatch(ev)("cell-up")
-              ? upCell(ev)(id)
-              : keyMatch(ev)("cell-down")
-                ? downCell(ev)(id)
-                : keyMatch(ev)("bold")
-                  ? bold(ev)(id)
-                  : keyMatch(ev)("italic")
-                    ? italic(ev)(id)
-                    : keyMatch(ev)("inlinecode")
-                      ? inlinecode(ev)(id)
-                      : keyMatch(ev)("code")
-                        ? code(ev)(id)
-                        : keyMatch(ev)("inlinemath")
-                          ? inlinemath(ev)(id)
-                          : keyMatch(ev)("math")
-                            ? math(ev)(id)
-                            : keyMatch(ev)("url-paste")
-                              ? urlPaste(ev)(id)
-                              : keyMatch(ev)("img-paste")
-                                ? imgPaste(ev)(id)
-                                : keyMatch(ev)("tex2svg")
-                                  ? tex2svg(ev)(id)
-                                  : window.setTimeout(history, 0);
-
-
+  window.setTimeout(history, 0);
 };
+
+
 
 const Cell: Component = (text: string) => {
   const id = getRand();
   console.log(id);
   newCellID.nextR(id);
-  const idEdit = "edit" + id;
-  const idHtml = "html" + id;
 
   historyEdit[id] = [text];
   undoHistoryEdit[id] = [];
@@ -685,23 +641,21 @@ const Cell: Component = (text: string) => {
 
     <div class="cell" id={id}>
 
-      <div class='celledit' id={idEdit}
+      <div class='celledit' id={"edit" + id}
         // chrome only !!! "plaintext-only"
         contenteditable={"plaintext-only" as any}
-        onKeyDown={ev => onKeyDown(ev)(id)}
-        onInput={ev => onInput(idEdit)}
-        // onBlur={ev => toHTML(ev)(id)}
-        onClick={ev => onEdit(ev)(id)}
+        onInput={ev => onInput(id)}
+        onfocusin={ev => onFocus(id)}
         style={{ display: 'none' }}
       >
         {text}
 
       </div>
 
-      <div class='cellhtml' id={idHtml}
+      <div class='cellhtml' id={"html" + id}
         contenteditable={false}
         //onKeyDown={ev => onKeyDown(ev)(id)}  does not work
-        onClick={ev => toEdit(ev)(id)}>
+        onClick={ev => toEdit(id)}>
 
         {contentStreams[id]()}
 
@@ -713,7 +667,7 @@ const Cell: Component = (text: string) => {
   ID.set(div, id);
 
   const initCell = () => {
-    hStyle(idEdit);
+    hStyle(id);
     currentID.nextR(id);
     renderHTML(id);
   };
@@ -1005,7 +959,7 @@ mdtextR
 
       console.log(ID.get(cells[0]));
 
-      lastEditID.nextR(ID.get(cells[0])); //set focus
+      currentID.nextR(ID.get(cells[0])); //set focus
 
     }, 100);
 
@@ -1090,19 +1044,52 @@ window.addEventListener('message', event => {
       })()
       : message.cmd === 'load'
         ? mdtextR.nextR(message.obj)
-        : message.cmd === 'editOrHTML'
-          ? editOrHTML({})(lastEditID.lastVal)
-          : message.cmd === 'exportHTML'
+        : message.cmd === 'exportHTML'
+          ? (() => {
+            console.log("exportHTML!!!!!!!!!!!!!");
+            cellToExportHTML();
+          })()
+          : message.cmd === 'returnSVG'
             ? (() => {
-              console.log("exportHTML!!!!!!!!!!!!!");
-              cellToExportHTML();
+              console.log("returnSVG!!!!!!!!!!!!!");
+              svgF(JSON.parse(message.obj));
             })()
-            : message.cmd === 'returnSVG'
-              ? (() => {
-                console.log("returnSVG!!!!!!!!!!!!!");
-                svgF(JSON.parse(message.obj));
-              })()
-              : undefined;
+            //keys--------------------------------
+            : message.cmd === 'editOrHTML'
+              ? editOrHTML(currentID.lastVal)
+              : message.cmd === 'paste'
+                ? paste(currentID.lastVal)
+                : message.cmd === 'undo'
+                  ? undo(currentID.lastVal)
+                  : message.cmd === 'redo'
+                    ? redo(currentID.lastVal)
+                    : message.cmd === 'cellAdd'
+                      ? cellAdd(currentID.lastVal)
+                      : message.cmd === 'cellDelete'
+                        ? cellDelete(currentID.lastVal)
+                        : message.cmd === 'cellUp'
+                          ? cellUp(currentID.lastVal)
+                          : message.cmd === 'cellDown'
+                            ? cellDown(currentID.lastVal)
+                            : message.cmd === 'bold'
+                              ? bold(currentID.lastVal)
+                              : message.cmd === 'italic'
+                                ? italic(currentID.lastVal)
+                                : message.cmd === 'code'
+                                  ? code(currentID.lastVal)
+                                  : message.cmd === 'math'
+                                    ? math(currentID.lastVal)
+                                    : message.cmd === 'inlineCode'
+                                      ? inlineCode(currentID.lastVal)
+                                      : message.cmd === 'inlineMath'
+                                        ? inlineMath(currentID.lastVal)
+                                        : message.cmd === 'urlPaste'
+                                          ? urlPaste(currentID.lastVal)
+                                          : message.cmd === 'imgPaste'
+                                            ? imgPaste(currentID.lastVal)
+                                            : message.cmd === 'tex2svg'
+                                              ? tex2svg(currentID.lastVal)
+                                              : undefined;
 
 });
 //==========================================
