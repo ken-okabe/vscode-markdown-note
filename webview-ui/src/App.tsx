@@ -59,10 +59,10 @@ const hFont = {};
 const [cellsStream, cellsStreamNext] = createSignal([]);
 
 const contentStreams = {};
-const textList = {};
 const ID = new Map(); //ID.get(cell)
 
-const deletingID = R(0);
+const newCellID = R('');
+const deletingID = R('');
 
 const historyEdit = [];
 const undoHistoryEdit = [];
@@ -73,10 +73,6 @@ const currentID = R("");
 let imageRepository;
 
 //==========================================
-
-//==========================================
-
-const newCellID = R('');
 
 const cellAdd = id => {
   console.log('on addCell');
@@ -171,7 +167,6 @@ const cellDown = id => {
 
 };
 
-
 const hStyle = id => {
 
   const elEdit = document.getElementById("edit" + id);
@@ -202,16 +197,9 @@ const hStyle = id => {
 };
 
 const renderHTML = id => {
-
-  textList[id] =
-    !!document.getElementById("edit" + id)
-      ? document.getElementById("edit" + id).innerText
-      : "";
-
   id === deletingID.lastVal
     ? undefined
     : markHtml(id);
-
 };
 
 //------------------------------------------------------
@@ -260,46 +248,29 @@ const replaceURLpaste =
       );
   };
 
-const bold = (id) => {
-  //ev.preventDefault();
+const bold = id =>
   replaceSelected(' **')('** ');
-};
-const italic = (id) => {
-  //ev.preventDefault();
+
+const italic = id =>
   replaceSelected(' *')('* ');
-};
 
-//======================================================
-
-const inlineCode = id => {
-  //ev.preventDefault();
+const inlineCode = id =>
   replaceSelected(' `')('` ');
-};
-const inlineMath = id => {
-  //ev.preventDefault();
+
+const inlineMath = id =>
   replaceSelected(' $')('$ ');
-};
 
-const code = id => {
-  //ev.preventDefault();
+const code = id =>
   newlinesPaste('```');
-};
 
-const math = id => {
-  //ev.preventDefault();
+const math = id =>
   newlinesPaste('$$');
-};
 
-
-const urlPaste = id => {
-  //ev.preventDefault();
+const urlPaste = id =>
   replaceURLpaste('');
-};
-const imgPaste = id => {
-  //ev.preventDefault();
-  replaceURLpaste('!');
-};
 
+const imgPaste = id =>
+  replaceURLpaste('!');
 //===========================================
 
 const blobToBase64 = (blob) =>
@@ -316,7 +287,6 @@ const paste = id => {
   console.log('on paste');
 
   const f = text => {
-    // ev.preventDefault();
     const sel = window.getSelection();
     // const selStr = sel.toString();
     const range = sel.getRangeAt(0);
@@ -399,8 +369,6 @@ const undo = id => {
     ? console.log('no previous History')
     : (() => {
 
-      //ev.preventDefault();
-
       const elEdit = document.getElementById("edit" + id);
 
       const undoHistory = undoHistoryEdit[id];
@@ -414,7 +382,6 @@ const undo = id => {
               ? []
               : el
         );
-
 
       console.log(`history1`);
       console.log(history1);
@@ -433,8 +400,6 @@ const undo = id => {
 const redo = id => {
 
   console.log('redo');
-
-  //ev.preventDefault();
 
   const elEdit = document.getElementById("edit" + id);
 
@@ -487,52 +452,14 @@ const tex2svg = id => {
 //------------------------------------------------------
 const showHtml =
   (id: string) => {
-    const elEdit = document.getElementById("edit" + id);
-
-    !!elEdit
-      ? elEdit.style.display = 'none'
-      : undefined;
-
-    const parentEl = document.getElementById("html" + id);
-
-    !!parentEl
-      ? parentEl.style.display = ''
-      : undefined;
+    document.getElementById("edit" + id).style.display = 'none'
+    document.getElementById("html" + id).style.display = ''
   };
 
 const showEdit =
   (id: string) => {
-    console.log('showEdit');
-
-    const elHtml = document.getElementById("html" + id);
-    !!elHtml
-      ? elHtml.style.display = 'none'
-      : undefined;
-
-    const elEdit = document.getElementById("edit" + id);
-    !!elEdit
-      ? elEdit.style.display = ''
-      : undefined;
-
-  };
-
-const showEditFocus =
-  (id: string) => {
-    console.log('showEditFocus');
-
-    const elHtml = document.getElementById("html" + id);
-    !!elHtml
-      ? elHtml.style.display = 'none'
-      : undefined;
-
-    const elEdit = document.getElementById("edit" + id);
-    !!elEdit
-      ? elEdit.style.display = ''
-      : undefined;
-
-    elEdit.focus(); // will trigger onFocusin
-
-    //setEndOfContenteditable(elEdit);
+    document.getElementById("edit" + id).style.display = ''
+    document.getElementById("html" + id).style.display = 'none';
   };
 //---event----------------------------------------------
 isEdit.mapR(val => {
@@ -561,10 +488,9 @@ const onFocus = id => {
 const toEdit = id => {
   console.log('toEdit');
 
-  // isEdit.nextR(true);   // redundant for onFocus
-  // currentID.nextR(id);  // redundant for onFocus
+  showEdit(id);
+  document.getElementById("edit" + id).focus();
 
-  showEditFocus(id);
 };
 
 const toHTML = id => {
@@ -620,9 +546,7 @@ const onInput = id => {
 
   window.setTimeout(history, 0);
 };
-
-
-
+//=======================================================
 const Cell: Component = (text: string) => {
   const id = getRand();
   console.log(id);
@@ -641,7 +565,6 @@ const Cell: Component = (text: string) => {
     <div class="cell" id={id}>
 
       <div class='celledit' id={"edit" + id}
-        // chrome only !!! "plaintext-only"
         contenteditable={"plaintext-only" as any}
         onInput={ev => onInput(id)}
         onfocusin={ev => onFocus(id)}
@@ -653,7 +576,6 @@ const Cell: Component = (text: string) => {
 
       <div class='cellhtml' id={"html" + id}
         contenteditable={false}
-        //onKeyDown={ev => onKeyDown(ev)(id)}  does not work
         onClick={ev => toEdit(id)}>
 
         {contentStreams[id]()}
@@ -684,6 +606,8 @@ const markHtml =
 
     const div = document.createElement('div');
 
+    const text = document.getElementById("edit" + id).innerText;
+
     const rmPromise =
       unified()
         .use(remarkParse)
@@ -704,7 +628,7 @@ const markHtml =
           // strategy: 'pre-mermaid'
         })
         .use(rehypeStringify)
-        .process(textList[id])
+        .process(text)
         .catch(error => {
           console.log("%%%%% reMark parser ERROR");
           console.log(error.message)
@@ -771,8 +695,6 @@ const onSort = evt => {
 
   cellToMarkSave();
 }
-
-
 
 const App: Component = () => {
 
@@ -846,15 +768,10 @@ const App: Component = () => {
   );
 };
 
-const cellToMarkSave = () =>
-  window.setTimeout(
-    () => save(cellToMark()),
-    0);
-
 const cellToMark = () => {
 
-  const els = Array.from(document.getElementsByClassName('cell'));
-  const texts = els.map((el: HTMLElement) => textList[el.id]);
+  const els = Array.from(document.getElementsByClassName('celledit'));
+  const texts = els.map((el: HTMLElement) => el.innerText);
 
   const text = texts.reduce((sum, a) => sum + '\n\n' + a);
 
@@ -862,24 +779,28 @@ const cellToMark = () => {
 
 };
 
-// ------------
-const cellToExportHTML = () => exportHTML(cellToHTML());
+const cellToMarkSave = () =>
+  window.setTimeout(
+    () => save(cellToMark()),
+    0);
 
+// ------------
 
 const cellToHTML = () => {
 
   console.log("cellToHTML called!");
 
-  const els = Array.from(document.getElementsByClassName('cell'));
-  const htmls =
-    els.map((el: HTMLElement) =>
-      el.getElementsByClassName("cellhtml")[0].innerHTML);
+  const els = Array.from(document.getElementsByClassName('cellhtml'));
+  const htmls = els.map((el: HTMLElement) => el.innerHTML);
 
   const html = htmls.reduce((sum, a) => sum + '\n\n' + a);
 
   return html;
 
 };
+
+const cellToExportHTML = () =>
+  exportHTML(cellToHTML());
 
 const requestLoad = () =>
   vscode.postMessage({
@@ -910,7 +831,6 @@ const requestSVG = (tex: string) => {
 
 };
 
-
 //=============================================================
 const parseMd = (mdText: string) => {
   const codeBlockRegex = /`{3}[\S\s]+?`{3}/g;
@@ -933,7 +853,6 @@ const parseMd = (mdText: string) => {
       });
   return result;
 };
-
 
 
 const mdtextR = R('Loading...');
