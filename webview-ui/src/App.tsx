@@ -102,7 +102,7 @@ const cellDelete = id => {
 
   deletingID.nextR(id);
 
-  cellDown(id);
+  cellUp(id);
 
   const newCells = cells =>
     cells.flatMap(
@@ -971,7 +971,7 @@ const getSVGurl = (svg: string) =>
   new Promise<string>(
     (resolve, reject) =>
 
-      imageRepository.repository === "username/webimages_repo" // left as default, no user config
+      imageRepository.repository === "USER/IMAGES-REPOSITORY" // left as default, no config
         ? reject("no imageRepository")
         : (() => {
           const content = btoa(svg);
