@@ -21,7 +21,7 @@ import { remark } from 'remark';
 import remarkBreaks from 'remark-breaks'
 import remarkDirective from 'remark-directive'
 import rehypePrism from 'rehype-prism-plus'
-import rehypeKatex from 'rehype-katex'
+import rehypeMathjax from 'rehype-mathjax'
 import remarkMath from 'remark-math'
 import rehypeFormat from 'rehype-format'
 
@@ -740,7 +740,7 @@ const markHtml =
         .use(remarkRehype, { allowDangerousHtml: true })
         .use(rehypeRaw) // *Parse* the raw HTML strings embedded in the tree
         .use(rehypePrism)
-        .use(rehypeKatex)
+        .use(rehypeMathjax)
         .use(rehypeMermaid, {
           // The default strategy is 'inline-svg'
           // strategy: 'img-png'

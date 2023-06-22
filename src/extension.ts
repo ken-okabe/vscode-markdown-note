@@ -17,7 +17,6 @@ export function activate(context: vscode.ExtensionContext) {
   const fileNameR = R('');
 
   const cssR = NotePanel.rCSS();
-  const katexR = NotePanel.rKatex();
 
   const mdTextR = NotePanel.rMdText();
 
@@ -39,8 +38,6 @@ export function activate(context: vscode.ExtensionContext) {
 <div xmlns="http://www.w3.org/1999/xhtml">
 
   <style>${cssR.lastVal}</style>
-
-  ${katexR.lastVal}
 
   <div class="container">
     ${content}
