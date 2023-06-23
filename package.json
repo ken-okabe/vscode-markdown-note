@@ -1,7 +1,7 @@
 {
   "name": "markdownnote",
   "displayName": "MarkdownNote",
-  "description": "MarkdownNote(Markdown Preview is WYSIWYG Editor)",
+  "description": "WYSIWYG Markdown Editor for GitHub README.md and more",
   "version": "0.310.0",
   "repository": {
     "type": "git",
