@@ -491,6 +491,8 @@ const toEdit = id => {
   showEdit(id);
   document.getElementById("edit" + id).focus();
 
+  isEdit.nextR(true);
+
 };
 
 const toHTML = id => {
@@ -676,7 +678,7 @@ const finalHtml =
         : (() => {
 
           id === currentID.lastVal
-            ? isEdit.nextR(true)
+            ? toEdit(id)
             : undefined;
 
           showEdit(id);
