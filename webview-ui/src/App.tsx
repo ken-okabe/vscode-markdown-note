@@ -232,7 +232,7 @@ const newlinesPaste =
       );
   };
 
-const replacepasteURL =
+const replacePasteURL =
   key => {
     const sel = window.getSelection();
     const range = sel.getRangeAt(0);
@@ -267,10 +267,10 @@ const math = id =>
   newlinesPaste('$$');
 
 const pasteURL = id =>
-  replacepasteURL('');
+  replacePasteURL('');
 
 const pasteImageURL = id =>
-  replacepasteURL('!');
+  replacePasteURL('!');
 //===========================================
 
 const blobToBase64 = (blob) =>
@@ -470,7 +470,7 @@ isEdit.mapR(val => {
 
 const _allHTMLorEDIT = id => {
 
-  console.log('_allHTMLorEDIT');
+  console.log('_AllHTMLorEDIT');
   console.log(isEdit.lastVal);
 
   isEdit.lastVal
@@ -523,7 +523,7 @@ const toHTMLmode = id => {
 
 };
 
-const onInput = id => {
+const onKeyDown = id => {
   console.log("onInput");
   console.log("edit" + id);
   hStyle(id);
@@ -566,7 +566,7 @@ const Cell: Component = (text: string) => {
 
       <div class='celledit' id={"edit" + id}
         contenteditable={"plaintext-only" as any}
-        onInput={ev => onInput(id)}
+        onKeyDown={ev => onKeyDown(id)}
         onfocusin={ev => onFocus(id)}
         style={{ display: 'none' }}
       >
@@ -967,39 +967,39 @@ window.addEventListener('message', event => {
             svgF(JSON.parse(message.obj));
           })()
           //keys--------------------------------
-          : message.cmd === '_allHTMLorEDIT'
+          : message.cmd === '_AllHTMLorEDIT'
             ? _allHTMLorEDIT(currentID.lastVal)
-            : message.cmd === 'paste'
-              ? paste(currentID.lastVal)
-              : message.cmd === 'undo'
-                ? undo(currentID.lastVal)
-                : message.cmd === 'redo'
-                  ? redo(currentID.lastVal)
-                  : message.cmd === '_cellAdd'
-                    ? _cellAdd(currentID.lastVal)
-                    : message.cmd === '_cellDelete'
-                      ? _cellDelete(currentID.lastVal)
-                      : message.cmd === '_cellUp'
-                        ? _cellUp(currentID.lastVal)
-                        : message.cmd === '_cellDown'
-                          ? _cellDown(currentID.lastVal)
-                          : message.cmd === 'bold'
+            : message.cmd === '_CellAdd'
+              ? _cellAdd(currentID.lastVal)
+              : message.cmd === '_CellDelete'
+                ? _cellDelete(currentID.lastVal)
+                : message.cmd === '_CellUp'
+                  ? _cellUp(currentID.lastVal)
+                  : message.cmd === '_CellDown'
+                    ? _cellDown(currentID.lastVal)
+                    : message.cmd === 'Paste'
+                      ? paste(currentID.lastVal)
+                      : message.cmd === 'Undo'
+                        ? undo(currentID.lastVal)
+                        : message.cmd === 'Redo'
+                          ? redo(currentID.lastVal)
+                          : message.cmd === 'Bold'
                             ? bold(currentID.lastVal)
-                            : message.cmd === 'italic'
+                            : message.cmd === 'Italic'
                               ? italic(currentID.lastVal)
-                              : message.cmd === 'codeInline'
+                              : message.cmd === 'CodeInline'
                                 ? codeInline(currentID.lastVal)
-                                : message.cmd === 'mathInline'
+                                : message.cmd === 'MathInline'
                                   ? mathInline(currentID.lastVal)
-                                  : message.cmd === 'code'
+                                  : message.cmd === 'Code'
                                     ? code(currentID.lastVal)
-                                    : message.cmd === 'math'
+                                    : message.cmd === 'Math'
                                       ? math(currentID.lastVal)
-                                      : message.cmd === 'pasteURL'
+                                      : message.cmd === 'PasteURL'
                                         ? pasteURL(currentID.lastVal)
-                                        : message.cmd === 'pasteImageURL'
+                                        : message.cmd === 'PasteImageURL'
                                           ? pasteImageURL(currentID.lastVal)
-                                          : message.cmd === 'tex2svg'
+                                          : message.cmd === 'Tex2SVG'
                                             ? tex2svg(currentID.lastVal)
                                             : undefined;
 

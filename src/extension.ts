@@ -207,105 +207,105 @@ export function activate(context: vscode.ExtensionContext) {
   //--------------------------------------------------------
 
   const _allHTMLorEDIT =
-    vscode.commands.registerCommand("markdownnote._allHTMLorEDIT",
+    vscode.commands.registerCommand("markdownnote._AllHTMLorEDIT",
       () => {
-        NotePanel.sendKey("_allHTMLorEDIT");
-      }
-    );
-  const paste =
-    vscode.commands.registerCommand("markdownnote.paste",
-      () => {
-        NotePanel.sendKey("paste");
-      }
-    );
-  const undo =
-    vscode.commands.registerCommand("markdownnote.undo",
-      () => {
-        NotePanel.sendKey("undo");
-      }
-    );
-  const redo =
-    vscode.commands.registerCommand("markdownnote.redo",
-      () => {
-        NotePanel.sendKey("redo");
+        NotePanel.sendKey("_AllHTMLorEDIT");
       }
     );
   const _cellAdd =
-    vscode.commands.registerCommand("markdownnote._cellAdd",
+    vscode.commands.registerCommand("markdownnote._CellAdd",
       () => {
-        NotePanel.sendKey("_cellAdd");
+        NotePanel.sendKey("_CellAdd");
       }
     );
   const _cellDelete =
-    vscode.commands.registerCommand("markdownnote._cellDelete",
+    vscode.commands.registerCommand("markdownnote._CellDelete",
       () => {
-        NotePanel.sendKey("_cellDelete");
+        NotePanel.sendKey("_CellDelete");
       }
     );
   const _cellUp =
-    vscode.commands.registerCommand("markdownnote._cellUp",
+    vscode.commands.registerCommand("markdownnote._CellUp",
       () => {
-        NotePanel.sendKey("_cellUp");
+        NotePanel.sendKey("_CellUp");
       }
     );
   const _cellDown =
-    vscode.commands.registerCommand("markdownnote._cellDown",
+    vscode.commands.registerCommand("markdownnote._CellDown",
       () => {
-        NotePanel.sendKey("_cellDown");
+        NotePanel.sendKey("_CellDown");
+      }
+    );
+  const paste =
+    vscode.commands.registerCommand("markdownnote.Paste",
+      () => {
+        NotePanel.sendKey('Paste');
+      }
+    );
+  const undo =
+    vscode.commands.registerCommand("markdownnote.Undo",
+      () => {
+        NotePanel.sendKey('Undo');
+      }
+    );
+  const redo =
+    vscode.commands.registerCommand("markdownnote.Redo",
+      () => {
+        NotePanel.sendKey("Redo");
       }
     );
   const bold =
-    vscode.commands.registerCommand("markdownnote.bold",
+    vscode.commands.registerCommand("markdownnote.Bold",
       () => {
-        NotePanel.sendKey("bold");
+        NotePanel.sendKey("Bold");
       }
     );
   const italic =
-    vscode.commands.registerCommand("markdownnote.italic",
+    vscode.commands.registerCommand("markdownnote.Italic",
       () => {
-        NotePanel.sendKey("italic");
+        NotePanel.sendKey("Italic");
       }
     );
   const codeInline =
-    vscode.commands.registerCommand("markdownnote.codeInline",
+    vscode.commands.registerCommand("markdownnote.CodeInline",
       () => {
-        NotePanel.sendKey("codeInline");
+        NotePanel.sendKey("CodeInline");
       }
     );
   const mathInline =
-    vscode.commands.registerCommand("markdownnote.mathInline",
+    vscode.commands.registerCommand("markdownnote.MathInline",
       () => {
-        NotePanel.sendKey("mathInline");
+        NotePanel.sendKey("MathInline");
       }
     );
   const code =
-    vscode.commands.registerCommand("markdownnote.code",
+    vscode.commands.registerCommand("markdownnote.Code",
       () => {
-        NotePanel.sendKey("code");
+        NotePanel.sendKey("Code");
       }
     );
   const math =
-    vscode.commands.registerCommand("markdownnote.math",
+    vscode.commands.registerCommand("markdownnote.Math",
       () => {
-        NotePanel.sendKey("math");
+        NotePanel.sendKey("Math");
       }
     );
   const pasteURL =
-    vscode.commands.registerCommand("markdownnote.pasteURL",
+    vscode.commands.registerCommand("markdownnote.PasteURL",
       () => {
-        NotePanel.sendKey("pasteURL");
+        NotePanel.sendKey("PasteURL");
       }
     );
   const pasteImageURL =
-    vscode.commands.registerCommand("markdownnote.pasteImageURL",
+    vscode.commands.registerCommand("markdownnote.PasteImageURL",
       () => {
-        NotePanel.sendKey("pasteImageURL");
+        NotePanel.sendKey("PasteImageURL");
       }
     );
   const tex2svg =
-    vscode.commands.registerCommand("markdownnote.tex2svg",
+    vscode.commands.registerCommand("markdownnote.Tex2SVG",
       () => {
-        NotePanel.sendKey("tex2svg");
+        NotePanel.sendKey("Tex2SVG");
       }
     );
 
@@ -316,13 +316,13 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(exportHTMLCommand);
   //keybinding
   context.subscriptions.push(_allHTMLorEDIT);
-  context.subscriptions.push(paste);
-  context.subscriptions.push(undo);
-  context.subscriptions.push(redo);
   context.subscriptions.push(_cellAdd);
   context.subscriptions.push(_cellDelete);
   context.subscriptions.push(_cellUp);
   context.subscriptions.push(_cellDown);
+  context.subscriptions.push(paste);
+  context.subscriptions.push(undo);
+  context.subscriptions.push(redo);
   context.subscriptions.push(bold);
   context.subscriptions.push(italic);
   context.subscriptions.push(codeInline);

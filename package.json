@@ -2,7 +2,7 @@
   "name": "markdownnote",
   "displayName": "MarkdownNote",
   "description": "MarkdownNote(Markdown Preview is WYSIWYG Editor)",
-  "version": "0.307.0",
+  "version": "0.310.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/stken2050/vscode-markdown-note.git"
@@ -55,102 +55,102 @@
     "keybindings": [
       {
         "key": "escape",
-        "command": "markdownnote._allHTMLorEDIT",
-        "when": "activeWebviewPanelId == 'MarkdownNote'"
-      },
-      {
-        "key": "ctrl+v",
-        "command": "markdownnote.paste",
-        "when": "activeWebviewPanelId == 'MarkdownNote'"
-      },
-      {
-        "key": "ctrl+z",
-        "command": "markdownnote.undo",
-        "when": "activeWebviewPanelId == 'MarkdownNote'"
-      },
-      {
-        "key": "ctrl+y",
-        "command": "markdownnote.redo",
+        "command": "markdownnote._AllHTMLorEDIT",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+enter",
-        "command": "markdownnote._cellAdd",
+        "command": "markdownnote._CellAdd",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+backspace",
-        "command": "markdownnote._cellDelete",
+        "command": "markdownnote._CellDelete",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+up",
-        "command": "markdownnote._cellUp",
+        "command": "markdownnote._CellUp",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+down",
-        "command": "markdownnote._cellDown",
+        "command": "markdownnote._CellDown",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+v",
+        "command": "markdownnote.Paste",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+z",
+        "command": "markdownnote.Undo",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+y",
+        "command": "markdownnote.Redo",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+b",
-        "command": "markdownnote.bold",
+        "command": "markdownnote.Bold",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+w",
-        "command": "markdownnote.bold",
+        "command": "markdownnote.Bold",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+i",
-        "command": "markdownnote.italic",
+        "command": "markdownnote.Italic",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+`",
-        "command": "markdownnote.codeInline",
+        "command": "markdownnote.CodeInline",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+e",
-        "command": "markdownnote.codeInline",
+        "command": "markdownnote.CodeInline",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+j",
-        "command": "markdownnote.codeInline",
+        "command": "markdownnote.CodeInline",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+n",
-        "command": "markdownnote.mathInline",
+        "command": "markdownnote.MathInline",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+k",
-        "command": "markdownnote.code",
+        "command": "markdownnote.Code",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+m",
-        "command": "markdownnote.math",
+        "command": "markdownnote.Math",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+l",
-        "command": "markdownnote.pasteURL",
+        "command": "markdownnote.PasteURL",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+p",
-        "command": "markdownnote.pasteImageURL",
+        "command": "markdownnote.PasteImageURL",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+/",
-        "command": "markdownnote.tex2svg",
+        "command": "markdownnote.Tex2SVG",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       }
     ],
