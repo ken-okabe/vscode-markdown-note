@@ -74,7 +74,7 @@ let imageRepository;
 
 //==========================================
 
-const cellAdd = id => {
+const _cellAdd = id => {
   console.log('on addCell');
 
   const newCells = cells =>
@@ -92,12 +92,12 @@ const cellAdd = id => {
 
 };
 
-const cellDelete = id => {
+const _cellDelete = id => {
   console.log('on deleteCell');
 
   deletingID.nextR(id);
 
-  cellUp(id);
+  _cellUp(id);
 
   const newCells = cells =>
     cells.flatMap(
@@ -113,7 +113,7 @@ const cellDelete = id => {
 
 };
 
-const cellUp = id => {
+const _cellUp = id => {
   console.log('on upCell');
 
   const f = (cell: Element, i: number, cells: Element[]) => {
@@ -140,7 +140,7 @@ const cellUp = id => {
 
 };
 
-const cellDown = id => {
+const _cellDown = id => {
   console.log('on downCell');
 
   const f = (cell: Element, i: number, cells: Element[]) => {
@@ -232,7 +232,7 @@ const newlinesPaste =
       );
   };
 
-const replaceURLpaste =
+const replacepasteURL =
   key => {
     const sel = window.getSelection();
     const range = sel.getRangeAt(0);
@@ -254,10 +254,10 @@ const bold = id =>
 const italic = id =>
   replaceSelected(' *')('* ');
 
-const inlineCode = id =>
+const codeInline = id =>
   replaceSelected(' `')('` ');
 
-const inlineMath = id =>
+const mathInline = id =>
   replaceSelected(' $')('$ ');
 
 const code = id =>
@@ -266,11 +266,11 @@ const code = id =>
 const math = id =>
   newlinesPaste('$$');
 
-const urlPaste = id =>
-  replaceURLpaste('');
+const pasteURL = id =>
+  replacepasteURL('');
 
-const imgPaste = id =>
-  replaceURLpaste('!');
+const pasteImageURL = id =>
+  replacepasteURL('!');
 //===========================================
 
 const blobToBase64 = (blob) =>
@@ -468,9 +468,9 @@ isEdit.mapR(val => {
   return val;
 });
 
-const editOrHTML = id => {
+const _allHTMLorEDIT = id => {
 
-  console.log('editOrHTML');
+  console.log('_allHTMLorEDIT');
   console.log(isEdit.lastVal);
 
   isEdit.lastVal
@@ -967,38 +967,38 @@ window.addEventListener('message', event => {
             svgF(JSON.parse(message.obj));
           })()
           //keys--------------------------------
-          : message.cmd === 'editOrHTML'
-            ? editOrHTML(currentID.lastVal)
+          : message.cmd === '_allHTMLorEDIT'
+            ? _allHTMLorEDIT(currentID.lastVal)
             : message.cmd === 'paste'
               ? paste(currentID.lastVal)
               : message.cmd === 'undo'
                 ? undo(currentID.lastVal)
                 : message.cmd === 'redo'
                   ? redo(currentID.lastVal)
-                  : message.cmd === 'cellAdd'
-                    ? cellAdd(currentID.lastVal)
-                    : message.cmd === 'cellDelete'
-                      ? cellDelete(currentID.lastVal)
-                      : message.cmd === 'cellUp'
-                        ? cellUp(currentID.lastVal)
-                        : message.cmd === 'cellDown'
-                          ? cellDown(currentID.lastVal)
+                  : message.cmd === '_cellAdd'
+                    ? _cellAdd(currentID.lastVal)
+                    : message.cmd === '_cellDelete'
+                      ? _cellDelete(currentID.lastVal)
+                      : message.cmd === '_cellUp'
+                        ? _cellUp(currentID.lastVal)
+                        : message.cmd === '_cellDown'
+                          ? _cellDown(currentID.lastVal)
                           : message.cmd === 'bold'
                             ? bold(currentID.lastVal)
                             : message.cmd === 'italic'
                               ? italic(currentID.lastVal)
-                              : message.cmd === 'inlineCode'
-                                ? inlineCode(currentID.lastVal)
-                                : message.cmd === 'inlineMath'
-                                  ? inlineMath(currentID.lastVal)
+                              : message.cmd === 'codeInline'
+                                ? codeInline(currentID.lastVal)
+                                : message.cmd === 'mathInline'
+                                  ? mathInline(currentID.lastVal)
                                   : message.cmd === 'code'
                                     ? code(currentID.lastVal)
                                     : message.cmd === 'math'
                                       ? math(currentID.lastVal)
-                                      : message.cmd === 'urlPaste'
-                                        ? urlPaste(currentID.lastVal)
-                                        : message.cmd === 'imgPaste'
-                                          ? imgPaste(currentID.lastVal)
+                                      : message.cmd === 'pasteURL'
+                                        ? pasteURL(currentID.lastVal)
+                                        : message.cmd === 'pasteImageURL'
+                                          ? pasteImageURL(currentID.lastVal)
                                           : message.cmd === 'tex2svg'
                                             ? tex2svg(currentID.lastVal)
                                             : undefined;

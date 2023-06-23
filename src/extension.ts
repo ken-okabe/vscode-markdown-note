@@ -206,10 +206,10 @@ export function activate(context: vscode.ExtensionContext) {
     );
   //--------------------------------------------------------
 
-  const editOrHTML =
-    vscode.commands.registerCommand("markdownnote.editOrHTML",
+  const _allHTMLorEDIT =
+    vscode.commands.registerCommand("markdownnote._allHTMLorEDIT",
       () => {
-        NotePanel.sendKey("editOrHTML");
+        NotePanel.sendKey("_allHTMLorEDIT");
       }
     );
   const paste =
@@ -230,28 +230,28 @@ export function activate(context: vscode.ExtensionContext) {
         NotePanel.sendKey("redo");
       }
     );
-  const cellAdd =
-    vscode.commands.registerCommand("markdownnote.cellAdd",
+  const _cellAdd =
+    vscode.commands.registerCommand("markdownnote._cellAdd",
       () => {
-        NotePanel.sendKey("cellAdd");
+        NotePanel.sendKey("_cellAdd");
       }
     );
-  const cellDelete =
-    vscode.commands.registerCommand("markdownnote.cellDelete",
+  const _cellDelete =
+    vscode.commands.registerCommand("markdownnote._cellDelete",
       () => {
-        NotePanel.sendKey("cellDelete");
+        NotePanel.sendKey("_cellDelete");
       }
     );
-  const cellUp =
-    vscode.commands.registerCommand("markdownnote.cellUp",
+  const _cellUp =
+    vscode.commands.registerCommand("markdownnote._cellUp",
       () => {
-        NotePanel.sendKey("cellUp");
+        NotePanel.sendKey("_cellUp");
       }
     );
-  const cellDown =
-    vscode.commands.registerCommand("markdownnote.cellDown",
+  const _cellDown =
+    vscode.commands.registerCommand("markdownnote._cellDown",
       () => {
-        NotePanel.sendKey("cellDown");
+        NotePanel.sendKey("_cellDown");
       }
     );
   const bold =
@@ -266,16 +266,16 @@ export function activate(context: vscode.ExtensionContext) {
         NotePanel.sendKey("italic");
       }
     );
-  const inlineCode =
-    vscode.commands.registerCommand("markdownnote.inlineCode",
+  const codeInline =
+    vscode.commands.registerCommand("markdownnote.codeInline",
       () => {
-        NotePanel.sendKey("inlineCode");
+        NotePanel.sendKey("codeInline");
       }
     );
-  const inlineMath =
-    vscode.commands.registerCommand("markdownnote.inlineMath",
+  const mathInline =
+    vscode.commands.registerCommand("markdownnote.mathInline",
       () => {
-        NotePanel.sendKey("inlineMath");
+        NotePanel.sendKey("mathInline");
       }
     );
   const code =
@@ -290,16 +290,16 @@ export function activate(context: vscode.ExtensionContext) {
         NotePanel.sendKey("math");
       }
     );
-  const urlPaste =
-    vscode.commands.registerCommand("markdownnote.urlPaste",
+  const pasteURL =
+    vscode.commands.registerCommand("markdownnote.pasteURL",
       () => {
-        NotePanel.sendKey("urlPaste");
+        NotePanel.sendKey("pasteURL");
       }
     );
-  const imgPaste =
-    vscode.commands.registerCommand("markdownnote.imgPaste",
+  const pasteImageURL =
+    vscode.commands.registerCommand("markdownnote.pasteImageURL",
       () => {
-        NotePanel.sendKey("imgPaste");
+        NotePanel.sendKey("pasteImageURL");
       }
     );
   const tex2svg =
@@ -315,22 +315,22 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(toSideCommand);
   context.subscriptions.push(exportHTMLCommand);
   //keybinding
-  context.subscriptions.push(editOrHTML);
+  context.subscriptions.push(_allHTMLorEDIT);
   context.subscriptions.push(paste);
   context.subscriptions.push(undo);
   context.subscriptions.push(redo);
-  context.subscriptions.push(cellAdd);
-  context.subscriptions.push(cellDelete);
-  context.subscriptions.push(cellUp);
-  context.subscriptions.push(cellDown);
+  context.subscriptions.push(_cellAdd);
+  context.subscriptions.push(_cellDelete);
+  context.subscriptions.push(_cellUp);
+  context.subscriptions.push(_cellDown);
   context.subscriptions.push(bold);
   context.subscriptions.push(italic);
-  context.subscriptions.push(inlineCode);
-  context.subscriptions.push(inlineMath);
+  context.subscriptions.push(codeInline);
+  context.subscriptions.push(mathInline);
   context.subscriptions.push(code);
   context.subscriptions.push(math);
-  context.subscriptions.push(urlPaste);
-  context.subscriptions.push(imgPaste);
+  context.subscriptions.push(pasteURL);
+  context.subscriptions.push(pasteImageURL);
   context.subscriptions.push(tex2svg);
 
 }

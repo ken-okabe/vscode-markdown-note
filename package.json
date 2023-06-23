@@ -2,7 +2,7 @@
   "name": "markdownnote",
   "displayName": "MarkdownNote",
   "description": "MarkdownNote(Markdown Preview is WYSIWYG Editor)",
-  "version": "0.303.0",
+  "version": "0.307.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/stken2050/vscode-markdown-note.git"
@@ -55,7 +55,7 @@
     "keybindings": [
       {
         "key": "escape",
-        "command": "markdownnote.editOrHTML",
+        "command": "markdownnote._allHTMLorEDIT",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
@@ -75,22 +75,22 @@
       },
       {
         "key": "ctrl+enter",
-        "command": "markdownnote.cellAdd",
+        "command": "markdownnote._cellAdd",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+backspace",
-        "command": "markdownnote.cellDelete",
+        "command": "markdownnote._cellDelete",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+up",
-        "command": "markdownnote.cellUp",
+        "command": "markdownnote._cellUp",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+down",
-        "command": "markdownnote.cellDown",
+        "command": "markdownnote._cellDown",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
@@ -109,18 +109,23 @@
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
+        "key": "ctrl+`",
+        "command": "markdownnote.codeInline",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
         "key": "ctrl+e",
-        "command": "markdownnote.inlineCode",
+        "command": "markdownnote.codeInline",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+j",
-        "command": "markdownnote.inlineCode",
+        "command": "markdownnote.codeInline",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+n",
-        "command": "markdownnote.inlineMath",
+        "command": "markdownnote.mathInline",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
@@ -135,12 +140,12 @@
       },
       {
         "key": "ctrl+l",
-        "command": "markdownnote.urlPaste",
+        "command": "markdownnote.pasteURL",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
         "key": "ctrl+p",
-        "command": "markdownnote.imgPaste",
+        "command": "markdownnote.pasteImageURL",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
