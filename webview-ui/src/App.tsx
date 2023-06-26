@@ -64,8 +64,8 @@ const ID = new Map(); //ID.get(cell)
 const newCellID = R('');
 const deletingID = R('');
 
-const historyEdit = [];
-const undoHistoryEdit = [];
+const editHistory = [];
+const undoHistory = [];
 
 const isEdit = R(true);
 const currentID = R("");
@@ -203,7 +203,7 @@ const renderHTML = id => {
 };
 
 //------------------------------------------------------
-const replaceSelected =
+const replaceSelected = id =>
   before => after => {
     const sel = window.getSelection();
 
@@ -215,9 +215,10 @@ const replaceSelected =
     range.deleteContents();
     range.insertNode(document.createTextNode(text));
 
+    history(id);  // <-----------------
   };
 
-const newlinesPaste =
+const newlinesPaste = id =>
   key => {
     const sel = window.getSelection();
     const range = sel.getRangeAt(0);
@@ -228,11 +229,13 @@ const newlinesPaste =
           const text = key + '\n' + clipText + '\n' + key;
           range.deleteContents();
           range.insertNode(document.createTextNode(text));
+
+          history(id);  // <-----------------
         }
       );
   };
 
-const replacePasteURL =
+const replacePasteURL = id =>
   key => {
     const sel = window.getSelection();
     const range = sel.getRangeAt(0);
@@ -244,33 +247,35 @@ const replacePasteURL =
           const text = key + '[' + selStr + '](' + clipText + ')';
           range.deleteContents();
           range.insertNode(document.createTextNode(text));
+
+          history(id); // <-----------------
         }
       );
   };
 
 const bold = id =>
-  replaceSelected(' **')('** ');
+  replaceSelected(id)(' **')('** ');
 
 const italic = id =>
-  replaceSelected(' *')('* ');
+  replaceSelected(id)(' *')('* ');
 
 const codeInline = id =>
-  replaceSelected(' `')('` ');
+  replaceSelected(id)(' `')('` ');
 
 const mathInline = id =>
-  replaceSelected(' $')('$ ');
+  replaceSelected(id)(' $')('$ ');
 
 const code = id =>
-  newlinesPaste('```');
+  newlinesPaste(id)('```');
 
 const math = id =>
-  newlinesPaste('$$');
+  newlinesPaste(id)('$$');
 
 const pasteURL = id =>
-  replacePasteURL('');
+  replacePasteURL(id)('');
 
 const pasteImageURL = id =>
-  replacePasteURL('!');
+  replacePasteURL(id)('!');
 //===========================================
 
 const blobToBase64 = (blob) =>
@@ -293,6 +298,8 @@ const paste = id => {
 
     range.deleteContents();
     range.insertNode(document.createTextNode(text));
+
+    history(id); // <-----------------
 
     return true;
   };
@@ -363,71 +370,91 @@ const undo = id => {
 
   console.log('undo');
 
-  const history = historyEdit[id];
+  const editHistoryID = editHistory[id];
+  const undoHistoryID = undoHistory[id];
 
-  history.length === 1
+  editHistoryID.length === 1
     ? console.log('no previous History')
     : (() => {
 
+      //restore the previous state
       const elEdit = document.getElementById("edit" + id);
+      const prevState =
+        editHistoryID[editHistoryID.length - 2];
+      elEdit.innerText = prevState.innerText;
+      elEdit.focus();
+      restoreSelection(elEdit, prevState);
 
-      const undoHistory = undoHistoryEdit[id];
+      // move the current/last state to the undoHistory
+      undoHistoryID[undoHistoryID.length] =
+        editHistoryID[editHistoryID.length - 1];
 
-      undoHistory[undoHistory.length] = history[history.length - 1];
-
-      const history1 =
-        history.flatMap(
+      // remove the current/last state
+      editHistory[id] = // mutable
+        editHistoryID.flatMap(
           (el, i) =>
-            i === history.length - 1
+            i === editHistoryID.length - 1
               ? []
               : el
-        );
-
-      console.log(`history1`);
-      console.log(history1);
-
-      elEdit.innerText = history1[history1.length - 1];
-
-      historyEdit[id] = history1;
-
-      setEndOfContenteditable(elEdit);
+        );;
 
       hStyle(id);
     })();
 };
-
 
 const redo = id => {
 
   console.log('redo');
 
-  const elEdit = document.getElementById("edit" + id);
+  const editHistoryID = editHistory[id];
+  const undoHistoryID = undoHistory[id];
 
-  const history = historyEdit[id];
-  const undoHistory = undoHistoryEdit[id];
-
-  undoHistory.length === 0
+  undoHistoryID.length === 0
     ? console.log('no previous redoHistory')
     : (() => {
 
-      history[history.length] = undoHistory[undoHistory.length - 1];
+      //restore the previous state
+      const elEdit = document.getElementById("edit" + id);
+      const prevState =
+        undoHistoryID[undoHistoryID.length - 1];
+      elEdit.innerText = prevState.innerText;
+      elEdit.focus();
+      restoreSelection(elEdit, prevState);
 
-      elEdit.innerText = undoHistory[undoHistory.length - 1];
-
-      undoHistoryEdit[id] =
-        undoHistory.flatMap(
+      // move the current/last state to the editHistory
+      editHistoryID[editHistoryID.length] =
+        undoHistoryID[undoHistoryID.length - 1];
+      // remove the current/last state history
+      undoHistory[id] = //mutable
+        undoHistoryID.flatMap(
           (el, i) =>
-            i === undoHistory.length - 1
+            i === undoHistoryID.length - 1
               ? []
               : el
         );
-
-      setEndOfContenteditable(elEdit);
 
       hStyle(id);
     })();
 
 };
+
+const restoreSelection = (elEdit, prevState) => {
+  if (elEdit.firstChild) {
+    const range = document.createRange();
+    range.setStart(
+      elEdit.firstChild,
+      Math.min(prevState.selectionStart, elEdit.firstChild.length)
+    );
+    range.setEnd(
+      elEdit.firstChild,
+      Math.min(prevState.selectionEnd, elEdit.firstChild.length)
+    );
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+};
+
 
 const svgCellID = R(0);
 const tex2svg = id => {
@@ -525,28 +552,42 @@ const toHTMLmode = id => {
 
 };
 
-const onKeyDown = id => {
-  console.log("onInput");
-  console.log("edit" + id);
-  hStyle(id);
+const history = (id) => {
+  console.log("history--------------");
+  const elEdit = document.getElementById("edit" + id);
+  const selection = window.getSelection();
+  const range = selection.getRangeAt(0);
+  const preSelectionRange = range.cloneRange();
+  preSelectionRange.selectNodeContents(elEdit);
+  preSelectionRange.setEnd(range.startContainer, range.startOffset);
+  const start = preSelectionRange.toString().length;
+  preSelectionRange.setEnd(range.endContainer, range.endOffset);
+  const end = preSelectionRange.toString().length;
 
-  const history = () => {
-    console.log("history--------------");
-    const elEdit = document.getElementById("edit" + id);
-    const text = elEdit.innerText;
-    console.log(text);
-    const history = historyEdit[id];
-    console.log(history);
-    console.log(history[history.length - 1]);
-
-    history[history.length - 1] === text
-      ? undefined
-      : history[history.length] = text;
-
-    console.log(history);
+  const state = {
+    innerText: elEdit.innerText,
+    cursorPosition: end,
+    selectionStart: start,
+    selectionEnd: end,
   };
 
-  window.setTimeout(history, 0);
+  const editHistoryID = editHistory[id];
+  editHistoryID[editHistoryID.length] = state;
+  console.log(editHistoryID);
+};
+
+const onKeyDown = id => {
+  console.log("onKeyDown");
+  console.log("edit" + id);
+
+  hStyle(id);
+};
+
+const onInput = id => {
+  console.log("onInput");
+  console.log("edit" + id);
+
+  history(id);
 };
 //=======================================================
 const Cell: Component = (text: string) => {
@@ -554,8 +595,15 @@ const Cell: Component = (text: string) => {
   console.log(id);
   newCellID.nextR(id);
 
-  historyEdit[id] = [text];
-  undoHistoryEdit[id] = [];
+  const state = {
+    innerText: text,
+    cursorPosition: undefined,
+    selectionStart: undefined,
+    selectionEnd: undefined,
+  };
+
+  editHistory[id] = [state];
+  undoHistory[id] = [];
 
   const [contentStream, contentStreamNext] = createSignal();
 
@@ -569,6 +617,9 @@ const Cell: Component = (text: string) => {
       <div class='celledit' id={"edit" + id}
         contenteditable={"plaintext-only" as any}
         onKeyDown={ev => onKeyDown(id)}
+        onInput={ev => onInput(id)}
+        //onPaste={ev => onInput(id)}  //paste is via keybinding
+        //onCut={ev => onInput(id)}
         onfocusin={ev => onFocus(id)}
         style={{ display: 'none' }}
       >
@@ -595,9 +646,7 @@ const Cell: Component = (text: string) => {
     renderHTML(id);
   };
 
-  window.setTimeout(
-    () => initCell()
-    , 0);
+  window.setTimeout(initCell, 0);
 
   return div;
 };
@@ -942,6 +991,8 @@ const svgF = svg => {
     const newText = comment(text) + "\n" + tag;
 
     elEdit.innerText = newText;
+
+    history(svgCellID.lastVal); // <------------------
   });
 };
 

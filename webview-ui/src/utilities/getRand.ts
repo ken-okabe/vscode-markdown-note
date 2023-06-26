@@ -7,7 +7,7 @@ const getRandomInt = (min, max) => {
     //The maximum is exclusive and the minimum is inclusive
 };
 
-const getRand = () => {
+const getRand = (): string => {
     const value = getRandomInt(0, 1000000000).toString();
     return randHistory.includes(value)
         ? getRand()
