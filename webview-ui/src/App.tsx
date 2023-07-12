@@ -582,14 +582,12 @@ const history = (id) => {
 const onKeyDown = id => {
   console.log("onKeyDown");
   console.log("edit" + id);
-
-  hStyle(id);
 };
 
 const onInput = id => {
   console.log("onInput");
   console.log("edit" + id);
-
+  hStyle(id);
   history(id);
 };
 //=======================================================
@@ -619,7 +617,7 @@ const Cell: Component = (text: string) => {
 
       <div class='celledit' id={"edit" + id}
         contenteditable={"plaintext-only" as any}
-        onKeyDown={ev => onKeyDown(id)}
+        //onKeyDown={ev => onKeyDown(id)}
         onInput={ev => onInput(id)}
         //onPaste={ev => onInput(id)}  //paste is via keybinding
         //onCut={ev => onInput(id)}

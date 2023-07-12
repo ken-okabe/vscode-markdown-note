@@ -34,14 +34,14 @@
         },
         "markdownnote.start_overlay": {
           "type": "object",
-          "description": "Initial editing mode to Overlay",
+          "description": "Initial Editing Mode is Overlay",
           "default": {
             "true OR false": true
           }
         },
         "markdownnote.image_repository": {
           "type": "object",
-          "description": "GitHub image repositoy and token",
+          "description": "GitHub Image Repositoy and Token",
           "default": {
             "repository": "USER/IMAGES-REPOSITORY",
             "token": "ghp_xxxxxxxxxxxxxxxxxxxx"

@@ -124,12 +124,9 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.workspace.getConfiguration("markdownnote.start_overlay");
 
   console.log("%%%%% start_overlay ? %%%%%");
-  console.log(overlay["true/false"]);
+  console.log(overlay["true OR false"]);
 
-  const modeR =
-    R(overlay["true/false"]
-      ? 1
-      : 2);
+  const modeR = R(overlay["true OR false"] ? 1 : 2);
 
   const f = (document: vscode.TextDocument | undefined) => {
 
