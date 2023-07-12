@@ -320,7 +320,10 @@ const paste = id => {
                 .then(f)
             )
           : imageRepository.repository === "USER/IMAGES-REPOSITORY" // left as default, no user config
-            ? undefined
+            ? vscode.postMessage({
+                command: "hello",
+                text: "Image Paste is not available. Please configure your image repository.",
+              })
             : item
               .getType(item.types[0])
               .then(blobToBase64)
@@ -786,9 +789,9 @@ const App: Component = () => {
       hFont['bold'] = getComputedStyle(document.getElementById('bold')).font;
       hFont['italic'] = getComputedStyle(document.getElementById('italic')).font;
 
-
       console.log('requestLoad');
       requestLoad();
+
     });
 
 
@@ -941,7 +944,10 @@ const getSVGurl = (svg: string) =>
     (resolve, reject) =>
 
       imageRepository.repository === "USER/IMAGES-REPOSITORY" // left as default, no config
-        ? reject("no imageRepository")
+        ? vscode.postMessage({
+                command: "hello",
+                text: "Image Paste is not available. Please configure your image repository.",
+              })
         : (() => {
           const content = btoa(svg);
           const ext = "svg";

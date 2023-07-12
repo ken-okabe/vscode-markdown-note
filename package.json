@@ -2,7 +2,7 @@
   "name": "markdownnote",
   "displayName": "MarkdownNote",
   "description": "WYSIWYG Markdown Editor for GitHub README.md and more",
-  "version": "0.400.0",
+  "version": "0.500.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/stken2050/vscode-markdown-note.git"
@@ -34,9 +34,9 @@
         },
         "markdownnote.start_overlay": {
           "type": "object",
-          "description": "Initial editing mode to Overlay(Default): true OR Side-by-Side: false",
+          "description": "Initial editing mode to Overlay",
           "default": {
-            "true/false": true
+            "true OR false": true
           }
         },
         "markdownnote.image_repository": {
