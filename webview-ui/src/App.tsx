@@ -11,14 +11,9 @@ import { R }
 import type { Reactive }
   from "./utilities/libs/ReactiveMonad/reactive-monadOp";
 
-import { admonitionsPlugin } from "./utilities/admonitionsPlugin";
-import { setEndOfContenteditable } from "./utilities/setEndOfContenteditable";
-
 // Default SortableJS
 import Sortable from 'sortablejs';
 
-import remarkBreaks from 'remark-breaks'
-import remarkDirective from 'remark-directive'
 import rehypePrism from 'rehype-prism-plus'
 import rehypeMathjax from 'rehype-mathjax'
 import remarkMath from 'remark-math'
@@ -29,7 +24,6 @@ import remarkGfm from 'remark-gfm'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
 import rehypeRaw from 'rehype-raw'
-
 import rehypeMermaid from 'rehype-mermaidjs'
 
 
@@ -70,6 +64,9 @@ const undoHistory = [];
 const isEdit = R(true);
 const currentID = R("");
 
+const isWritable = R(true);
+
+let sortable: Sortable;
 let imageRepository;
 
 //==========================================
@@ -172,7 +169,7 @@ const hStyle = id => {
   const elEdit = document.getElementById("edit" + id);
 
   const f0 = () => {
-    const text = elEdit.innerText;
+    const text = elEdit?.innerText;
 
     elEdit.style.font =
       text.substring(0, 6) === '######'
@@ -215,7 +212,7 @@ const replaceSelected = id =>
     range.deleteContents();
     range.insertNode(document.createTextNode(text));
 
-    history(id);  // <-----------------
+    onInput(id);  // <-----------------
   };
 
 const newlinesPaste = id =>
@@ -230,7 +227,7 @@ const newlinesPaste = id =>
           range.deleteContents();
           range.insertNode(document.createTextNode(text));
 
-          history(id);  // <-----------------
+          onInput(id);  // <-----------------
         }
       );
   };
@@ -248,7 +245,7 @@ const replacePasteURL = id =>
           range.deleteContents();
           range.insertNode(document.createTextNode(text));
 
-          history(id); // <-----------------
+          onInput(id); // <-----------------
         }
       );
   };
@@ -299,7 +296,7 @@ const paste = id => {
     range.deleteContents();
     range.insertNode(document.createTextNode(text));
 
-    history(id); // <-----------------
+    onInput(id); // <-----------------
 
     return true;
   };
@@ -321,9 +318,9 @@ const paste = id => {
             )
           : imageRepository.repository === "USER/IMAGES-REPOSITORY" // left as default, no user config
             ? vscode.postMessage({
-                command: "hello",
-                text: "Image Paste is not available. Please configure your image repository.",
-              })
+              command: "hello",
+              text: "Image Paste is not available. Please configure your image repository.",
+            })
             : item
               .getType(item.types[0])
               .then(blobToBase64)
@@ -442,15 +439,15 @@ const redo = id => {
 };
 
 const restoreSelection = (elEdit, prevState) => {
-  if (elEdit.firstChild) {
+  if (elEdit?.firstChild) {
     const range = document.createRange();
     range.setStart(
-      elEdit.firstChild,
-      Math.min(prevState.selectionStart, elEdit.firstChild.length)
+      elEdit?.firstChild,
+      Math.min(prevState.selectionStart, elEdit?.firstChild.length)
     );
     range.setEnd(
-      elEdit.firstChild,
-      Math.min(prevState.selectionEnd, elEdit.firstChild.length)
+      elEdit?.firstChild,
+      Math.min(prevState.selectionEnd, elEdit?.firstChild.length)
     );
     const selection = window.getSelection();
     selection.removeAllRanges();
@@ -498,14 +495,52 @@ isEdit.mapR(val => {
   return val;
 });
 
-const _allHTMLorEDIT = id => {
+const _readOnly_Writable = id => {
+  console.log('_readOnly_Writable');
+  console.log(isWritable.lastVal);
 
-  console.log('_AllHTMLorEDIT');
+  isWritable.lastVal
+    ? toReadOnlymode(id)
+    : toWritableMode(id);
+};
+
+const toReadOnlymode = id => {
+  console.log('toReadOnlymode');
+  vscode.postMessage({
+    command: "hello",
+    text: "ReadOnly Mode"
+  });
+  isWritable.nextR(false);
+  toHTMLmode(id);
+  sortable.option("disabled", true); //disable sortable
+
+  Array
+    .from(document.getElementsByClassName('cellhtml') as HTMLCollectionOf<HTMLElement>)
+    .map(el => el.style.cursor = "default");
+};
+
+const toWritableMode = id => {
+  console.log('toWritableMode');
+  vscode.postMessage({
+    command: "hello",
+    text: "Writable Mode"
+  });
+  isWritable.nextR(true);
+  toEdit(id);
+  sortable.option("disabled", false); //enable sortable
+
+  Array
+    .from(document.getElementsByClassName('cellhtml') as HTMLCollectionOf<HTMLElement>)
+    .map(el => el.style.cursor = "-webkit-grabbing");
+};
+
+const _allHTML_EDIT = id => {
+  console.log('_AllHTML_EDIT');
   console.log(isEdit.lastVal);
 
   isEdit.lastVal
     ? toHTMLmode(id)
-    : toEdit(id);
+    : toEdit(id)
 
 };
 const onFocus = id => {
@@ -568,7 +603,7 @@ const history = (id) => {
   const end = preSelectionRange.toString().length;
 
   const state = {
-    innerText: elEdit.innerText,
+    innerText: elEdit?.innerText,
     cursorPosition: end,
     selectionStart: start,
     selectionEnd: end,
@@ -579,10 +614,6 @@ const history = (id) => {
   console.log(editHistoryID);
 };
 
-const onKeyDown = id => {
-  console.log("onKeyDown");
-  console.log("edit" + id);
-};
 
 const onInput = id => {
   console.log("onInput");
@@ -590,6 +621,8 @@ const onInput = id => {
   hStyle(id);
   history(id);
 };
+
+
 //=======================================================
 const Cell: Component = (text: string) => {
   const id = getRand();
@@ -617,10 +650,7 @@ const Cell: Component = (text: string) => {
 
       <div class='celledit' id={"edit" + id}
         contenteditable={"plaintext-only" as any}
-        //onKeyDown={ev => onKeyDown(id)}
         onInput={ev => onInput(id)}
-        //onPaste={ev => onInput(id)}  //paste is via keybinding
-        //onCut={ev => onInput(id)}
         onfocusin={ev => onFocus(id)}
         style={{ display: 'none' }}
       >
@@ -630,7 +660,12 @@ const Cell: Component = (text: string) => {
 
       <div class='cellhtml' id={"html" + id}
         contenteditable={false}
-        onClick={ev => toEdit(id)}>
+        onClick={ev =>
+          isWritable.lastVal
+            ? toEdit(id)
+            : undefined // usual web UI click works
+        }
+      >
 
         {contentStreams[id]()}
 
@@ -663,10 +698,7 @@ const markHtml =
     const rmPromise =
       unified()
         .use(remarkParse)
-        .use(remarkDirective)
-        .use(admonitionsPlugin)
         .use(remarkGfm as any)
-        .use(remarkBreaks)
         .use(remarkMath)
         .use(remarkRehype, { allowDangerousHtml: true })
         .use(rehypeRaw) // *Parse* the raw HTML strings embedded in the tree
@@ -768,7 +800,7 @@ const App: Component = () => {
 
       // Your code to run since DOM is loaded and ready
 
-      Sortable.create(
+      sortable = Sortable.create(
         document.getElementById('items'),
         {
           animation: 150,
@@ -884,35 +916,81 @@ const requestSVG = (tex: string) => {
 };
 
 //=============================================================
-const parseMd = (mdText: string) => {
-  const codeBlockRegex = /`{3}[\S\s]+?`{3}/g;
-  const splitText =
-    mdText
-      .split(codeBlockRegex);
-  const codeBlocks =
-    mdText
-      .match(codeBlockRegex) || [];
-  const result =
-    splitText
-      .flatMap((text, index) => {
-        const blocks =
-          text
-            .split('\n\n')
-            .filter(block => block.trim() !== '');
-        return index < codeBlocks.length
-          ? [...blocks, codeBlocks[index]]
-          : blocks;
-      });
-  return result;
-};
-
-
 const mdtextR = R('Loading...');
 //==========================================
+//-----------------------------------------------
 mdtextR
-  .mapR(mdText => parseMd(mdText))
-  .mapR(mds => {
+  .mapR(mdText => {
 
+    const domParser = new DOMParser();
+    const doc = domParser.parseFromString(mdText, "text/html");
+    const tagBlocks = Array.from(doc.body.children).map((el) => el.outerHTML);
+
+    const prefixTag = '#%#y#8#%%%%a%%#7%%#c#replacing#Tag#Block#%%5#%%x%m%%##q#6#%##w#';
+    const regexTag = new RegExp(`(${prefixTag})(\\d+)`, 'g');
+
+    const replaceTagBlocks =
+      (mdText) => (tagBlocks) =>
+        tagBlocks.reduce(
+          (result, tag, index) =>
+            result.replace(tag, `${prefixTag}${index}`),
+          mdText
+        );
+    // HTML tag blocks are replaced with a special string
+    const mdText1: string = replaceTagBlocks(mdText)(tagBlocks);
+    //--------------------------------------------------
+    const codeBlockRegex = /`{3}[\S\s]+?`{3}/g;
+
+    const codeBlocks =
+      [...mdText1.matchAll(codeBlockRegex)]
+        .map((match) => match[0]);
+
+    const prefixCode = '#%#y#8#%%%%a%%#7%%#c#replacing#Code#Block#%%5#%%x%m%%##q#6#%##w#';
+    const regexCode = new RegExp(`(${prefixCode})(\\d+)`, 'g');
+
+    const replaceCodeBlocks =
+      (mdText) => (codeBlocks) =>
+        codeBlocks.reduce(
+          (result, code, index) =>
+            result.replace(code, `${prefixCode}${index}`),
+          mdText
+        );
+    // Code blocks are replaced with a special string
+    const mdText2: string = replaceCodeBlocks(mdText1)(codeBlocks);
+    //--------------------------------------------------
+    const mds2 = mdText2.split(/\n\n+/);
+    //--------------------------------------------------
+    const restoreTagBlocks =
+      mds => tagBlocks =>
+        mds.flatMap(
+          (md) =>
+            md.match(regexTag)
+              ? (() => {
+                const index =
+                  Number(md.match(regexTag)[0].replace(prefixTag, ''));
+                return [tagBlocks[index]];
+              })()
+              : [md]
+        );
+
+    const restoreCodelocks =
+      mds => codeBlocks =>
+        mds.flatMap(
+          (md) =>
+            md.match(regexCode)
+              ? (() => {
+                const index =
+                  Number(md.match(regexCode)[0].replace(prefixCode, ''));
+                return [codeBlocks[index]];
+              })()
+              : [md]
+        );
+
+    // Code blocks are restored
+    const mds1 = restoreCodelocks(mds2)(codeBlocks);
+    // HTML tag blocks are restored
+    const mds = restoreTagBlocks(mds1)(tagBlocks);
+    //--------------------------------------------------
     const cells =
       mds.length === 0 // if markdown text is empty
         ? [Cell("# Title")]
@@ -931,10 +1009,14 @@ mdtextR
 
       currentID.nextR(ID.get(cells[0])); //set focus
 
+      cellToMarkSave(); // load and save (trim empty lines etc)
+
     }, 100);
 
-
   });
+
+
+
 //==========================================
 
 const getSVGurl = (svg: string) =>
@@ -943,9 +1025,9 @@ const getSVGurl = (svg: string) =>
 
       imageRepository.repository === "USER/IMAGES-REPOSITORY" // left as default, no config
         ? vscode.postMessage({
-                command: "hello",
-                text: "Image Paste is not available. Please configure your image repository.",
-              })
+          command: "hello",
+          text: "Image Paste is not available. Please configure your image repository.",
+        })
         : (() => {
           const content = btoa(svg);
           const ext = "svg";
@@ -984,7 +1066,7 @@ const svgF = svg => {
     const tag = `<p align="center"><img src= "${url}"></p>`;
 
     const elEdit = document.getElementById("edit" + svgCellID.lastVal);
-    const text = elEdit.innerText;
+    const text = elEdit?.innerText;
 
     const comment
       = text =>
@@ -996,7 +1078,7 @@ const svgF = svg => {
 
     elEdit.innerText = newText;
 
-    history(svgCellID.lastVal); // <------------------
+    onInput(svgCellID.lastVal); // <------------------
   });
 };
 
@@ -1024,41 +1106,68 @@ window.addEventListener('message', event => {
             svgF(JSON.parse(message.obj));
           })()
           //keys--------------------------------
-          : message.cmd === '_AllHTMLorEDIT'
-            ? _allHTMLorEDIT(currentID.lastVal)
-            : message.cmd === '_CellAdd'
-              ? _cellAdd(currentID.lastVal)
-              : message.cmd === '_CellDelete'
-                ? _cellDelete(currentID.lastVal)
-                : message.cmd === '_CellUp'
-                  ? _cellUp(currentID.lastVal)
-                  : message.cmd === '_CellDown'
-                    ? _cellDown(currentID.lastVal)
-                    : message.cmd === 'Paste'
-                      ? paste(currentID.lastVal)
-                      : message.cmd === 'Undo'
-                        ? undo(currentID.lastVal)
-                        : message.cmd === 'Redo'
-                          ? redo(currentID.lastVal)
-                          : message.cmd === 'Bold'
-                            ? bold(currentID.lastVal)
-                            : message.cmd === 'Italic'
-                              ? italic(currentID.lastVal)
-                              : message.cmd === 'CodeInline'
-                                ? codeInline(currentID.lastVal)
-                                : message.cmd === 'MathInline'
-                                  ? mathInline(currentID.lastVal)
-                                  : message.cmd === 'Code'
-                                    ? code(currentID.lastVal)
-                                    : message.cmd === 'Math'
-                                      ? math(currentID.lastVal)
-                                      : message.cmd === 'PasteURL'
-                                        ? pasteURL(currentID.lastVal)
-                                        : message.cmd === 'PasteImageURL'
-                                          ? pasteImageURL(currentID.lastVal)
-                                          : message.cmd === 'Tex2SVG'
-                                            ? tex2svg(currentID.lastVal)
-                                            : undefined;
+          : message.cmd === '_ReadOnly_Writable'
+            ? _readOnly_Writable(currentID.lastVal)
+            : message.cmd === '_AllHTML_EDIT'
+              ? isWritable.lastVal
+                ? _allHTML_EDIT(currentID.lastVal)
+                : vscode.postMessage({
+                  command: "hello",
+                  text: "ReadOnly Mode",
+                })
+              : message.cmd === '_CellAdd'
+                ? isWritable.lastVal
+                  ? _cellAdd(currentID.lastVal)
+                  : vscode.postMessage({
+                    command: "hello",
+                    text: "ReadOnly Mode",
+                  })
+                : message.cmd === '_CellDelete'
+                  ? isWritable.lastVal
+                    ? _cellDelete(currentID.lastVal)
+                    : vscode.postMessage({
+                      command: "hello",
+                      text: "ReadOnly Mode",
+                    })
+                  : message.cmd === '_CellUp'
+                    ? isWritable.lastVal
+                      ? _cellUp(currentID.lastVal)
+                      : vscode.postMessage({
+                        command: "hello",
+                        text: "ReadOnly Mode",
+                      })
+                    : message.cmd === '_CellDown'
+                      ? isWritable.lastVal
+                        ? _cellDown(currentID.lastVal)
+                        : vscode.postMessage({
+                          command: "hello",
+                          text: "ReadOnly Mode",
+                        })
+                      : message.cmd === 'Paste'
+                        ? paste(currentID.lastVal)
+                        : message.cmd === 'Undo'
+                          ? undo(currentID.lastVal)
+                          : message.cmd === 'Redo'
+                            ? redo(currentID.lastVal)
+                            : message.cmd === 'Bold'
+                              ? bold(currentID.lastVal)
+                              : message.cmd === 'Italic'
+                                ? italic(currentID.lastVal)
+                                : message.cmd === 'CodeInline'
+                                  ? codeInline(currentID.lastVal)
+                                  : message.cmd === 'MathInline'
+                                    ? mathInline(currentID.lastVal)
+                                    : message.cmd === 'Code'
+                                      ? code(currentID.lastVal)
+                                      : message.cmd === 'Math'
+                                        ? math(currentID.lastVal)
+                                        : message.cmd === 'PasteURL'
+                                          ? pasteURL(currentID.lastVal)
+                                          : message.cmd === 'PasteImageURL'
+                                            ? pasteImageURL(currentID.lastVal)
+                                            : message.cmd === 'Tex2SVG'
+                                              ? tex2svg(currentID.lastVal)
+                                              : undefined;
 
 });
 //==========================================

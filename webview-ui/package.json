@@ -17,29 +17,21 @@
     "vite-plugin-solid": "^2.3.0"
   },
   "dependencies": {
-    "@microflash/remark-callout-directives": "^1.5.0",
     "@vscode/webview-ui-toolkit": "^1.2.1",
     "bootstrap": "^5.2.0",
-    "github-markdown-css": "^5.1.0",
-    "hastscript": "^7.0.2",
-    "mathjax": "^3.2.2",
     "prism-themes": "^1.9.0",
-    "rehype-format": "^4.0.1",
     "rehype-mathjax": "^4.0.2",
     "rehype-mermaidjs": "^1.0.1",
     "rehype-prism-plus": "^1.5.0",
     "rehype-raw": "^6.1.1",
     "rehype-stringify": "^9.0.3",
-    "remark": "^14.0.2",
-    "remark-breaks": "^3.0.2",
-    "remark-directive": "^2.0.1",
     "remark-gfm": "^3.0.1",
     "remark-math": "^5.1.1",
-    "remark-mdx": "^2.1.4",
+    "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
+    "remark-stringify": "^10.0.3",
     "solid-js": "^1.5.1",
     "sortablejs": "^1.15.0",
-    "texsvg": "^2.0.2",
-    "unist-util-visit": "^4.1.1"
+    "texsvg": "^2.0.2"
   }
 }

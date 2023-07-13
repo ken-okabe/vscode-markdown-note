@@ -2,7 +2,7 @@
   "name": "markdownnote",
   "displayName": "MarkdownNote",
   "description": "WYSIWYG Markdown Editor for GitHub README.md and more",
-  "version": "0.500.0",
+  "version": "0.600.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/stken2050/vscode-markdown-note.git"
@@ -55,7 +55,12 @@
     "keybindings": [
       {
         "key": "escape",
-        "command": "markdownnote._AllHTMLorEDIT",
+        "command": "markdownnote._AllHTML_EDIT",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+escape",
+        "command": "markdownnote._ReadOnly_Writable",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
@@ -149,7 +154,7 @@
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       },
       {
-        "key": "ctrl+/",
+        "key": "ctrl+,",
         "command": "markdownnote.Tex2SVG",
         "when": "activeWebviewPanelId == 'MarkdownNote'"
       }
