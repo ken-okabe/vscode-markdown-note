@@ -18,4 +18,4 @@
 
 # ✅ Headers
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo03.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo02.gif)
