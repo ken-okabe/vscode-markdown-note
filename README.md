@@ -1,4 +1,4 @@
-![![image](https://raw.githubusercontent.com/ken-okabe/web-images/main/img_1689302662138.png)](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/showcase.png)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/showcase.png)
 
 ## VSCode + Markdown + WYSIWYG = Productivity
 
@@ -37,3 +37,8 @@
 # ✅ GFM & features supported by GitHub 
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo05.gif)
+
+
+# ✅ Key Bindings
+
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/keybindings.png)

@@ -12,6 +12,8 @@ We use [GitHub](https://github.com/) site, and his name is  **Octcat**😉
 
 > I love  `Code` !
 
+![image](https://raw.githubusercontent.com/ken-okabe/web-images/main/img_1689324989741.png)
+
 ```js
 let a = 1;
 let b = 2;
@@ -70,3 +72,4 @@ A --> C(Round Rect)
 B --> D{Rhombus}
 C --> D
 ```
+
