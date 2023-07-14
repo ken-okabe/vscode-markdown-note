@@ -38,7 +38,29 @@
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo05.gif)
 
+# ✅ Side-by-side mode is also WYSIWYG
+
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo06.gif)
+
+# ✅ ??
 
 # ✅ Key Bindings
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/keybindings.png)
+
+You can do everything with Key Bindings except for drag and drop; you can also customize them.
+
+# ✅ Works with VSCode’s full potential
+
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo07.gif)
+
+For any operations that are not suitable for the Block editing, you can use VSCode features, such as undo/redo/select the whole document, or managing files with Git.
+
+ 
+
+
+
+
+
+
+
