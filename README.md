@@ -2,5 +2,6 @@
 
 # VSCode + Markdown + WYSIWYG = Productivity
 
-Helllo
+## Seamless
 
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo00.gif)
