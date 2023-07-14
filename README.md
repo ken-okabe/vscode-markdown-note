@@ -2,6 +2,10 @@
 
 # VSCode + Markdown + WYSIWYG = Productivity
 
-## Seamless
+## ✅ Seamless
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo00.gif)
+
+## ✅ Block Editing
+
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo01.gif)
