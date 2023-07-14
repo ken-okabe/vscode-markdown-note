@@ -1,11 +1,21 @@
 ![![image](https://raw.githubusercontent.com/ken-okabe/web-images/main/img_1689302662138.png)](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/showcase.png)
 
-# VSCode + Markdown + WYSIWYG = Productivity
+## VSCode + Markdown + WYSIWYG = Productivity
 
-## ✅ Seamless
+---
+
+# ✅ Seamless
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo00.gif)
 
-## ✅ Block Editing
+---
+
+# ✅ Block Editing
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo01.gif)
+
+---
+
+# ✅ Headers
+
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo03.gif)
