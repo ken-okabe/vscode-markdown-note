@@ -8,7 +8,7 @@ Hello!
 
 We use [GitHub](https://github.com/) site, and his name is  **Octcat**😉 
 
-![image](https://raw.githubusercontent.com/ken-okabe/web-images/main/img_1689170633279.png)
+![octcat](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png)
 
 > I love  `Code` !
 
