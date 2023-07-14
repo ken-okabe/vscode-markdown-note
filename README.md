@@ -1,8 +1,6 @@
-![logo](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/logo256.png)
+![![image](https://raw.githubusercontent.com/ken-okabe/web-images/main/img_1689302662138.png)](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/showcase.png)
 
-# Markdown Note
-
-## VSCode + Markdown + WYSIWYG = Productivity
+# VSCode + Markdown + WYSIWYG = Productivity
 
 >test
 - test
