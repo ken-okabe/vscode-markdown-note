@@ -52,7 +52,7 @@ Here is how it goes:
 
 1. Paste the image URL (`ctrl + P`)
 
- **and it will work just fine😎** 
+ **and it will work just fine 😎** 
 
 
 ---
