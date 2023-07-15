@@ -41,9 +41,9 @@ You can easily and quickly  **paste**  the site or image URL copied to the clipb
 
 Here is how it goes:
 
-1. Your clipboard has an image link:  `https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png`
+1. Your clipboard has an image link:  [https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png)
 
-2. Type any image name in the Cell
+2. Type any image name in the Cell  (**octcat**) 
 
 3. Select all (`ctrl + A`)
 
