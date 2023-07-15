@@ -72,19 +72,17 @@ Here is how it goes:
 
 By default,  **Markdown Note**  works in  **Writable Mode** , but some web elements need user's click action even in Markdown documents.
 
-For example, GitHub Markdown supports `<details>` and `<summary>` html tags.
+For example,  **GitHub Markdown**  supports `<details>` and `<summary>` html tags.
 
 To test the native behavior, you can switch to  **ReadOnly Mode**  temporarily with `Ctrl+Esc`.
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_detail.gif)
 
-In ReadOnly Mode, the usual behavior of Markdown Note is paused and you can click the element normally.
+In  **ReadOnly Mode** , the default behavior of  **Markdown Note**  is paused and you can click the element in the standard manner.
 
 This way, you can see how `<details>` and `<summary>` html tags work.
 
-You can return to the normal  **Writable Mode**  by pressing `Ctrl+Esc` again.
-
-
+ Pressing `Ctrl+Esc` again  will return to the default  **Writable Mode**.
 
 ---
 
