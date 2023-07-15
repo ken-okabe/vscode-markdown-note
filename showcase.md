@@ -32,7 +32,6 @@ console.log(c);
 ## GitHub Flavored Markdown
 
 <details>
-
 <summary>Tips for collapsed sections</summary>
 
 ### You can add a header
@@ -44,6 +43,7 @@ You can add an image or a code block, too.
 ```js
  console.log("Hello World");
 ```
+---
 
 </details>
 

@@ -41,19 +41,16 @@ You can easily and quickly  **paste**  the site or image URL copied to the clipb
 Here is how it goes:
 
 0. Your clipboard has an image link:  [https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png)
-
 1. Type any image name in the Cell  (**octcat**) 
-
 2. Select all, then Paste the image URL  (`ctrl + A, P`)
-
 3. Exit the Cell (`Esc`)
 
  **Alternatively, if you don't want to type the image name, you can just** 
 
 1. Paste the image URL (`ctrl + P`)
+2. Exit the Cell (`Esc`)
 
  **and it will work just fine 😎** 
-
 
 ---
 
@@ -66,6 +63,28 @@ Here is how it goes:
 # ✅ GFM & features supported by GitHub 
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo05.gif)
+
+---
+
+# ✅ ReadOnly & Writable Mode
+
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/readonly.gif)
+
+By default,  **Markdown Note**  works in  **Writable Mode** , but some web elements need user's click action even in Markdown documents.
+
+For example, GitHub Markdown supports `<details>` and `<summary>` html tags.
+
+To test the native behavior, you can switch to  **ReadOnly Mode**  temporarily with `Ctrl+Esc`.
+
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_detail.gif)
+
+In ReadOnly Mode, the usual behavior of Markdown Note is paused and you can click the element normally.
+
+This way, you can see how `<details>` and `<summary>` html tags work.
+
+You can return to the normal  **Writable Mode**  by pressing `Ctrl+Esc` again.
+
+
 
 ---
 
@@ -96,7 +115,8 @@ The bidirectional data flow might look cool, but in fact, it often causes confus
 After native editing the Markdown source code in the standard VSCode editor, the user needs to **reload the contents explicitly since the data flow is unidirectional** .
 
 At this point, the user will choose which panel to reload:
-- to Side or Overlay.
+- to Side
+- Overlay
 
 The native editing can be a full modification of the document, and the reload action helps to  **reconstruct the entire markdown Cells with integrity** .
 
