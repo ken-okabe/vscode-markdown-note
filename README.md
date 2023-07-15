@@ -52,10 +52,10 @@ Here is how it goes:
 
  **and it will work just fine 😎** 
 
-URL paste & ImageURL paste operations are identical, and
+The operations to paste  **URLs**  &  **ImageURLs**  are identical but
 
-- For image links, `image` is used as the default name.
-- For URLs, the pasted URL itself is used as the shown link text. So when you just paste `https://github.com/` with  `ctrl + L` , the result will be  [https://github.com/](https://github.com/).
+- For  **imageURLs** , `image` is used as the default name.
+- For  **URLs** , the pasted URL itself is used as the shown link text. So when you just paste `https://github.com/` with  `ctrl + L` , the result will be  [https://github.com/](https://github.com/).
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_url.gif)
 
