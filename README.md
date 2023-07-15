@@ -32,25 +32,32 @@ You can see the exact header size based on the current CSS  **before converting 
 
 ---
 
-# ✅ Link & Image
+# ✅ URL & ImageURL
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_image.gif)
 
-You can easily and quickly  **paste**  the site or image URL copied to the clipboard as Markdown with a shortcut key ( `Ctrl+L`  for links,  `Ctrl+P`  for images by default Key Bindings).
+You can easily and quickly  **paste**   **URLs**  or  **imageURLs**  copied to the clipboard as Markdown with a shortcut key ( `Ctrl+L`  for URLs,  `Ctrl+P`  for images by default Key Bindings).
 
 Here is how it goes:
 
-0. Your clipboard has an image link:  [https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png)
+0. Your clipboard has an imageURL:  [https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png)
 1. Type any image name in the Cell  (**octcat**) 
-2. Select all, then Paste the image URL  (`ctrl + A, P`)
+2. Select all, then Paste the imageURL  (`ctrl + A, P`)
 3. Exit the Cell (`Esc`)
 
  **Alternatively, if you don't want to type the image name, you can just** 
 
-1. Paste the image URL (`ctrl + P`)
+1. Paste the imageURL (`ctrl + P`)
 2. Exit the Cell (`Esc`)
 
  **and it will work just fine 😎** 
+
+URL paste & ImageURL paste operations are identical, and
+
+- For image links, `image` is used as the default name.
+- For URLs, the pasted URL itself is used as the shown link text. So when you just paste `https://github.com/` with  `ctrl + L` , the result will be  [https://github.com/](https://github.com/).
+
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_url.gif)
 
 ---
 

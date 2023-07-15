@@ -241,7 +241,14 @@ const replacePasteURL = id =>
     navigator.clipboard.readText()
       .then(
         clipText => {
-          const text = key + '[' + selStr + '](' + clipText + ')';
+          const selStr1 =
+            selStr === ''
+              ? key === '!'
+                ? 'image'  // default image name
+                : clipText // default link text
+              : selStr;
+
+          const text = key + '[' + selStr1 + '](' + clipText + ')';
           range.deleteContents();
           range.insertNode(document.createTextNode(text));
 
