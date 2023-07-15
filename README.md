@@ -34,9 +34,22 @@ You can see the exact header size based on the current CSS  **before converting 
 
 # ✅ Link & Image
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo03.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_image.gif)
 
 You can easily and quickly  **paste**  the site or image URL copied to the clipboard as Markdown with a shortcut key ( `Ctrl+L`  for links,  `Ctrl+P`  for images by default Key Bindings).
+
+
+Here is how it goes:
+
+1. Your clipboard has an image link:  `https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png`
+
+2. Type any image name in the Cell
+
+3. Select all (`ctrl + A`)
+
+4. Paste the image URL (`ctrl + P`)
+
+5. Exit the Cell (`Esc`)
 
 ---
 
