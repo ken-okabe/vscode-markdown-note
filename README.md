@@ -42,12 +42,12 @@ Here is how it goes:
 
 0. Your clipboard has an imageURL:  [https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png)
 1. Type any image name in the Cell  (**octcat**) 
-2. Select all, then Paste the imageURL  (`ctrl + A, P`)
+2. Select all, then Paste the imageURL  (`Ctrl+A,P`)
 3. Exit the Cell (`Esc`)
 
  **Alternatively, if you don't want to type the image name, you can just** 
 
-1. Paste the imageURL (`ctrl + P`)
+1. Paste the imageURL (`Ctrl+P`)
 2. Exit the Cell (`Esc`)
 
  **and it will work just fine 😎** 
@@ -55,7 +55,7 @@ Here is how it goes:
 The operations to paste  **URLs**  &  **ImageURLs**  are identical but
 
 - For  **imageURLs** , `image` is used as the default name.
-- For  **URLs** , the pasted URL itself is used as the shown link text. So when you just paste `https://github.com/` with  `ctrl + L` , the result will be  [https://github.com/](https://github.com/).
+- For  **URLs** , the pasted URL itself is used as the shown link text. So when you just paste `https://github.com/` with  `Ctrl+L` , the result will be  [https://github.com/](https://github.com/).
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_url.gif)
 
