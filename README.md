@@ -40,14 +40,11 @@ You can easily and quickly  **paste**   **URLs**  or  **imageURLs**  from clipbo
 
 Here is how it goes:
 
-0. Your clipboard has an imageURL:  [https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png)
-1. Type any image name in the Cell  (**octcat**) 
-2. Select all, then Paste the imageURL  (`Ctrl+A,P`)
-3. Exit the Cell (`Esc`)
+0. Your clipboard has an imageURL:  [https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png)1. Type any image name in the Cell  (**octcat**) 2. Select all, then Paste the  **imageURL**   (`Ctrl+A,P`)3. Exit the Cell (`Esc`)
 
  **Alternatively, if you don't want to type the image name, you can just** 
 
-1. Paste the imageURL (`Ctrl+P`)
+1. Paste the  **imageURL**  (`Ctrl+P`)
 2. Exit the Cell (`Esc`)
 
  **and it will work just fine 😎** 
@@ -81,17 +78,24 @@ In **Markdown Note**, you can add **Code & Mathematics** in the same way as  **U
 
 -  **Code & Mathematics(LaTeX)**  are almost always  **from Clipboard** , we just copy&paste them!
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_mathjax.gif)
+---
+
+### Mathematics(LaTeX)
 
 0. Your clipboard has:
 `\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.`
 
-1. Paste the Math (`Ctrl+M`)
+1. Paste the  **Math**  (`Ctrl+M`)
 2. Exit the Cell (`Esc`)
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_mermaid.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_mathjax.gif)
 
-0. Your clipboard has:
+---
+
+---
+
+### Code (including Mermaid)
+
 ```
 graph LR
 A[Square Rect] -- Link text --> B((Circle))
@@ -99,8 +103,14 @@ A --> C(Round Rect)
 B --> D{Rhombus}
 C --> D
 ```
-1. Paste the Code (`Ctrl+K`)
-2. Exit the Cell (`Esc`)
+
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_mermaid.gif)
+
+---
+
+### Inline
+
+To insert **inlineCode** & **inlineMath**, you can use the same operation as for (inline) **Bold** or (inline) **Italic**, that is, select the  *target strings* , then press the **ShortcutKey**: `Ctrl+?`.
 
 ---
 
@@ -184,5 +194,6 @@ If you prefer not to use a public repository or a secret Gist, you can still dis
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo07.gif)
 
-For any operations that are not suitable for the Cell editing, you can use VSCode features, such as  **undo/redo/select the whole document** , or  **managing files with Git** .
+For any operations that are not suitable for the Cell editing, you can use VSCode features, such as  **undo/redo/select the whole document** , or  **managing files with Directories and Git** .
 
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_all.gif)
