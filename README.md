@@ -72,7 +72,7 @@ Here is how it goes:
 
 By default,  **Markdown Note**  works in  **Writable Mode** , but some web elements need user's click action even in Markdown documents.
 
-For example,  **GitHub Markdown**  supports `<details>` and `<summary>` html tags.
+For example,  **Markdown used in GitHub**  ( *not GitHub Flavored Markdown Spec* ) supports `<details>` and `<summary>` html tags.
 
 To test the native behavior, you can switch to  **ReadOnly Mode**  temporarily with `Ctrl+Esc`.
 
