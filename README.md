@@ -32,11 +32,11 @@ You can see the exact header size based on the current CSS  **before converting 
 
 ---
 
-# ✅ URL & ImageURL
+# ✅ URL & ImageURL from Clipboard
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_image.gif)
 
-You can easily and quickly  **paste**   **URLs**  or  **imageURLs**  copied to the clipboard as Markdown with a shortcut key ( `Ctrl+L`  for URLs,  `Ctrl+P`  for images by default Key Bindings).
+You can easily and quickly  **paste**   **URLs**  or  **imageURLs**  from clipboard as Markdown with a shortcut key ( `Ctrl+L`  for URLs,  `Ctrl+P`  for images by default Key Bindings).
 
 Here is how it goes:
 
@@ -70,6 +70,37 @@ The operations to paste  **URLs**  &  **ImageURLs**  are identical but
 # ✅ GFM & features supported by GitHub 
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo05.gif)
+
+---
+
+# ✅ Code & Mathematics(LaTeX) from Clipboard
+
+In **Markdown Note**, you can add **Code & Mathematics** in the same way as  **URL & ImageURL from Clipboard**.
+
+-  **URLs & ImageURLs**  are almost always  **from Clipboard** , we just copy&paste them!
+
+-  **Code & Mathematics(LaTeX)**  are almost always  **from Clipboard** , we just copy&paste them!
+
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_mathjax.gif)
+
+0. Your clipboard has:
+`\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.`
+
+1. Paste the Math (`Ctrl+M`)
+2. Exit the Cell (`Esc`)
+
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_mermaid.gif)
+
+0. Your clipboard has:
+```
+graph LR
+A[Square Rect] -- Link text --> B((Circle))
+A --> C(Round Rect)
+B --> D{Rhombus}
+C --> D
+```
+1. Paste the Code (`Ctrl+K`)
+2. Exit the Cell (`Esc`)
 
 ---
 
