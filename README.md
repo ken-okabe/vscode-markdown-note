@@ -196,4 +196,4 @@ If you prefer not to use a public repository or a secret Gist, you can still dis
 
 For any operations that are not suitable for the Cell editing, you can use VSCode features, such as  **undo/redo/select the whole document** , or  **managing files with Directories and Git** .
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_all.webm)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_all.gif)
