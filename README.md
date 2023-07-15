@@ -68,7 +68,7 @@ Here is how it goes:
 
 # ✅ ReadOnly & Writable Mode
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/readonly.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_readonly.gif)
 
 By default,  **Markdown Note**  works in  **Writable Mode** , but some web elements need user's click action even in Markdown documents.
 
