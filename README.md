@@ -40,7 +40,11 @@ You can easily and quickly  **paste**   **URLs**  or  **imageURLs**  from clipbo
 
 Here is how it goes:
 
-0. Your clipboard has an imageURL:  [https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png)1. Type any image name in the Cell  (**octcat**) 2. Select all, then Paste the  **imageURL**   (`Ctrl+A,P`)3. Exit the Cell (`Esc`)
+0. Your clipboard has an imageURL:  [https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png)
+
+1. Type any image name in the Cell  (**octcat**) 
+2. Select all, then Paste the  **imageURL**   (`Ctrl+A,P`)
+3. Exit the Cell (`Esc`)
 
  **Alternatively, if you don't want to type the image name, you can just** 
 
@@ -52,7 +56,7 @@ Here is how it goes:
 The operations to paste  **URLs**  &  **ImageURLs**  are identical but
 
 - For  **imageURLs** , `image` is used as the default name.
-- For  **URLs** , the pasted URL itself is used as the shown link text. So when you just paste `https://github.com/` with  `Ctrl+L` , the result will be  [https://github.com/](https://github.com/).
+- For  **URLs** , the pasted URL itself is used as the default link text. So when you just paste `https://github.com/` with  `Ctrl+L` , the result will be  [https://github.com/](https://github.com/).
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_url.gif)
 
@@ -72,7 +76,7 @@ The operations to paste  **URLs**  &  **ImageURLs**  are identical but
 
 # ✅ Code & Mathematics(LaTeX) from Clipboard
 
-In **Markdown Note**, you can add **Code & Mathematics** in the same way as  **URL & ImageURL from Clipboard**.
+In **Markdown Note**, you can add **Code & Mathematics(LaTeX)** in the same way as  **URL & ImageURL from Clipboard**.
 
 -  **URLs & ImageURLs**  are almost always  **from Clipboard** , we just copy&paste them!
 
@@ -194,6 +198,16 @@ If you prefer not to use a public repository or a secret Gist, you can still dis
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo07.gif)
 
-For any operations that are not suitable for the Cell editing, you can use VSCode features, such as  **undo/redo/select the whole document** , or  **managing files with Directories and Git** .
+For any operations that are not suitable for the Cell editing, you can use VSCode features, such as  **undo/redo/select the whole document** , or  **managing files with directories and Git** .
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_all.gif)
+
+### Command for Profiles
+
+You can launch VS Code with a specific profile via the  `--profile`  command-line interface option. 
+
+```sh
+code --profile writing my-documents
+```
+
+If the profile specified does not exist, a new empty profile with the given name is created.
