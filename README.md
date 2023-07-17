@@ -246,7 +246,7 @@ You can use VSCode features, such as **undo/redo/select the whole document** , o
 
 ### After installing Markdown Note, the built-in Setup Walkthrough page will automatically launch.
 
-### Use `Ctrl+A` to select all, then `Ctrl+C` to copy the automatically generated JSON on the page.
+### Use `Ctrl+A` to select all, then `Ctrl+C` to copy the generated  `JSON`  on the page.
 
 ### 
 
