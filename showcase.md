@@ -8,7 +8,7 @@ Hello!
 
 We use [GitHub](https://github.com/) site, and his name is  **Octcat**😉 
 
-![octcat](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png)
+![octcat](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/octcat.png)
 
 > I love  `Code` !
 
@@ -70,24 +70,3 @@ A --> C(Round Rect)
 B --> D{Rhombus}
 C --> D
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

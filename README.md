@@ -1,8 +1,8 @@
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/showcase.png)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/showcase.png)
 
 ## is also the ultimate note & memo App built on VSCode
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/todo.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/todo.png)
 
 ## VSCode + Markdown + WYSIWYG = Productivity
 
@@ -10,7 +10,7 @@
 
 # 🔷 Seamless
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo00.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo00.gif)
 
  **Click**  on what you want to edit to enter input mode.
 
@@ -22,7 +22,7 @@ Press the   `ESC`   key again to return to input mode.
 
 # 🔷 Cell Editing
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo01.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo01.gif)
 
 **Cell**  is familiar to Jupyter Notebook users.
 
@@ -32,7 +32,7 @@ Every  **Cell**  has its  **own isolated editing history** , so  **undo&redo**  
 
 # 🔷 Headers
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo02.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo02.gif)
 
 You can see the exact header size based on the current CSS  **before converting to HTML**  by entering  `#` .
 
@@ -40,13 +40,13 @@ You can see the exact header size based on the current CSS  **before converting 
 
 # 🔷 Paste URL & ImageURL from Clipboard
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_image.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo_image.gif)
 
 You can use a shortcut key (`Ctrl+L` for URLs, `Ctrl+P` for images by default Key Bindings) to paste  **URLs**  or  **imageURLs**  from the clipboard as Markdown  on *selected text* .
 
 Here is how it goes:
 
-0. Your clipboard has an imageURL:  [https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/octcat.png)
+0. Your clipboard has an imageURL:  [https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/octcat.png](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/octcat.png)
 
 1. Type any image name in the Cell (**octcat**) 
 2. Select all, then paste the **imageURL** (`Ctrl+A,P`)
@@ -63,19 +63,19 @@ For **imageURLs**, `image` is used as the default name.
 
 For **URLs**, the pasted URL itself is used as the default link text. So when you just paste `https://github.com/` with `Ctrl+L`, the result will be [https://github.com/](https://github.com/).
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_url.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo_url.gif)
 
 ---
 
 # 🔷 Drag&Drop Cells
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo04.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo04.gif)
 
 ---
 
 # 🔷 GFM & features supported by GitHub
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo05.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo05.gif)
 
 ---
 
@@ -96,7 +96,7 @@ In **Markdown Note**, you can add **Code & Mathematics(LaTeX)** in the same way 
 1. Paste the **Math** (`Ctrl+M`)
 2. Exit the Cell (`Esc`)
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_mathjax.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo_mathjax.gif)
 
 ---
 
@@ -115,7 +115,7 @@ C --> D
 1. Paste the **Code** (`Ctrl+K`)
 2. Exit the Cell (`Esc`)
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_mermaid.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo_mermaid.gif)
 
 ---
 
@@ -127,7 +127,7 @@ To insert **inlineCode** & **inlineMath**, you can use the same operation as for
 
 # 🔷 ReadOnly & Writable Mode
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_readonly.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo_readonly.gif)
 
 By default,  **Markdown Note**  works in  **Writable Mode** , but some web elements need user's click action even in Markdown documents.
 
@@ -135,7 +135,7 @@ For example,  **Markdown used in GitHub**  ( *not GitHub Flavored Markdown Spec*
 
 To test the native behavior, you can switch to  **ReadOnly Mode**  temporarily with `Ctrl+Esc`.
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_detail.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo_detail.gif)
 
 In  **ReadOnly Mode** , the default behavior of  **Markdown Note**  is paused and you can click the element in the standard manner.
 
@@ -147,7 +147,7 @@ This way, you can see how `<details>` and `<summary>` html tags work.
 
 # 🔷 Side-by-side mode is also WYSIWYG
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo06.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo06.gif)
 
 ---
 
@@ -167,7 +167,7 @@ Bidirectional data flow might look cool, but it often causes confusion for both 
 
 # 🔷 Reload to Side or Overlay
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo08.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo08.gif)
 
 The user needs to **reload the contents explicitly after editing the Markdown source code in the standard VSCode editor, since the data flow is unidirectional** .
 
@@ -182,7 +182,7 @@ The reload action helps to **reconstruct the entire markdown Cells with integrit
 
 # 🔷 Key Bindings (Extension Keyboard Shortcuts)
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/keybindings.png)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/keybindings.png)
 
 You can use Key Bindings for everything except drag and drop; you can also customize them.
 
@@ -204,11 +204,11 @@ You can still display images by using your own URL as before, if you prefer not 
 
 # 🔷 Works with VSCode’s full potential
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo07.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo07.gif)
 
 You can use VSCode features, such as **undo/redo/select the whole document** , or **managing files with directories and Git** , for any operations that are not suitable for the Cell editing.
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/demo_all.gif)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo_all.gif)
 
 ---
 
@@ -224,19 +224,19 @@ You can use VSCode features, such as **undo/redo/select the whole document** , o
 
 ### Click ⚙️ at the left bottom to Create Profile
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/0profile.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/0profile.png)
 
 ### Select  `Empty Profile` 
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/1emptyprofile.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/1emptyprofile.png)
 
 ### Let's name the new profile  `writing`
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/2writing.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/2writing.png)
 
 ### Now you have the new `Empty Profile`
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/3profilecreated.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/3profilecreated.png)
 
 ### Finally, please remember to install  Markdown Note in the new `Empty Profile` !!😎
 
@@ -250,11 +250,11 @@ You can use VSCode features, such as **undo/redo/select the whole document** , o
 
 ### 
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/walkthrough.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/walkthrough.png)
 
 ### Paste (`Ctrl+A,P`) into the empty  `settings.json`  of `Empty Profile` 
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/7blankobject.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/7blankobject.png)
 
 ### Save ( `Ctrl+S` ) and Done!
 
@@ -280,7 +280,7 @@ code --profile writing my-documents
 
 Here is a simplified `settings.json`  .
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/settings-json.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/settings-json.png)
 
 ---
 
@@ -303,7 +303,7 @@ If  `autoSave`  with a short interval is not enabled, the VSCode standard editor
 
 This is `autoLockGroups` feature, which is neccesary for  **Side-by-side mode**.  `LockGroup`  allows you to lock an editor group in VSCode to prevent unintended multi-tab experiences. Without this feature, a user would need to manually lock the group on every occasion.
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/lockgroup.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/lockgroup.png)
 
 ---
 
@@ -315,7 +315,7 @@ This is `autoLockGroups` feature, which is neccesary for  **Side-by-side mode**.
 
 In most cases, the theme in VSCode is configured through a GUI.
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/theme-gui.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/theme-gui.png)
 
  **Some dark themes can make the scroll bar almost invisible in Markdown Note.** 
 
@@ -337,7 +337,7 @@ In most cases, the theme in VSCode is configured through a GUI.
 >> https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.css
 >> https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown-dark.css
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/dark.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/dark.png)
 
 [You can generate by yourself.](https://github.com/sindresorhus/generate-github-markdown-css)
 
@@ -356,7 +356,7 @@ dark_tritanopia
 
 https://github.com/settings/appearance
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/github-theme.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/github-theme.png)
 
  **Code highlighting can be styled independently with [Prism](https://prismjs.com/)** 
 
@@ -393,7 +393,7 @@ For more information on managing personal access tokens on GitHub, you can refer
 
 # 🔷 The ultimate note & memo App built on VSCode
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/todo.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/todo.png)
 
 VSCode is such a great editor. 
 
@@ -405,7 +405,7 @@ The reason is that Markdown editing is  **not WYSIWYG** .
 
 Your notes and memos are now natively managed with  **secret repos in GitHub** !
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/note-shortcut.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/note-shortcut.png)
 
 With combinations of VSCode profile and command, you can easily create a shortcut key to launch the app.
 
@@ -425,11 +425,11 @@ code --profile note /home/ken/Documents/note
 
 # 🔷 Invest in the software that powers your world! 
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/sponsor.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/sponsor.png)
 
 https://github.com/sponsors
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/contribute.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/contribute.png)
 
  ***Markdown Note**  is also planning to join GitHub Sponsors in the near future.* 
 
