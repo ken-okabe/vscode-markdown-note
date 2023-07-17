@@ -1,19 +1,31 @@
 {
   "name": "markdownnote",
-  "displayName": "MarkdownNote",
+  "version": "0.9.7",
+  "displayName": "Markdown Note",
   "description": "WYSIWYG Markdown Editor for GitHub README.md and more",
-  "version": "0.9.6",
+  "author": {
+    "name": "Ken Okabe"
+  },
+  "publisher": "KenOkabe",
   "repository": {
     "type": "git",
     "url": "https://github.com/ken-okabe/vscode-markdown-note.git"
   },
-  "publisher": "KenOkabe",
-  "engines": {
-    "vscode": "^1.71.0"
-  },
+  "homepage": "https://github.com/ken-okabe/vscode-markdown-note",
   "categories": [
     "Notebooks"
   ],
+  "keywords": [
+    "markdown",
+    "editor",
+    "WYSIWYG",
+    "productivity"
+  ],
+  "license": "MIT",
+  "icon": "icon256.png",
+  "engines": {
+    "vscode": "^1.71.0"
+  },
   "main": "./out/extension.js",
   "activationEvents": [
     "*"
