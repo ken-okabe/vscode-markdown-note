@@ -1,6 +1,6 @@
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/showcase.png)
 
-## Also the ultimate note & memo App built on VSCode
+## is also the ultimate note & memo App built on VSCode
 
 ![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/todo.png)
 
