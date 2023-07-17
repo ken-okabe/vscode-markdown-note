@@ -184,6 +184,8 @@ The reload action helps to **reconstruct the entire markdown Cells with integrit
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/keybindings.png)
 
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/keylayout.png)
+
 You can use Key Bindings for everything except drag and drop; you can also customize them.
 
 ---
