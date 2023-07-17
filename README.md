@@ -155,7 +155,7 @@ This way, you can see how `<details>` and `<summary>` html tags work.
 
 Bidirectional data flow might look cool, but it often causes confusion for both humans and software architectures.
 
- **The conventional Markdown Preview**  has a unidirectional data flow:
+ **The conventional Markdown Preview**  has a unidirectional data flow :
 
 - Markdown source code -> The read-only preview.
 
@@ -173,8 +173,8 @@ The user needs to **reload the contents explicitly after editing the Markdown so
 
 The user can choose which panel to reload:
 
-- to Side
-- Overlay
+-  **to Side** 
+-  **Overlay** 
 
 The reload action helps to **reconstruct the entire markdown Cells with integrity** after a full modification of the document by native editing.
 
@@ -244,9 +244,9 @@ You can use VSCode features, such as **undo/redo/select the whole document** , o
 
 ## 1. Copy&Paste the `JSON`  *copied at the built-in walkthrough page*  into the empty  `settings.json`  of `Empty Profile`
 
-### This extension will launch the  *built-in Setup Walkthrough page*. 
+### After installing Markdown Note, the built-in Setup Walkthrough page will automatically launch.
 
-### Copy (`Ctrl+A,C`) the  `JSON`  that is automatically generated on that page.
+### Use `Ctrl+A` to select all, then `Ctrl+C` to copy the automatically generated JSON on the page.
 
 ### 
 
