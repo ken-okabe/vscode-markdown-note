@@ -1,6 +1,6 @@
 {
   "name": "markdownnote",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "displayName": "Markdown Note",
   "description": "WYSIWYG Markdown Editor for GitHub README.md and more",
   "author": {
@@ -19,6 +19,7 @@
     "markdown",
     "editor",
     "WYSIWYG",
+    "GitHub",
     "productivity"
   ],
   "license": "MIT",
