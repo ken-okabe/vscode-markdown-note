@@ -317,7 +317,7 @@ In most cases, the theme in VSCode is configured through a GUI.
 
 ![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/theme-gui.png)
 
- **Some dark themes can make the scroll bar almost invisible in Markdown note.** 
+ **Some dark themes can make the scroll bar almost invisible in Markdown Note.** 
 
 ---
 
