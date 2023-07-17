@@ -1,0 +1,227 @@
+{
+  "name": "markdownnote",
+  "displayName": "MarkdownNote",
+  "description": "WYSIWYG Markdown Editor for GitHub README.md and more",
+  "version": "0.9.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stken2050/vscode-markdown-note.git"
+  },
+  "engines": {
+    "vscode": "^1.71.0"
+  },
+  "categories": [
+    "Notebooks"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "*"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "MarkdownNote",
+      "properties": {
+        "markdownnote.initial_setup": {
+          "type": "object",
+          "description": "Initial Setup",
+          "default": {
+            "true OR false": true
+          }
+        },
+        "markdownnote.CSS": {
+          "type": "object",
+          "description": "CSS URLs",
+          "default": {
+            "URLs": [
+              "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css",
+              "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css",
+              "https://unpkg.com/prism-themes@1.9.0/themes/prism-coldark-dark.min.css"
+            ]
+          }
+        },
+        "markdownnote.start_overlay": {
+          "type": "object",
+          "description": "Initial Editing Mode is Overlay",
+          "default": {
+            "true OR false": true
+          }
+        },
+        "markdownnote.image_repository": {
+          "type": "object",
+          "description": "GitHub Image Repositoy and Token",
+          "default": {
+            "repository": "USER/IMAGES-REPOSITORY",
+            "token": "ghp_xxxxxxxxxxxxxxxxxxxx"
+          }
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "key": "escape",
+        "command": "markdownnote._AllHTML_EDIT",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+escape",
+        "command": "markdownnote._ReadOnly_Writable",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+enter",
+        "command": "markdownnote._CellAdd",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+backspace",
+        "command": "markdownnote._CellDelete",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+up",
+        "command": "markdownnote._CellUp",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+down",
+        "command": "markdownnote._CellDown",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+v",
+        "command": "markdownnote.Paste",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+z",
+        "command": "markdownnote.Undo",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+y",
+        "command": "markdownnote.Redo",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+b",
+        "command": "markdownnote.Bold",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+w",
+        "command": "markdownnote.Bold",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+i",
+        "command": "markdownnote.Italic",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+`",
+        "command": "markdownnote.CodeInline",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+e",
+        "command": "markdownnote.CodeInline",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+j",
+        "command": "markdownnote.CodeInline",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+n",
+        "command": "markdownnote.MathInline",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+k",
+        "command": "markdownnote.Code",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+m",
+        "command": "markdownnote.Math",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+l",
+        "command": "markdownnote.PasteURL",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+p",
+        "command": "markdownnote.PasteImageURL",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      },
+      {
+        "key": "ctrl+,",
+        "command": "markdownnote.Tex2SVG",
+        "when": "activeWebviewPanelId == 'MarkdownNote'"
+      }
+    ],
+    "commands": [
+      {
+        "command": "markdownnote.overlay",
+        "title": "MarkdownNote: _📑 Reload Overlay"
+      },
+      {
+        "command": "markdownnote.toSide",
+        "title": "MarkdownNote: _📖 Reload to Side"
+      },
+      {
+        "command": "markdownnote.exportHTML",
+        "title": "MarkdownNote: 📁 Export as HTML file"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdownnote.overlay",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdownnote.toSide",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdownnote.exportHTML",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "install:all": "npm install && npm --prefix ./webview-ui install ./webview-ui",
+    "start:webview": "npm --prefix ./webview-ui run start",
+    "build:webview": "npm --prefix ./webview-ui run build",
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.71.0",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "@vscode/test-electron": "^2.1.5",
+    "@vscode/vsce": "2.19.0",
+    "eslint": "^8.20.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^5.0"
+  },
+  "dependencies": {
+    "mathjax": "^3.2.2"
+  }
+}

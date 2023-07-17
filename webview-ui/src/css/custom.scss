@@ -1,0 +1,24 @@
+.ghost {
+    opacity: 0.2;
+}
+
+.cell {
+    margin: 1em;
+}
+
+.celledit {
+    outline-style: dotted;
+}
+
+.cellhtml {
+    outline-style: none;
+    //cursor: move;
+    cursor: -webkit-grabbing;
+}
+
+.initial {
+    all: initial
+}
+
+
+
