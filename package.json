@@ -2,11 +2,12 @@
   "name": "markdownnote",
   "displayName": "MarkdownNote",
   "description": "WYSIWYG Markdown Editor for GitHub README.md and more",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stken2050/vscode-markdown-note.git"
+    "url": "https://github.com/ken-okabe/vscode-markdown-note.git"
   },
+  "publisher": "KenOkabe",
   "engines": {
     "vscode": "^1.71.0"
   },
