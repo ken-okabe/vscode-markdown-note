@@ -2,7 +2,7 @@
   "name": "markdownnote",
   "displayName": "MarkdownNote",
   "description": "WYSIWYG Markdown Editor for GitHub README.md and more",
-  "version": "0.9.2",
+  "version": "0.9.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/stken2050/vscode-markdown-note.git"

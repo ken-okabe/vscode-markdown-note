@@ -10,7 +10,7 @@
 
 # Hello! This is Markdown Note Setup Walkthrough
 
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/logo256.png)
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/logo256.png)
 
 ---
 
@@ -30,21 +30,21 @@
 
 ## Click ⚙️ at the left bottom to Create Profile
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/0profile.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/0profile.png)
 
 ## Select  `Empty Profile` 
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/1emptyprofile.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/1emptyprofile.png)
 
 ## Let's name the new profile  `writing`
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/2writing.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/2writing.png)
 
 ##
 
 ## Now you have the new `Empty Profile`
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/3profilecreated.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/3profilecreated.png)
 
 ## Finally, please remember to install Markdown Note in the new `Empty Profile` !!😎
 
@@ -52,24 +52,24 @@
 
 ## Open Settings
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/4settings.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/4settings.png)
 
 ## Click the small icon on the right side
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/5aicon.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/5aicon.png)
 
 ## Open Current Profile Settings (JSON)
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/6iconselect.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/6iconselect.png)
 
 ## `settings.json` should be empty
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/7blankobject.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/7blankobject.png)
 
 # 2. Paste the  `JSON`   *you copied at the top of the page* 👆 into the empty  `settings.json`
 
 ##  Select All and Paste (`Ctrl+A,P`)
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note/main/_images/setup/8pasted.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/8pasted.png)
 
 # Save ( `Ctrl+S` ) and Done!
