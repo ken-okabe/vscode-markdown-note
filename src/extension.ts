@@ -24,6 +24,23 @@ export function activate(context: vscode.ExtensionContext) {
 
   const exportHTMLR = NotePanel.rExportHTML();
 
+  vscode.workspace.onDidChangeConfiguration((evt) =>
+    evt.affectsConfiguration("markdownnote.CSS")
+      ? (() => {
+        NotePanel.currentPanel?.dispose();
+        fileNameR.nextR("");
+        loadCSS();
+      })()
+      : undefined
+  );
+
+  vscode.window.onDidChangeActiveTextEditor((evt) =>
+    vscode.workspace.getConfiguration("markdownnote.initial_setup")["true OR false"]
+      ? undefined
+      : f(evt?.document)
+  );
+
+
   //-------------------------------------------
   const exportHTML = (content: string) => {
     const html = `
@@ -86,18 +103,10 @@ export function activate(context: vscode.ExtensionContext) {
     });
   };
 
-  vscode.workspace.onDidChangeConfiguration((event) =>
-    event.affectsConfiguration("markdownnote.CSS")
-     ? (()=>{
-      NotePanel.currentPanel?.dispose();
-      loadCSS();
-      })()
-     : undefined
-  );
-
   // =================================================================
 
-  const overlay = vscode.workspace.getConfiguration("markdownnote.start_overlay")["true OR false"];
+  const overlay =
+    vscode.workspace.getConfiguration("markdownnote.start_overlay")["true OR false"];
   console.log("%%%%% start_overlay ? %%%%%");
   console.log(overlay);
   const modeR = R(overlay ? 1 : 2);
@@ -126,7 +135,6 @@ export function activate(context: vscode.ExtensionContext) {
     f(vscode.window.activeTextEditor?.document);
     // to trigger in side-mode, need to focus the first pane
     vscode.commands.executeCommand("workbench.action.focusFirstEditorGroup");
-    vscode.window.onDidChangeActiveTextEditor((evt) => f(evt?.document));
   };
   //================================================================
 
@@ -152,7 +160,7 @@ export function activate(context: vscode.ExtensionContext) {
       };
 
       const cssURLs: string[] =
-          vscode.workspace.getConfiguration("markdownnote.CSS").URLs;
+        vscode.workspace.getConfiguration("markdownnote.CSS").URLs;
 
       let markdownnoteObj = {
         "markdownnote.initial_setup": {
