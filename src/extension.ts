@@ -87,7 +87,12 @@ export function activate(context: vscode.ExtensionContext) {
   };
 
   vscode.workspace.onDidChangeConfiguration((event) =>
-    event.affectsConfiguration("markdownnote.CSS") ? loadCSS() : undefined
+    event.affectsConfiguration("markdownnote.CSS")
+     ? (()=>{
+      NotePanel.currentPanel?.dispose();
+      loadCSS();
+      })()
+     : undefined
   );
 
   // =================================================================
@@ -146,17 +151,16 @@ export function activate(context: vscode.ExtensionContext) {
         "workbench.editor.autoLockGroups": autoLockGroups1,
       };
 
+      const cssURLs: string[] =
+          vscode.workspace.getConfiguration("markdownnote.CSS").URLs;
+
       let markdownnoteObj = {
         "markdownnote.initial_setup": {
           "true OR false": false, // <------ initialSetup has changed to false
         },
         "markdownnote.CSS": {
           // same as the default in package.json
-          URLs: [
-            "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css",
-            "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css",
-            "https://unpkg.com/prism-themes@1.9.0/themes/prism-coldark-dark.min.css",
-          ],
+          URLs: cssURLs,
         },
         "markdownnote.start_overlay": {
           // same as the default in package.json
@@ -193,7 +197,7 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.workspace.onDidChangeConfiguration((event) =>
         event.affectsConfiguration("markdownnote.initial_setup")
           ? vscode.workspace.getConfiguration("markdownnote.initial_setup")["true OR false"]
-            ? undefined
+            ? undefined //true, so configured already
             : (() => { //-------------------------------------------
               //initial_setup has been changed to false
               const setupdonePath =
