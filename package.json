@@ -1,8 +1,8 @@
 {
   "name": "markdownnote",
-  "version": "0.9.10",
+  "version": "0.9.11",
   "displayName": "Markdown Note",
-  "description": "WYSIWYG Markdown Editor for GitHub README.md and more",
+  "description": "A WYSIWYG Markdown Editor that supports the features used on GitHub site and beyond",
   "author": {
     "name": "Ken Okabe"
   },
