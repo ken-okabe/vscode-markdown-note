@@ -19,8 +19,50 @@ export function activate(context: vscode.ExtensionContext) {
 
   const mdTextR = NotePanel.rMdText();
 
+  const lastSavedText = R("");
+
+  mdTextR.mapR(
+    mdText => lastSavedText.nextR(mdText)
+  );
+
+  const fileChangedR = NotePanel.rFileChanged();
+
   const saveR = NotePanel.rSave();
-  saveR.mapR((text) => (text !== undefined ? fs.writeFile(fileNameR.lastVal, text) : undefined));
+  saveR.mapR((text) =>
+  (text !== undefined
+    ? (() => {
+      /*  vscode.window.showInformationMessage(
+          `Saving`
+        );*/
+      console.log('saving');
+      // check the background file change------------
+      fs.readFile(fileNameR.lastVal, "utf8")
+        .then((mdText) => {
+          console.log(
+            mdText
+          );
+          //------------------------
+          mdText === lastSavedText.lastVal
+            ? (() => { // safe to save
+              console.log('lastSavedText is matched, safe to save');
+              fs.writeFile(fileNameR.lastVal, text);
+              lastSavedText.nextR(text);
+            })()
+            : (() => { // file changed in background
+              console.log('file changed in background');
+              vscode.window.showInformationMessage(
+                'The working file has been changed in the background. Please copy the parts you edited in Markdown Note to the clipboard, then reload from the source file tab and merge the contents of the clipboard.'
+              );
+              //----send message to NotePanel->Webview->Dialog
+              fileChangedR.nextR(true);
+              //------------------------------------
+            })();
+
+          //-----------------------------------------
+        });
+
+    })()
+    : undefined));
 
   const exportHTMLR = NotePanel.rExportHTML();
 
@@ -114,7 +156,7 @@ export function activate(context: vscode.ExtensionContext) {
   const f = (document: vscode.TextDocument | undefined) => {
     console.log("!! onDidChangeActiveTextEditor !!");
 
-    !!document && document.languageId === "markdown"
+    document?.languageId === "markdown"
       ? document.fileName !== fileNameR.lastVal
         ? (() => {
           console.log("===============");

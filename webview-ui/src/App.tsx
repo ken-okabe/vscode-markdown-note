@@ -860,6 +860,14 @@ const App: Component = () => {
         <p><strong id='bold'></strong></p>
         <p><em id='italic'></em></p>
 
+        <dialog>
+          <h2>The working file has been changed in the background</h2>
+          <p>Please copy the parts you edited in Markdown Note to the clipboard, then reload from the source file tab and merge the contents of the clipboard.
+          </p>
+          <button class="close-button">OK</button>
+        </dialog>
+
+
       </div>
     </main>
 
@@ -1106,6 +1114,19 @@ const svgF = svg => {
   });
 };
 
+
+const fileChanged = () => {
+
+  const dialog = document.querySelector('dialog');
+  const closeButton = document.querySelector('.close-button');
+
+  dialog.showModal();
+
+  closeButton.addEventListener('click', () => {
+    dialog.close();
+  });
+
+};
 //==========================================
 window.addEventListener('message', event => {
 
@@ -1129,69 +1150,74 @@ window.addEventListener('message', event => {
             console.log("returnSVG!!!!!!!!!!!!!");
             svgF(JSON.parse(message.obj));
           })()
-          //keys--------------------------------
-          : message.cmd === '_ReadOnly_Writable'
-            ? _readOnly_Writable(currentID.lastVal)
-            : message.cmd === '_AllHTML_EDIT'
-              ? isWritable.lastVal
-                ? _allHTML_EDIT(currentID.lastVal)
-                : vscode.postMessage({
-                  command: "hello",
-                  text: "ReadOnly Mode",
-                })
-              : message.cmd === '_CellAdd'
+          : message.cmd === 'fileChanged'
+            ? (() => {
+              console.log("file changed background msg");
+              fileChanged();
+            })()
+            //keys--------------------------------
+            : message.cmd === '_ReadOnly_Writable'
+              ? _readOnly_Writable(currentID.lastVal)
+              : message.cmd === '_AllHTML_EDIT'
                 ? isWritable.lastVal
-                  ? _cellAdd(currentID.lastVal)
+                  ? _allHTML_EDIT(currentID.lastVal)
                   : vscode.postMessage({
                     command: "hello",
                     text: "ReadOnly Mode",
                   })
-                : message.cmd === '_CellDelete'
+                : message.cmd === '_CellAdd'
                   ? isWritable.lastVal
-                    ? _cellDelete(currentID.lastVal)
+                    ? _cellAdd(currentID.lastVal)
                     : vscode.postMessage({
                       command: "hello",
                       text: "ReadOnly Mode",
                     })
-                  : message.cmd === '_CellUp'
+                  : message.cmd === '_CellDelete'
                     ? isWritable.lastVal
-                      ? _cellUp(currentID.lastVal)
+                      ? _cellDelete(currentID.lastVal)
                       : vscode.postMessage({
                         command: "hello",
                         text: "ReadOnly Mode",
                       })
-                    : message.cmd === '_CellDown'
+                    : message.cmd === '_CellUp'
                       ? isWritable.lastVal
-                        ? _cellDown(currentID.lastVal)
+                        ? _cellUp(currentID.lastVal)
                         : vscode.postMessage({
                           command: "hello",
                           text: "ReadOnly Mode",
                         })
-                      : message.cmd === 'Paste'
-                        ? paste(currentID.lastVal)
-                        : message.cmd === 'Undo'
-                          ? undo(currentID.lastVal)
-                          : message.cmd === 'Redo'
-                            ? redo(currentID.lastVal)
-                            : message.cmd === 'Bold'
-                              ? bold(currentID.lastVal)
-                              : message.cmd === 'Italic'
-                                ? italic(currentID.lastVal)
-                                : message.cmd === 'CodeInline'
-                                  ? codeInline(currentID.lastVal)
-                                  : message.cmd === 'MathInline'
-                                    ? mathInline(currentID.lastVal)
-                                    : message.cmd === 'Code'
-                                      ? code(currentID.lastVal)
-                                      : message.cmd === 'Math'
-                                        ? math(currentID.lastVal)
-                                        : message.cmd === 'PasteURL'
-                                          ? pasteURL(currentID.lastVal)
-                                          : message.cmd === 'PasteImageURL'
-                                            ? pasteImageURL(currentID.lastVal)
-                                            : message.cmd === 'Tex2SVG'
-                                              ? tex2svg(currentID.lastVal)
-                                              : undefined;
+                      : message.cmd === '_CellDown'
+                        ? isWritable.lastVal
+                          ? _cellDown(currentID.lastVal)
+                          : vscode.postMessage({
+                            command: "hello",
+                            text: "ReadOnly Mode",
+                          })
+                        : message.cmd === 'Paste'
+                          ? paste(currentID.lastVal)
+                          : message.cmd === 'Undo'
+                            ? undo(currentID.lastVal)
+                            : message.cmd === 'Redo'
+                              ? redo(currentID.lastVal)
+                              : message.cmd === 'Bold'
+                                ? bold(currentID.lastVal)
+                                : message.cmd === 'Italic'
+                                  ? italic(currentID.lastVal)
+                                  : message.cmd === 'CodeInline'
+                                    ? codeInline(currentID.lastVal)
+                                    : message.cmd === 'MathInline'
+                                      ? mathInline(currentID.lastVal)
+                                      : message.cmd === 'Code'
+                                        ? code(currentID.lastVal)
+                                        : message.cmd === 'Math'
+                                          ? math(currentID.lastVal)
+                                          : message.cmd === 'PasteURL'
+                                            ? pasteURL(currentID.lastVal)
+                                            : message.cmd === 'PasteImageURL'
+                                              ? pasteImageURL(currentID.lastVal)
+                                              : message.cmd === 'Tex2SVG'
+                                                ? tex2svg(currentID.lastVal)
+                                                : undefined;
 
 });
 //==========================================

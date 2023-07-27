@@ -22,6 +22,8 @@ const cssR = R('');
 const mdTextR = R('');
 const saveR = R(undefined);
 
+const fileChangedR = R(true);
+
 const exportHTMLR = R(undefined);
 
 console.log("NodePanel imported");
@@ -50,6 +52,9 @@ export class NotePanel {
   }
   public static rSave() {
     return saveR;
+  }
+  public static rFileChanged() {
+    return fileChangedR;
   }
   public static rExportHTML() {
     return exportHTMLR;
@@ -227,7 +232,12 @@ export class NotePanel {
 
       });
 
-
+    fileChangedR.mapR(() => {
+      webview.postMessage({ // 1
+        cmd: 'fileChanged',
+        obj: {}
+      });
+    });
 
     webview.onDidReceiveMessage(
       (message: any) => {
