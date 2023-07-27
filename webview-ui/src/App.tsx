@@ -862,6 +862,7 @@ const App: Component = () => {
 
         <dialog>
           <h2>The working file has been changed in the background</h2>
+          <p>To protect the data, Markdown Note cannot overwrite and save with the current edits.</p>
           <p>Please copy the parts you edited in Markdown Note to the clipboard, then reload from the source file tab and merge the contents of the clipboard.
           </p>
           <button class="close-button">OK</button>
