@@ -22,7 +22,7 @@ const cssR = R('');
 const mdTextR = R('');
 const saveR = R(undefined);
 
-const fileChangedR = R(true);
+const fileChangedR = R(false);
 
 const exportHTMLR = R(undefined);
 
@@ -232,11 +232,13 @@ export class NotePanel {
 
       });
 
-    fileChangedR.mapR(() => {
-      webview.postMessage({ // 1
-        cmd: 'fileChanged',
-        obj: {}
-      });
+    fileChangedR.mapR(bool => {
+      bool
+        ? webview.postMessage({ // 1
+          cmd: 'fileChanged',
+          obj: {}
+        })
+        : undefined;
     });
 
     webview.onDidReceiveMessage(
