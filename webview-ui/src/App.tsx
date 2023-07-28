@@ -1042,7 +1042,7 @@ mdtextR
 
       currentID.nextR(ID.get(cells[0])); //set focus
 
-      cellToMarkSave(); // load and save (trim empty lines etc)
+     // cellToMarkSave(); // load and save (trim empty lines etc)
 
     }, 100);
 
