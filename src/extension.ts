@@ -13,56 +13,56 @@ import * as https from "https";
 export function activate(context: vscode.ExtensionContext) {
   console.log("!!!!!markdownnote Activated!!!!!");
 
-  const fileNameR = R("");
+  const fileNameR = R('');
 
   const cssR = NotePanel.rCSS();
 
-  const mdTextR = NotePanel.rMdText();
+  const initialMdTextR = NotePanel.rInitialMdText();
 
-  const lastSavedText = R("");
+  // const lastSavedTextR = R('');
 
-  mdTextR.mapR(
-    mdText => lastSavedText.nextR(mdText)
-  );
-
+  //mdTextR.next exclusively here on Setups and Reloads
+  //mdTextR --mapR--> lastSavedTexR here, always
+  /* initialMdTextR.mapR( // initial mdText
+     initialMdText => lastSavedTextR.nextR(initialMdText)
+   );*/
   const fileChangedR = NotePanel.rFileChanged();
 
+  const obj: any = {};
+  const workingEditorR = R(obj);
+
+  vscode.workspace.onDidChangeTextDocument(changeEvent =>
+    changeEvent.document === workingEditorR.lastVal.document
+      ? savingR.lastVal
+        ? savingR.nextR(false)
+        //--- file has been changed externally
+        : (() => {
+          fs.writeFile(
+            fileNameR.lastVal + '--Snapshot.md', savedTextR.lastVal);
+
+          let textBackground = workingEditorR.lastVal.document.getText();
+          fs.writeFile(
+            fileNameR.lastVal + '-BackgroundEdit.md', textBackground);
+
+          //----send message to NotePanel->Webview->Dialog
+          fileChangedR.nextR(true);
+        })()
+      : undefined
+  );
+
+  const savedTextR = R('');
+  const savingR = R(false);
   const saveR = NotePanel.rSave();
   saveR.mapR((text) =>
-  (text !== undefined
-    ? (() => {
-      /*  vscode.window.showInformationMessage(
-          `Saving`
-        );*/
-      console.log('saving');
-      // check the background file change------------
-      fs.readFile(fileNameR.lastVal, "utf8")
-        .then((mdText) => {
-          console.log(
-            mdText
-          );
-          //------------------------
-          mdText === lastSavedText.lastVal
-            ? (() => { // safe to save
-              console.log('lastSavedText is matched, safe to save');
-              fs.writeFile(fileNameR.lastVal, text);
-              lastSavedText.nextR(text);
-            })()
-            : (() => { // file changed in background
-              console.log('file changed in background');
-              vscode.window.showInformationMessage(
-                'The working file has been changed in the background. Please copy the parts you edited in Markdown Note to the clipboard, then reload from the source file tab and merge the contents of the clipboard.'
-              );
-              //----send message to NotePanel->Webview->Dialog
-              fileChangedR.nextR(true);
-              //------------------------------------
-            })();
-
-          //-----------------------------------------
-        });
-
-    })()
-    : undefined));
+    text !== undefined
+      ? (() => {
+        savingR.nextR(true);
+        fs.writeFile(fileNameR.lastVal, text);
+        // preserve the text
+        savedTextR.nextR(text);
+      })()
+      : undefined
+  );
 
   const exportHTMLR = NotePanel.rExportHTML();
 
@@ -160,6 +160,9 @@ export function activate(context: vscode.ExtensionContext) {
       ? document.fileName !== fileNameR.lastVal
         ? (() => {
           console.log("===============");
+
+          workingEditorR.nextR(vscode.window.activeTextEditor);
+
           console.log(document.fileName);
           fileNameR.lastVal = document.fileName;
           modeR.lastVal === 1
@@ -238,7 +241,7 @@ export function activate(context: vscode.ExtensionContext) {
             + mdText;
 
           //-----------------------------------------
-          mdTextR.nextR(setupMdText);
+          initialMdTextR.nextR(setupMdText);
           NotePanel.render(context.extensionUri, 1);
           //-----------------------------------------
         });
@@ -259,7 +262,7 @@ export function activate(context: vscode.ExtensionContext) {
                   const completeMdText = mdText;
 
                   //-----------------------------------------
-                  mdTextR.nextR(completeMdText);
+                  initialMdTextR.nextR(completeMdText);
                   NotePanel.render(context.extensionUri, 1);
                   //-----------------------------------------
 
@@ -282,10 +285,12 @@ export function activate(context: vscode.ExtensionContext) {
     })();
 
   // =================================================================
+  // mdTextR activeTextEditor.document.getText() then
+  // NodePanel.render()
   const overlayCommand = vscode.commands.registerCommand("markdownnote.overlay", () => {
     console.log("overlayCommand called-----");
     !!vscode.window.activeTextEditor
-      ? mdTextR.nextR(vscode.window.activeTextEditor.document.getText())
+      ? initialMdTextR.nextR(vscode.window.activeTextEditor.document.getText())
       : undefined;
     modeR.nextR(1); // switch mode to 1
     NotePanel.render(context.extensionUri, 1);
@@ -293,11 +298,12 @@ export function activate(context: vscode.ExtensionContext) {
   const toSideCommand = vscode.commands.registerCommand("markdownnote.toSide", () => {
     console.log("toSideCommand called-----");
     !!vscode.window.activeTextEditor
-      ? mdTextR.nextR(vscode.window.activeTextEditor.document.getText())
+      ? initialMdTextR.nextR(vscode.window.activeTextEditor.document.getText())
       : undefined;
     modeR.nextR(2); // switch mode to 2
     NotePanel.render(context.extensionUri, 2);
   });
+  //--------------------------------------------------------
   const exportHTMLCommand = vscode.commands.registerCommand("markdownnote.exportHTML", () => {
     console.log("exportHTML called-----");
     NotePanel.exportHTML();

@@ -2,7 +2,7 @@
 
 ## What is Lorem Ipsum?
 
-Hello!
+Hello
 
 **Lorem Ipsum**  is simply dummy text of the printing and typesetting industry.   *Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.*
 
@@ -11,6 +11,8 @@ We use [GitHub](https://github.com/) site, and his name is  **Octcat**😉
 ![octcat](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/octcat.png)
 
 > I love  `Code` !
+
+sdfsdfsdfsd
 
 ```js
 let a = 1;

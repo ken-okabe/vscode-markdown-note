@@ -19,7 +19,7 @@ const mathjax = require("mathjax");
 
 const cssR = R('');
 
-const mdTextR = R('');
+const initialMdTextR = R('');
 const saveR = R(undefined);
 
 const fileChangedR = R(false);
@@ -47,8 +47,8 @@ export class NotePanel {
   public static rCSS() {
     return cssR;
   }
-  public static rMdText() {
-    return mdTextR;
+  public static rInitialMdText() {
+    return initialMdTextR;
   }
   public static rSave() {
     return saveR;
@@ -268,7 +268,7 @@ export class NotePanel {
 
             webview.postMessage({ // 2
               cmd: 'load',
-              obj: mdTextR.lastVal
+              obj: initialMdTextR.lastVal
             }); // load from the source
 
 

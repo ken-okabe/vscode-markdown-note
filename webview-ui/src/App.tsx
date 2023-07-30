@@ -862,9 +862,15 @@ const App: Component = () => {
 
         <dialog>
           <h2>The working file has been changed in the background</h2>
-          <p>To protect the data, Markdown Note cannot overwrite and save with the current edits.</p>
-          <p>Please copy the parts you edited in Markdown Note to the clipboard, then reload from the source file tab and merge the contents of the clipboard.
-          </p>
+
+          <p>To protect your work on <em>MYFILE.md</em>, the following files were created:</p>
+          <ul>
+            <li><em>MYFILE.md--Snapshot.md</em> - file before background edit</li>
+            <li><em>MYFILE.md-BackgroundEdit.md</em> - file after background edit</li>
+          </ul>
+          <p>By comparing the two files, you can also check for changes.</p>
+          <p>Please reload the appropriate <em>MYFILE.md</em> into MarkdownNote after completing the edits.</p>
+
           <button class="close-button">OK</button>
         </dialog>
 
@@ -939,10 +945,11 @@ const requestSVG = (tex: string) => {
 };
 
 //=============================================================
-const mdtextR = R('Loading...');
+const initialMdTextR = R('Loading...');
+// first default value before loaded
 //==========================================
 //-----------------------------------------------
-mdtextR
+initialMdTextR // called twice
   .mapR(mdText => {
 
     const domParser = new DOMParser();
@@ -1042,7 +1049,7 @@ mdtextR
 
       currentID.nextR(ID.get(cells[0])); //set focus
 
-     // cellToMarkSave(); // load and save (trim empty lines etc)
+      cellToMarkSave(); // load and save (trim empty lines etc)
 
     }, 100);
 
@@ -1140,7 +1147,7 @@ window.addEventListener('message', event => {
       console.log(imageRepository);
     })()
     : message.cmd === 'load'
-      ? mdtextR.nextR(message.obj)
+      ? initialMdTextR.nextR(message.obj)
       : message.cmd === 'exportHTML'
         ? (() => {
           console.log("exportHTML!!!!!!!!!!!!!");
