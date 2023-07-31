@@ -2,7 +2,7 @@
 
 ## is also the ultimate note & memo App built on VSCode
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/todo.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/todo.gif)
 
 ## VSCode + Markdown + WYSIWYG = Productivity
 
