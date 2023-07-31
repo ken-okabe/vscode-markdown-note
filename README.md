@@ -395,7 +395,7 @@ For more information on managing personal access tokens on GitHub, you can refer
 
 # 🔷 The ultimate note & memo App built on VSCode
 
-![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/todo.png)
+![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/todo.gif)
 
 VSCode is such a great editor. 
 
