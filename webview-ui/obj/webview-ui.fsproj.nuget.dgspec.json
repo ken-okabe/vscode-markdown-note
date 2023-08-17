@@ -1,0 +1,65 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/ken/Documents/p/c/vscode-markdown-note/webview-ui/webview-ui.fsproj": {}
+  },
+  "projects": {
+    "/home/ken/Documents/p/c/vscode-markdown-note/webview-ui/webview-ui.fsproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/ken/Documents/p/c/vscode-markdown-note/webview-ui/webview-ui.fsproj",
+        "projectName": "webview-ui",
+        "projectPath": "/home/ken/Documents/p/c/vscode-markdown-note/webview-ui/webview-ui.fsproj",
+        "packagesPath": "/home/ken/.nuget/packages/",
+        "outputPath": "/home/ken/Documents/p/c/vscode-markdown-note/webview-ui/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/ken/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "/home/ken/.dotnet/sdk/7.0.400/FSharp/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[7.0.400, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/ken/.dotnet/sdk/7.0.400/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

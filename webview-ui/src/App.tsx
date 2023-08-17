@@ -952,57 +952,87 @@ const initialMdTextR = R('Loading...');
 initialMdTextR // called twice
   .mapR(mdText => {
 
-    const domParser = new DOMParser();
-    const doc = domParser.parseFromString(mdText, "text/html");
-    const tagBlocks = Array.from(doc.body.children).map((el) => el.outerHTML);
 
-    const prefixTag = '#%#y#8#%%%%a%%#7%%#c#replacing#Tag#Block#%%5#%%x%m%%##q#6#%##w#';
-    const regexTag = new RegExp(`(${prefixTag})(\\d+)`, 'g');
+    const detailsTag = /<details/g;
+    const detailsEndTag = /<\/details>/g;
+    
+    const detailsStartPositions = 
+      [...mdText.matchAll(detailsTag)]
+      .map(match => match.index);
+    const detailsEndPositions =
+      [...mdText.matchAll(detailsEndTag)]
+      .map(match => match.index);
 
-    const replaceTagBlocks =
-      (mdText) => (tagBlocks) =>
-        tagBlocks.reduce(
-          (result, tag, index) =>
-            result.replace(tag, `${prefixTag}${index}`),
-          mdText
-        );
-    // HTML tag blocks are replaced with a special string
-    const mdText1: string = replaceTagBlocks(mdText)(tagBlocks);
-    //--------------------------------------------------
+    const detailsRanges =
+      detailsStartPositions
+      .map((item, index) => [item, detailsEndPositions[index]]);
+
+    console.log("detailsRanges");
+    console.log(detailsRanges);
+ 
     const codeBlockRegex = /`{3}[\S\s]+?`{3}/g;
-
-    const codeBlocks =
-      [...mdText1.matchAll(codeBlockRegex)]
+    
+    const codeBlocks0 =
+      [...mdText.matchAll(codeBlockRegex)]
         .map((match) => match[0]);
 
-    const prefixCode = '#%#y#8#%%%%a%%#7%%#c#replacing#Code#Block#%%5#%%x%m%%##q#6#%##w#';
-    const regexCode = new RegExp(`(${prefixCode})(\\d+)`, 'g');
+    let codeBlockIndex0 = 0;
+    const codeBlocks = 
+      codeBlocks0.flatMap(
+        codeBlock => {
+          const codeBlockIndex =
+            mdText.indexOf(codeBlock, codeBlockIndex0);
+          codeBlockIndex0 = codeBlockIndex + 1
 
-    const replaceCodeBlocks =
-      (mdText) => (codeBlocks) =>
-        codeBlocks.reduce(
-          (result, code, index) =>
-            result.replace(code, `${prefixCode}${index}`),
+          console.log("codeBlockIndex");
+          console.log(codeBlockIndex);
+
+          const isWithinRange = 
+          detailsRanges.some(range =>
+            range[0] <= codeBlockIndex && codeBlockIndex <= range[1]);
+          
+          console.log(isWithinRange);
+          return isWithinRange
+            ? [] 
+            : [codeBlock];
+        });
+
+    console.log("codeBlocks");
+    console.log(codeBlocks);
+
+    const replaceBlocks =
+      mdText => blocks => prefix =>
+        blocks.reduce(
+          (result, target, index) =>
+            result.replace(target, `${prefix}${index}`),
           mdText
         );
+    
+    const prefixCode = 
+      '#%#y#8#%%%%a%%#7%%#c#replacing#Code#Block#%%5#%%x%m%%##q#6#%##w#';
+    const regexCode = new RegExp(`(${prefixCode})(\\d+)`, 'g');
+
     // Code blocks are replaced with a special string
-    const mdText2: string = replaceCodeBlocks(mdText1)(codeBlocks);
+    const mdText1: string = 
+      replaceBlocks(mdText)(codeBlocks)(prefixCode);
+    //--------------------------------------------------
+    const domParser = new DOMParser();
+    const doc = domParser.parseFromString(mdText1, "text/html");
+    const tagBlocks = Array.from(doc.body.children).map((el) => el.outerHTML);
+
+    console.log("tagBlocks");
+    console.log(tagBlocks);
+
+    const prefixTag =
+      '#%#y#8#%%%%a%%#7%%#c#replacing#Tag#Block#%%5#%%x%m%%##q#6#%##w#';
+    const regexTag = new RegExp(`(${prefixTag})(\\d+)`, 'g');
+
+    // HTML tag blocks are replaced with a special string
+    const mdText2: string = 
+      replaceBlocks(mdText1)(tagBlocks)(prefixTag);
     //--------------------------------------------------
     const mds2 = mdText2.split(/\n\n+/);
     //--------------------------------------------------
-    const restoreTagBlocks =
-      mds => tagBlocks =>
-        mds.flatMap(
-          (md) =>
-            md.match(regexTag)
-              ? (() => {
-                const index =
-                  Number(md.match(regexTag)[0].replace(prefixTag, ''));
-                return [tagBlocks[index]];
-              })()
-              : [md]
-        );
-
     const restoreCodelocks =
       mds => codeBlocks =>
         mds.flatMap(
@@ -1016,10 +1046,25 @@ initialMdTextR // called twice
               : [md]
         );
 
-    // Code blocks are restored
-    const mds1 = restoreCodelocks(mds2)(codeBlocks);
+    const restoreTagBlocks =
+      mds => tagBlocks =>
+        mds.flatMap(
+          (md) =>
+            md.match(regexTag)
+              ? (() => {
+                const index =
+                  Number(md.match(regexTag)[0].replace(prefixTag, ''));
+                return [tagBlocks[index]];
+              })()
+              : [md]
+        );
+
     // HTML tag blocks are restored
-    const mds0 = restoreTagBlocks(mds1)(tagBlocks);
+   // const mds1 = restoreCodelocks(mds2)(codeBlocks);
+   // const mds0 = restoreTagBlocks(mds1)(tagBlocks);
+    // Code blocks are restored
+
+     const mds0 = mds2;
 
     const mds =
       mds0.flatMap(
@@ -1054,6 +1099,51 @@ initialMdTextR // called twice
     }, 100);
 
   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

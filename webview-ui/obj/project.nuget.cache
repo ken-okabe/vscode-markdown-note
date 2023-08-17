@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "84NeVAV4nLKPl6iAnwOnL22y+QKD1xBbMYI+EzEV3c+IYfLmzBuWirj7h2V62s0+m/rb3r+r8UvBrsJo9tyUVQ==",
+  "success": true,
+  "projectFilePath": "/home/ken/Documents/p/c/vscode-markdown-note/webview-ui/webview-ui.fsproj",
+  "expectedPackageFiles": [
+    "/home/ken/.nuget/packages/fsharp.core/7.0.400/fsharp.core.7.0.400.nupkg.sha512"
+  ],
+  "logs": []
+}
