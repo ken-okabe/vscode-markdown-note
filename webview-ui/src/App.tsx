@@ -48,6 +48,24 @@ provideVSCodeDesignSystem().register(vsCodeButton());
 
 
 //=================================================================
+const parser =  unified()
+.use(remarkParse)
+.use(remarkGfm as any)
+.use(remarkMath)
+.use(remarkRehype, { allowDangerousHtml: true })
+.use(rehypeRaw) // *Parse* the raw HTML strings embedded in the tree
+.use(rehypePrism)
+.use(rehypeMathjax)
+.use(rehypeMermaid, {
+  // The default strategy is 'inline-svg'
+  // strategy: 'img-png'
+  // strategy: 'img-svg'
+  // strategy: 'inline-svg'
+  // strategy: 'pre-mermaid'
+});
+
+
+
 const hFont = {};
 
 const [cellsStream, cellsStreamNext] = createSignal([]);
@@ -709,22 +727,8 @@ const markHtml =
 
     const text = document.getElementById("edit" + id).innerText;
 
-    const rmPromise =
-      unified()
-        .use(remarkParse)
-        .use(remarkGfm as any)
-        .use(remarkMath)
-        .use(remarkRehype, { allowDangerousHtml: true })
-        .use(rehypeRaw) // *Parse* the raw HTML strings embedded in the tree
-        .use(rehypePrism)
-        .use(rehypeMathjax)
-        .use(rehypeMermaid, {
-          // The default strategy is 'inline-svg'
-          // strategy: 'img-png'
-          // strategy: 'img-svg'
-          // strategy: 'inline-svg'
-          // strategy: 'pre-mermaid'
-        })
+    const parserPromise =
+       parser
         .use(rehypeStringify)
         .process(text)
         .catch(error => {
@@ -732,7 +736,7 @@ const markHtml =
           console.log(error.message)
         });
 
-    rmPromise
+    parserPromise
       .then((html) =>
         !!html
           ? finalHtml(id)(html)(div)
@@ -750,15 +754,15 @@ const finalHtml =
 
     const f = () => {
 
-      const editIDtext = document.getElementById("edit" + id).innerText;
+      const editIDtext = document.getElementById("edit" + id)?.innerText;
       const isMarkdownTxt =
         !isHTML(editIDtext);
 
       div.innerHTML = html.toString();
 
-      const isImage = div.querySelector('img') != null;
+      const isImage = div?.querySelector('img') != null;
 
-      const hasText = div.innerText.length > 0;
+      const hasText = div?.innerText.length > 0;
 
       contentStreams[id].next(div);
 
@@ -952,192 +956,66 @@ const initialMdTextR = R('Loading...');
 initialMdTextR // called twice
   .mapR(mdText => {
 
+    console.log("initial parser");
 
-    const detailsTag = /<details/g;
-    const detailsEndTag = /<\/details>/g;
+    const contents =
+      parser
+      .parse(mdText)
+      .children.map;
+
+      console.log("source map===============");
+      console.log(contents);
+      console.log("-------------------------");
+
+/*
+
+
+      createSourceMap(mdText)(parser)
+      .then(mds=> {
+
+
+
+        console.log(mds.length);
+        console.log(mds);
+        const cells =
+          mds.length === 0 // if markdown text is empty
+            ? [Cell("# Title")]
+            : mds.map(md => Cell(md));
     
-    const detailsStartPositions = 
-      [...mdText.matchAll(detailsTag)]
-      .map(match => match.index);
-    const detailsEndPositions =
-      [...mdText.matchAll(detailsEndTag)]
-      .map(match => match.index);
-
-    const detailsRanges =
-      detailsStartPositions
-      .map((item, index) => [item, detailsEndPositions[index]]);
-
-    console.log("detailsRanges");
-    console.log(detailsRanges);
- 
-    const codeBlockRegex = /`{3}[\S\s]+?`{3}/g;
+        console.log(cells);
     
-    const codeBlocks0 =
-      [...mdText.matchAll(codeBlockRegex)]
-        .map((match) => match[0]);
-
-    let codeBlockIndex0 = 0;
-    const codeBlocks = 
-      codeBlocks0.flatMap(
-        codeBlock => {
-          const codeBlockIndex =
-            mdText.indexOf(codeBlock, codeBlockIndex0);
-          codeBlockIndex0 = codeBlockIndex + 1
-
-          console.log("codeBlockIndex");
-          console.log(codeBlockIndex);
-
-          const isWithinRange = 
-          detailsRanges.some(range =>
-            range[0] <= codeBlockIndex && codeBlockIndex <= range[1]);
-          
-          console.log(isWithinRange);
-          return isWithinRange
-            ? [] 
-            : [codeBlock];
-        });
-
-    console.log("codeBlocks");
-    console.log(codeBlocks);
-
-    const replaceBlocks =
-      mdText => blocks => prefix =>
-        blocks.reduce(
-          (result, target, index) =>
-            result.replace(target, `${prefix}${index}`),
-          mdText
-        );
+        cellsStreamNext(cells); //update cells
     
-    const prefixCode = 
-      '#%#y#8#%%%%a%%#7%%#c#replacing#Code#Block#%%5#%%x%m%%##q#6#%##w#';
-    const regexCode = new RegExp(`(${prefixCode})(\\d+)`, 'g');
+        window.setTimeout(() => {
+          let cells =
+            Array
+              .from(document.getElementsByClassName('cell'));
+    
+          console.log(ID.get(cells[0]));
+    
+          currentID.nextR(ID.get(cells[0])); //set focus
+    
+          cellToMarkSave(); // load and save (trim empty lines etc)
+    
+        }, 100);
 
-    // Code blocks are replaced with a special string
-    const mdText1: string = 
-      replaceBlocks(mdText)(codeBlocks)(prefixCode);
+
+      })
+      .catch(error => {
+        console.log("%%%%% Initial reMark parser ERROR");
+        console.log(error.message)
+      });
+
+
+
+
+*/
+
+
     //--------------------------------------------------
-    const domParser = new DOMParser();
-    const doc = domParser.parseFromString(mdText1, "text/html");
-    const tagBlocks = Array.from(doc.body.children).map((el) => el.outerHTML);
-
-    console.log("tagBlocks");
-    console.log(tagBlocks);
-
-    const prefixTag =
-      '#%#y#8#%%%%a%%#7%%#c#replacing#Tag#Block#%%5#%%x%m%%##q#6#%##w#';
-    const regexTag = new RegExp(`(${prefixTag})(\\d+)`, 'g');
-
-    // HTML tag blocks are replaced with a special string
-    const mdText2: string = 
-      replaceBlocks(mdText1)(tagBlocks)(prefixTag);
-    //--------------------------------------------------
-    const mds2 = mdText2.split(/\n\n+/);
-    //--------------------------------------------------
-    const restoreCodelocks =
-      mds => codeBlocks =>
-        mds.flatMap(
-          (md) =>
-            md.match(regexCode)
-              ? (() => {
-                const index =
-                  Number(md.match(regexCode)[0].replace(prefixCode, ''));
-                return [codeBlocks[index]];
-              })()
-              : [md]
-        );
-
-    const restoreTagBlocks =
-      mds => tagBlocks =>
-        mds.flatMap(
-          (md) =>
-            md.match(regexTag)
-              ? (() => {
-                const index =
-                  Number(md.match(regexTag)[0].replace(prefixTag, ''));
-                return [tagBlocks[index]];
-              })()
-              : [md]
-        );
-
-    // HTML tag blocks are restored
-   // const mds1 = restoreCodelocks(mds2)(codeBlocks);
-   // const mds0 = restoreTagBlocks(mds1)(tagBlocks);
-    // Code blocks are restored
-
-     const mds0 = mds2;
-
-    const mds =
-      mds0.flatMap(
-        md =>
-          md === ''
-            ? []
-            : [md]
-      );
-    //--------------------------------------------------
-    console.log(mds.length);
-    console.log(mds);
-    const cells =
-      mds.length === 0 // if markdown text is empty
-        ? [Cell("# Title")]
-        : mds.map(md => Cell(md));
-
-    console.log(cells);
-
-    cellsStreamNext(cells); //update cells
-
-    window.setTimeout(() => {
-      let cells =
-        Array
-          .from(document.getElementsByClassName('cell'));
-
-      console.log(ID.get(cells[0]));
-
-      currentID.nextR(ID.get(cells[0])); //set focus
-
-      cellToMarkSave(); // load and save (trim empty lines etc)
-
-    }, 100);
+   
 
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

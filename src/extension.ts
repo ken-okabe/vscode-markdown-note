@@ -291,8 +291,10 @@ export function activate(context: vscode.ExtensionContext) {
     console.log("overlayCommand called-----");
     !!vscode.window.activeTextEditor
       ? initialMdTextR.nextR(vscode.window.activeTextEditor.document.getText())
-      : undefined;
+        : undefined;
+
     modeR.nextR(1); // switch mode to 1
+    savingR.nextR(true);
     NotePanel.render(context.extensionUri, 1);
   });
   const toSideCommand = vscode.commands.registerCommand("markdownnote.toSide", () => {
@@ -300,7 +302,9 @@ export function activate(context: vscode.ExtensionContext) {
     !!vscode.window.activeTextEditor
       ? initialMdTextR.nextR(vscode.window.activeTextEditor.document.getText())
       : undefined;
+
     modeR.nextR(2); // switch mode to 2
+    savingR.nextR(true);
     NotePanel.render(context.extensionUri, 2);
   });
   //--------------------------------------------------------
