@@ -961,6 +961,7 @@ initialMdTextR // called twice
 
     console.log("initial parser");
 
+    /*
     const html =
       marked.parse(mdText);
 
@@ -974,6 +975,7 @@ initialMdTextR // called twice
     console.log("bodyEls===============");
     console.log(bodyEls);
     console.log("-------------------------");
+    */
     //--------------------------------------------
     let sourceMap = [];
 
