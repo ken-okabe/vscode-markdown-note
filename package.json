@@ -1,6 +1,6 @@
 {
   "name": "markdownnote",
-  "version": "0.9.95",
+  "version": "0.9.100",
   "displayName": "Markdown Note",
   "description": "A WYSIWYG Markdown Editor that supports the features used on GitHub site and beyond",
   "author": {
@@ -189,6 +189,10 @@
       {
         "command": "markdownnote.exportHTML",
         "title": "MarkdownNote: 📁 Export as HTML file"
+      },
+      {
+        "command": "markdownnote.concatenateMarkdown",
+        "title": "MarkdownNote: 📃 Concatenate Markdown"
       }
     ],
     "menus": {
@@ -206,6 +210,11 @@
         {
           "when": "resourceLangId == markdown",
           "command": "markdownnote.exportHTML",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceLangId == markdown",
+          "command": "markdownnote.concatenateMarkdown",
           "group": "navigation"
         }
       ]

@@ -26,6 +26,12 @@ import rehypeStringify from 'rehype-stringify'
 import rehypeRaw from 'rehype-raw'
 import rehypeMermaid from 'rehype-mermaidjs'
 
+import { marked } from 'marked';
+
+// Set options
+marked.use({
+  gfm: true,
+});
 
 // In order to use the Webview UI Toolkit web components they
 // must be registered with the browser (i.e. webview) using the
@@ -48,23 +54,6 @@ provideVSCodeDesignSystem().register(vsCodeButton());
 
 
 //=================================================================
-const parser =  unified()
-.use(remarkParse)
-.use(remarkGfm as any)
-.use(remarkMath)
-.use(remarkRehype, { allowDangerousHtml: true })
-.use(rehypeRaw) // *Parse* the raw HTML strings embedded in the tree
-.use(rehypePrism)
-.use(rehypeMathjax)
-.use(rehypeMermaid, {
-  // The default strategy is 'inline-svg'
-  // strategy: 'img-png'
-  // strategy: 'img-svg'
-  // strategy: 'inline-svg'
-  // strategy: 'pre-mermaid'
-});
-
-
 
 const hFont = {};
 
@@ -728,7 +717,21 @@ const markHtml =
     const text = document.getElementById("edit" + id).innerText;
 
     const parserPromise =
-       parser
+        unified()
+        .use(remarkParse)
+        .use(remarkGfm as any)
+        .use(remarkMath)
+        .use(remarkRehype, { allowDangerousHtml: true })
+        .use(rehypeRaw) // *Parse* the raw HTML strings embedded in the tree
+        .use(rehypePrism)
+        .use(rehypeMathjax)
+        .use(rehypeMermaid, {
+          // The default strategy is 'inline-svg'
+          // strategy: 'img-png'
+          // strategy: 'img-svg'
+          // strategy: 'inline-svg'
+          // strategy: 'pre-mermaid'
+        })
         .use(rehypeStringify)
         .process(text)
         .catch(error => {
@@ -958,73 +961,81 @@ initialMdTextR // called twice
 
     console.log("initial parser");
 
-    const contents =
-      parser
-      .parse(mdText)
-      .children.map;
+    const html =
+      marked.parse(mdText);
 
-      console.log("source map===============");
-      console.log(contents);
-      console.log("-------------------------");
+    const DOMparser = new DOMParser();
 
-/*
+    const dom = DOMparser.parseFromString(html, "text/html");
+    const bodyEls = 
+          Array.from(dom.body.children)
+               .map(el => el.outerHTML)   ;
 
+    console.log("bodyEls===============");
+    console.log(bodyEls);
+    console.log("-------------------------");
+    //--------------------------------------------
+    let sourceMap = [];
 
-      createSourceMap(mdText)(parser)
-      .then(mds=> {
+    let mdTextEOF = mdText+'\n\n# EOF';
 
+    let lines =  mdTextEOF.split('\n');
+    let source = '';
+    let prevSource: string;
 
+    for (let i = 0; i < lines.length; i++) {
+      source += lines[i] + '\n';
+      let html = marked.parse(source);
+      let dom = new DOMParser().parseFromString(html, 'text/html');
+      let domChildren = dom.body.children;
 
-        console.log(mds.length);
-        console.log(mds);
-        const cells =
-          mds.length === 0 // if markdown text is empty
-            ? [Cell("# Title")]
-            : mds.map(md => Cell(md));
-    
-        console.log(cells);
-    
-        cellsStreamNext(cells); //update cells
-    
-        window.setTimeout(() => {
-          let cells =
-            Array
-              .from(document.getElementsByClassName('cell'));
-    
-          console.log(ID.get(cells[0]));
-    
-          currentID.nextR(ID.get(cells[0])); //set focus
-    
-          cellToMarkSave(); // load and save (trim empty lines etc)
-    
-        }, 100);
+      domChildren.length === 2
+        ? (()=>{
+          source = lines[i] + '\n';
+          console.log("==detected Source!!==========");
+          console.log(prevSource);
+          console.log("======================");
+          sourceMap[sourceMap.length] = //trim \n at the begining and end
+             prevSource.trim().replace(/^[\r\n]+|[\r\n]+$/g, "");
+        })()
+        : undefined
 
+      prevSource = source;
+      console.log("--prevSource----------");
+      console.log(prevSource);
+      console.log("----------------------");
+    };
 
-      })
-      .catch(error => {
-        console.log("%%%%% Initial reMark parser ERROR");
-        console.log(error.message)
-      });
+    console.log("sourceMap=============");
+    console.log(sourceMap);
+    console.log("----------------------");
+    //--------------------------------------------  
+    let mds = sourceMap;
+    console.log(mds.length);
 
+    const cells =
+      mds.length === 0 // if markdown text is empty
+        ? [Cell("# Title")]
+        : mds.map(md => Cell(md));
 
+    console.log(cells);
 
+    cellsStreamNext(cells); //update cells
 
-*/
+    window.setTimeout(() => {
+      let cells =
+        Array
+          .from(document.getElementsByClassName('cell'));
 
+      console.log(ID.get(cells[0]));
 
-    //--------------------------------------------------
-   
+      currentID.nextR(ID.get(cells[0])); //set focus
+
+      cellToMarkSave(); // load and save (trim empty lines etc)
+
+    }, 100);
 
   });
-
-
-
-
-
-
-
-
-
 //==========================================
 
 const getSVGurl = (svg: string) =>
@@ -1089,7 +1100,6 @@ const svgF = svg => {
     onInput(svgCellID.lastVal); // <------------------
   });
 };
-
 
 const fileChanged = () => {
 

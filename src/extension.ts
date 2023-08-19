@@ -5,6 +5,7 @@ import { NotePanel } from "./panels/NotePanel";
 import { R } from "./utilities/libs/ReactiveMonad/reactive-monadOp";
 import type { Reactive } from "./utilities/libs/ReactiveMonad/reactive-monadOp";
 
+
 import * as fs from "node:fs/promises";
 import * as path from "path";
 
@@ -291,7 +292,7 @@ export function activate(context: vscode.ExtensionContext) {
     console.log("overlayCommand called-----");
     !!vscode.window.activeTextEditor
       ? initialMdTextR.nextR(vscode.window.activeTextEditor.document.getText())
-        : undefined;
+      : undefined;
 
     modeR.nextR(1); // switch mode to 1
     savingR.nextR(true);
@@ -312,6 +313,81 @@ export function activate(context: vscode.ExtensionContext) {
     console.log("exportHTML called-----");
     NotePanel.exportHTML();
   });
+  //--------------------------------------------------------
+
+
+
+
+  const readDir = (dir: string): Promise<string[]> =>
+    fs.readdir(dir).then((files) =>
+      Promise.all(
+        files
+          .sort((a, b) => a.localeCompare(b))
+          .map((file) =>
+            fs.stat(path.join(dir, file)).then((stat) =>
+              stat.isDirectory()
+                ? readDir(path.join(dir, file))
+                : [path.join(dir, file)]
+            )
+          )
+      ).then((files) => files.flat())
+    );
+
+  const filterMdFiles = (files: string[]): string[] =>
+    files.filter((file) => path.extname(file) === ".md");
+
+  const readFiles = (files: string[]): Promise<string[]> =>
+    Promise.all(files.map((file) => fs.readFile(file, "utf8")));
+
+  const concatFiles = (files: string[]): string => files.join("\n");
+
+  const saveFile = (filename: string, content: string): Promise<void> =>
+    fs.writeFile(filename, content);
+
+  const processDir = (
+    dir: string,
+    outputFilename: string
+  ): Promise<void> =>
+    readDir(dir)
+      .then(filterMdFiles)
+      .then(readFiles)
+      .then(concatFiles)
+      .then((content) => saveFile(outputFilename, content));
+
+  const concatenateMarkdownCommand = vscode.commands.registerCommand(
+    "markdownnote.concatenateMarkdown",
+    () => {
+      const options: vscode.OpenDialogOptions = {
+        canSelectMany: false,
+        canSelectFolders: true,
+        canSelectFiles: false,
+        openLabel: "Select Directory",
+      };
+
+      vscode.window.showOpenDialog(options).then((dirUri) =>
+        dirUri && dirUri.length !== 0
+          ? vscode.window
+            .showInputBox({
+              prompt: "Enter output filename",
+              value: "output.md",
+            })
+            .then((outputFilename) =>
+              outputFilename
+                ? processDir(dirUri[0].fsPath, outputFilename).then(() =>
+                  vscode.window.showInformationMessage(
+                    `Concatenated markdown files saved to ${outputFilename}`
+                  )
+                )
+                : undefined
+            )
+          : undefined
+      );
+    }
+  );
+
+
+
+
   //--------------------------------------------------------
 
   const _allHTML_EDIT = vscode.commands.registerCommand("markdownnote._AllHTML_EDIT", () => {
@@ -376,6 +452,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(overlayCommand);
   context.subscriptions.push(toSideCommand);
   context.subscriptions.push(exportHTMLCommand);
+  context.subscriptions.push(concatenateMarkdownCommand);
   //keybinding
   context.subscriptions.push(_allHTML_EDIT);
   context.subscriptions.push(_radOnly_Writable);
