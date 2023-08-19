@@ -35,9 +35,15 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.workspace.onDidChangeTextDocument(changeEvent =>
     changeEvent.document === workingEditorR.lastVal.document
       ? savingR.lastVal
-        ? savingR.nextR(false)
-        //--- file has been changed externally
+        ? savingR.nextR(false) // do nothing, just reset the flag
+        //----------------------------------------------------------
+        //--- Or file has been changed externally----------------------
         : (() => {
+          //close the current webView
+          NotePanel.currentPanel?.dispose();
+        //  fileNameR.nextR("");
+
+          /*
           fs.writeFile(
             fileNameR.lastVal + '--Snapshot.md', savedTextR.lastVal);
 
@@ -47,6 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
 
           //----send message to NotePanel->Webview->Dialog
           fileChangedR.nextR(true);
+          */
         })()
       : undefined
   );
