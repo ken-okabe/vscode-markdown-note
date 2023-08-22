@@ -717,7 +717,7 @@ const markHtml =
     const text = document.getElementById("edit" + id).innerText;
 
     const parserPromise =
-        unified()
+      unified()
         .use(remarkParse)
         .use(remarkGfm as any)
         .use(remarkMath)
@@ -960,60 +960,40 @@ initialMdTextR // called twice
   .mapR(mdText => {
 
     console.log("initial parser");
-
-    /*
-    const html =
-      marked.parse(mdText);
-
-    const DOMparser = new DOMParser();
-
-    const dom = DOMparser.parseFromString(html, "text/html");
-    const bodyEls = 
-          Array.from(dom.body.children)
-               .map(el => el.outerHTML)   ;
-
-    console.log("bodyEls===============");
-    console.log(bodyEls);
-    console.log("-------------------------");
-    */
     //--------------------------------------------
-    let sourceMap = [];
+    let mdTextEOF = mdText + '\n\n# EOF';
 
-    let mdTextEOF = mdText+'\n\n# EOF';
-
-    let lines =  mdTextEOF.split('\n');
+    let lines = mdTextEOF.split('\n');
     let source = '';
     let prevSource: string;
 
-    for (let i = 0; i < lines.length; i++) {
-      source += lines[i] + '\n';
-      let html = marked.parse(source);
-      let dom = new DOMParser().parseFromString(html, 'text/html');
-      let domChildren = dom.body.children;
-
-      domChildren.length === 2
-        ? (()=>{
-          source = lines[i] + '\n';
-          console.log("==detected Source!!==========");
-          console.log(prevSource);
-          console.log("======================");
-          sourceMap[sourceMap.length] = //trim \n at the begining and end
-             prevSource.trim().replace(/^[\r\n]+|[\r\n]+$/g, "");
-        })()
-        : undefined
-
-      prevSource = source;
-      console.log("--prevSource----------");
-      console.log(prevSource);
-      console.log("----------------------");
-    };
+    let sourceMap: string[] =
+      lines.flatMap(
+        line => {
+          source += line + '\n';
+          let html = marked.parse(source);
+          let dom = new DOMParser().parseFromString(html, 'text/html');
+          let domChildren = dom.body.children;
+          return domChildren.length === 2
+            ? (() => {
+              source = line + '\n';
+              let block = // trim \n at the begining and end
+                prevSource.trim().replace(/^[\r\n]+|[\r\n]+$/g, "");
+              prevSource = source;
+              return [block];
+            })()
+            : (() => {
+              prevSource = source;
+              return [];
+            })()
+        });
 
     console.log("sourceMap=============");
+    console.log(sourceMap.length);
     console.log(sourceMap);
     console.log("----------------------");
     //--------------------------------------------  
     let mds = sourceMap;
-    console.log(mds.length);
 
     const cells =
       mds.length === 0 // if markdown text is empty
