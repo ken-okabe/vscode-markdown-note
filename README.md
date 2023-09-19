@@ -1,5 +1,7 @@
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/showcase.png)
 
+![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo06.gif)
+
 ## is also the ultimate note & memo App built on VSCode
 
 ![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/todo.gif)
@@ -12,7 +14,7 @@
 
 ![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo00.gif)
 
- **Click**  on what you want to edit to enter input mode.
+**Click**  on what you want to edit to enter input mode.
 
 Once you finish editing, press the   `ESC`  key.
 
@@ -52,12 +54,12 @@ Here is how it goes:
 2. Select all, then paste the **imageURL** (`Ctrl+A,P`)
 3. Exit the Cell (`Esc`)
 
- **Alternatively, you can skip typing the image name and just** 
+**Alternatively, you can skip typing the image name and just**
 
 1. Paste the **imageURL** (`Ctrl+P`)
 2. Exit the Cell (`Esc`)
 
- **and it will work just fine 😎** 
+**and it will work just fine 😎**
 
 For **imageURLs**, `image` is used as the default name.
 
@@ -88,7 +90,7 @@ In **Markdown Note**, you can add **Code & Mathematics(LaTeX)** in the same way 
 
 ---
 
- $Mathematics(LaTeX)$ 
+$Mathematics(LaTeX)$
 
 0. Your clipboard has:
 `\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.`
@@ -100,7 +102,7 @@ In **Markdown Note**, you can add **Code & Mathematics(LaTeX)** in the same way 
 
 ---
 
- $Code (including Mermaid)$ 
+$Code (including Mermaid)$
 
 0. Your clipboard has:
 
@@ -119,7 +121,7 @@ C --> D
 
 ---
 
- $Inline$ 
+$Inline$
 
 To insert **inlineCode** & **inlineMath**, you can use the same operation as for (inline) **Bold** or (inline) **Italic**, that is, select the  *target strings* , then press the **ShortcutKey**: `Ctrl+?`.
 
@@ -141,13 +143,7 @@ In  **ReadOnly Mode** , the default behavior of  **Markdown Note**  is paused an
 
 This way, you can see how `<details>` and `<summary>` html tags work.
 
- Pressing `Ctrl+Esc` again  will return to the default  **Writable Mode**.
-
----
-
-# 🔷 Side-by-side mode is also WYSIWYG
-
-![](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/demo06.gif)
+Pressing `Ctrl+Esc` again  will return to the default  **Writable Mode**.
 
 ---
 
@@ -155,11 +151,11 @@ This way, you can see how `<details>` and `<summary>` html tags work.
 
 Bidirectional data flow might look cool, but it often causes confusion for both humans and software architectures.
 
- **The conventional Markdown Preview**  has a unidirectional data flow :
+**The conventional Markdown Preview**  has a unidirectional data flow :
 
 - Markdown source code -> The read-only preview.
 
- **Markdown Note**  also uses the same simple unidirectional design, but *in the opposite direction* :
+**Markdown Note**  also uses the same simple unidirectional design, but *in the opposite direction* :
 
 - WYSIWYG Editor -> Markdown source code.
 
@@ -174,7 +170,7 @@ The user needs to **reload the contents explicitly after editing the Markdown so
 The user can choose which panel to reload:
 
 -  **to Side** 
--  **Overlay** 
+-  **Overlay**
 
 The reload action helps to **reconstruct the entire markdown Cells with integrity** after a full modification of the document by native editing.
 
@@ -216,9 +212,9 @@ You can use VSCode features, such as **undo/redo/select the whole document** , o
 
 # 🔷 Getting Started
 
-## Take advantage of VSCode  `Empty Profile` 
+## Take advantage of VSCode  `Empty Profile`
 
- **To get started quickly and simply, you can take advantage of an empty and isolated VSCode profile to install Markdown Note, or use any VSCode profile you like later.** 
+**To get started quickly and simply, you can take advantage of an empty and isolated VSCode profile to install Markdown Note, or use any VSCode profile you like later.**
 
 ---
 
@@ -228,7 +224,7 @@ You can use VSCode features, such as **undo/redo/select the whole document** , o
 
 ![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/0profile.png)
 
-### Select  `Empty Profile` 
+### Select  `Empty Profile`
 
 ![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/1emptyprofile.png)
 
@@ -250,29 +246,29 @@ You can use VSCode features, such as **undo/redo/select the whole document** , o
 
 ### Use `Ctrl+A` to select all, then `Ctrl+C` to copy the generated  `JSON`  on the page.
 
-### 
+###
 
 ![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/walkthrough.png)
 
-### Paste (`Ctrl+A,P`) into the empty  `settings.json`  of `Empty Profile` 
+### Paste (`Ctrl+A,P`) into the empty  `settings.json`  of `Empty Profile`
 
 ![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/7blankobject.png)
 
 ### Save ( `Ctrl+S` ) and Done!
 
- **The built-in Setup Walkthrough page guides you step by step and does not require VSCode reload, so for now just prepare  `Empty Profile`.** 
+**The built-in Setup Walkthrough page guides you step by step and does not require VSCode reload, so for now just prepare  `Empty Profile`.**
 
 ---
 
 ## Command for VSCode Profiles
 
- **You can use the `--profile` command-line interface option to launch VS Code with a specific profile.** 
+**You can use the `--profile` command-line interface option to launch VS Code with a specific profile.**
 
 ```sh
 code --profile writing my-documents
 ```
 
- **A new `Empty Profile` with the given name is created if the profile specified does not exist.** 
+**A new `Empty Profile` with the given name is created if the profile specified does not exist.**
 
 ---
 
@@ -319,7 +315,7 @@ In most cases, the theme in VSCode is configured through a GUI.
 
 ![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/theme-gui.png)
 
- **Some dark themes can make the scroll bar almost invisible in Markdown Note.** 
+**Some dark themes can make the scroll bar almost invisible in Markdown Note.**
 
 ---
 
@@ -360,7 +356,7 @@ https://github.com/settings/appearance
 
 ![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/setup/github-theme.png)
 
- **Code highlighting can be styled independently with [Prism](https://prismjs.com/)** 
+**Code highlighting can be styled independently with [Prism](https://prismjs.com/)**
 
 ---
 
@@ -389,7 +385,7 @@ With one Keystroke, this feature allows you to **upload the clipboard image** to
 
 You need to create *a dedicated image repository* and *an access token on GitHub* to use this feature. **This feature does not work with secret repositories, and your images will be public.**
 
-For more information on managing personal access tokens on GitHub, you can refer to the [official documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). 
+For more information on managing personal access tokens on GitHub, you can refer to the [official documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
 
 ---
 
@@ -397,13 +393,13 @@ For more information on managing personal access tokens on GitHub, you can refer
 
 ![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/todo.gif)
 
-VSCode is such a great editor. 
+VSCode is such a great editor.
 
-The only problem with VSCode is that it’s not suitable for  **casual use as a daily note and memo app** . 
+The only problem with VSCode is that it’s not suitable for  **casual use as a daily note and memo app** .
 
 The reason is that Markdown editing is  **not WYSIWYG** .
 
- **Markdown Note transforms VSCode into your daily note and memo app, and it's probably the most powerful one in the world.** 
+**Markdown Note transforms VSCode into your daily note and memo app, and it's probably the most powerful one in the world.**
 
 Your notes and memos are now natively managed with  **secret repos in GitHub** !
 
@@ -425,7 +421,7 @@ code --profile note /home/ken/Documents/note
 
 ---
 
-# 🔷 Invest in the software that powers your world! 
+# 🔷 Invest in the software that powers your world!
 
 ![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/sponsor.png)
 
@@ -433,8 +429,6 @@ https://github.com/sponsors
 
 ![image](https://raw.githubusercontent.com/ken-okabe/vscode-markdown-note-images/main/contribute.png)
 
- ***Markdown Note**  is also planning to join GitHub Sponsors in the near future.* 
+***Markdown Note**  is also planning to join GitHub Sponsors in the near future.*
 
 If you like this project, you can join the future of open source by investing today😉
-
- 
