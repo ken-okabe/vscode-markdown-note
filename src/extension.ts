@@ -144,13 +144,19 @@ export function activate(context: vscode.ExtensionContext) {
     const cssURLs: string[] = vscode.workspace.getConfiguration("markdownnote.CSS").URLs;
     console.log(cssURLs);
 
-    Promise.all(cssURLs.map((url) => readFile(url))).then((textDataArray) => {
+    console.log(cssURLs.length);
+
+    cssURLs.length !==0
+    
+    ? Promise.all(cssURLs.map((url) => readFile(url))).then((textDataArray) => {
       let css = textDataArray.reduce((acc, textData) => acc + "\n\n" + textData, "");
       cssR.nextR(css); // final purpose
       console.log("css loaded");
 
       start(); // start overlay or side mode
-    });
+    })
+    
+    : start()
   };
 
   // =================================================================
